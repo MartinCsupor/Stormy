@@ -5,3 +5,6 @@ body{
     color: white;
 }
 
+@theme{
+    --breakpoint-xs:520px;
+}
