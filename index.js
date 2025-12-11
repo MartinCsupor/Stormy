@@ -9,7 +9,7 @@ let hofok = (temp) => {
     return celsius ? Math.round(temp - 273.15) 
         : Math.round((temp - 273.15) * 9/5 + 32);
 
-} 
+} ;
 
 const getDailyWeather = async () => {
 
@@ -17,7 +17,7 @@ const getDailyWeather = async () => {
     `https://api.openweathermap.org/data/2.5/weather?lat=46.181793&lon=18.954306&appid=${API_KEY}&lang=hu`
     );
     return dailyWeather;
-}
+};
 
 getDailyWeather().then( async data => {
     dailyWeather = await data.json();
@@ -45,7 +45,7 @@ const getHourlyWeather = async () => {
         `https://api.openweathermap.org/data/2.5/forecast?lat=46.181793&lon=18.954306&appid=${API_KEY}&lang=hu`
     );
     return weeklyWeather;
-}
+};
 
 getHourlyWeather().then( async data => {
     hourlyWeather = await data.json();
@@ -83,4 +83,78 @@ getHourlyWeather().then( async data => {
     const napi = document.getElementById("napi_idojaras");
 
 
+    let napok = [];
+    let esok = [];
+    let ikonok = [];
+    let minek = [];
+    let maxok = [];
+
+    let db = 0;
+    hourlyWeather.list.forEach(nap => {
+        db++;
+
+        let esokO =  [];
+        let ikonokO =  [];
+        let minekO = [];
+        let maxokO = [];
+
+        esokO.push(nap.pop*100);
+        ikonokO.push(nap.weather[0].icon);
+        minekO.push(hofok(nap.main.temp_min));
+        maxokO.push(hofok(nap.main.temp_max));
+
+
+        if(db == 8){
+            db = 0;
+
+            napok.push(new Date(nap.dt * 1000).toLocaleDateString("hu-HU", {weekday: "long"}));
+
+            esokO = esokO.reduce((a,b) => a + b, 0) / esokO.length;  
+            esok.push(esokO);
+            esokO = []
+
+            ikonokO = ikonokO.sort((a,b) =>
+                ikonokO.filter(v => v===a).length
+                - ikonokO.filter(v => v===b).length
+            ).pop();
+            ikonok.push(ikonokO);
+
+
+            minekO = esokO.reduce((a,b) => a + b, 0) / minekO.length;  
+            minek.push(minekO);
+            minekO = []
+
+            maxokO = maxokO.reduce((a,b) => a + b, 0) / maxokO.length;
+            maxok.push(maxokO);
+            maxokO = []
+        }
+    });
+
+    for (let i = 0; i < 5; i++){
+
+        const napDiv = document.createElement("div");
+        const napNev = document.createElement("p");
+        const napEso = document.createElement("p");
+        const napIkon = document.createElement("img");
+        const napMin = document.createElement("p");
+        const napMax = document.createElement("p");
+
+        if (i == 0){
+            napNev.innerHTML = "Ma";
+        } else {
+            napNev.innerHTML = napok[i].charAt(0).toUpperCase() + napok[i].slice(1);
+        }
+        napEso.innerHTML = esok[i]+"%";
+        // napIkon.src = `img/icons/$idojaras${ikon[i]}.png`;
+        napMin.innerHTML = minek[i]+ (celsius ? "°C" : "°F");
+        napMax.innerHTML = maxok[i]+ (celsius ? "°C" : "°F");
+
+
+        napi.appendChild(napDiv);
+        napi.appendChild(napNev);
+        napi.appendChild(napEso);
+        napi.appendChild(napIkon);
+        napi.appendChild(napMin);
+        napi.appendChild(napMax);
+    }
 });
