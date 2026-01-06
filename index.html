@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <title>Stormy</title>
 </head>
 <body>
@@ -50,6 +51,18 @@
         <section>
             <div id="orankenti_idojaras" class="flex overflow-x-auto">
                 <!-- óránkénti időjárási adatok -->
+                <div class="swiper w-full h-70 bg-blue-500">
+                    <div class="swiper-wrapper flex-center">
+                      <div class="">Slide 1</div>
+                      <div class="swiper-slide slide2 bg-red-500">Slide 2</div>
+                      <div class="swiper-slide slide3 bg-red-500">Slide 3</div>
+                      <div class="swiper-slide slide3 bg-red-500">Slide 4</div>
+                      <div class="swiper-slide slide3 bg-red-500">Slide 5</div>
+                      <div class="swiper-slide slide3 bg-red-500">Slide 6</div>
+                      <div class="swiper-slide slide3 bg-red-500">Slide 7</div>
+                      <div class="swiper-slide slide3 bg-red-500">Slide 8</div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -58,6 +71,7 @@
                 <!-- napi időjárási adatok -->
             </div>
         </section>
+s
 
     </main>
 
@@ -349,8 +363,25 @@
 
     
 
-</section>
-</div>
-</div>
+    </section>
+    </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            new Swiper(".swiper", {
+                slidesPerView: 5,
+                spaceBetween: 50,
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </body>
 </html>
