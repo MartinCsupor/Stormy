@@ -31,44 +31,37 @@
         </section>
 
         <section class="bg-blue-200">
-            <div class="flex justify-between">
+            <div class="flex justify-between bg-[#476D98] p-4 rounded-2xl">
                 <div>
-                    <h2 id="jelenlegi_fok"></h2>
+                    <h2 id="jelenlegi_fok" class="font-bold text-2xl"></h2>
                     <div>
                         <img src="" alt="Időjárás ikon" id="jelenlegi_idojaras_ikon">
-                        <p id="jelenglegi_idojaras_ikon_leiras"></p>
+                        <p id="jelenglegi_idojaras_ikon_leiras" class="font-bold"></p>
                     </div>
-                    <p id="jelenlegi_hoerzet"></p>
+                    <p id="jelenlegi_hoerzet" class="font-bold"></p>
                 </div>
                 <div>
-                    <h2 id="jelenlegi_varos"></h2>
-                    <p id="jelenlegi_ido"></p>
-                    <p id="jelenlegi_minmax"></p>
+                    <h2 id="jelenlegi_varos"  class="font-bold text-3xl"></h2>
+                    <p id="jelenlegi_ido" class="font-bold p-3 "></p>
+                    <p id="jelenlegi_minmax" class=" font-bold"></p>
                 </div>
             </div>
         </section>
 
         <section>
-            <div id="orankenti_idojaras" class="flex overflow-x-auto">
+          <div class="bg-[#82B3DB]">
+            <div id="orankenti_idojaras" class="flex overflow-x-auto  ">
                 <!-- óránkénti időjárási adatok -->
-                <div class="swiper w-full h-70 bg-blue-500">
-                    <div class="swiper-wrapper flex-center">
-                      <div class="">Slide 1</div>
-                      <div class="swiper-slide slide2 bg-red-500">Slide 2</div>
-                      <div class="swiper-slide slide3 bg-red-500">Slide 3</div>
-                      <div class="swiper-slide slide3 bg-red-500">Slide 4</div>
-                      <div class="swiper-slide slide3 bg-red-500">Slide 5</div>
-                      <div class="swiper-slide slide3 bg-red-500">Slide 6</div>
-                      <div class="swiper-slide slide3 bg-red-500">Slide 7</div>
-                      <div class="swiper-slide slide3 bg-red-500">Slide 8</div>
-                    </div>
-                </div>
             </div>
         </section>
 
         <section>
             <div id="napi_idojaras" class="flex overflow-x-auto">
                 <!-- napi időjárási adatok -->
+          
+                
+
+
             </div>
         </section>
 s
@@ -96,93 +89,96 @@ s
     <div id="rendezes" class="flex  flex-row gap-8
     ">
 
-    <section class="bg-[#82B3DB] p-4 mb-5 w-sm  rounded-2xl">
-        <div id="idojaras_jellemzoi" class="max-w-md mx-auto">
-          <!-- metrics grid -->
-          <div class="grid grid-cols-2 gap-4">
-            <div class="bg-[#476D98] rounded-2xl p-4 text-white">
-              <h3 class="font-bold mb-2">Páratartalom</h3>
-              <p class="text-2xl">%</p>
+    <div id="rendezes" class="flex flex-col gap-4 p-4">
+        <section class="bg-[#82B3DB] p-4 mb-5 rounded-2xl">
+          <div id="idojaras_jellemzoi" class="max-w-md mx-auto">
+            <!-- metrics grid -->
+            <div class="grid grid-cols-2 gap-4">
+              <div class="bg-[#476D98] rounded-2xl p-4 text-white">
+                <h3 class="font-bold mb-2">Páratartalom</h3>
+                <p class="text-2xl">%</p>
+              </div>
+              <div class="bg-[#476D98] rounded-2xl p-4 text-white">
+                <h3 class="font-bold mb-2">Szélsebbeség</h3>
+                <p class="text-2xl">↗ %</p>
+              </div>
+              <div class="bg-[#476D98] rounded-2xl p-4 text-white">
+                <h3 class="font-bold mb-2">UV Index</h3>
+                <p class="text-2xl">%</p>
+              </div>
+              <div class="bg-[#476D98] rounded-2xl p-4 text-white">
+                <h3 class="font-bold mb-2">Légnyomás</h3>
+                <p class="text-2xl">%</p>
+              </div>
+              <div class="bg-[#476D98] rounded-2xl p-4 text-white">
+                <h3 class="font-bold mb-2">Látótávolság</h3>
+                <p class="text-2xl">%</p>
+              </div>
+              <div class="bg-[#476D98] rounded-2xl p-4 text-white">
+                <h3 class="font-bold mb-2">Harmatpont</h3>
+                <p class="text-2xl">–</p>
+              </div>
             </div>
-            <div class="bg-[#476D98] rounded-2xl p-4 text-white">
-              <h3 class="font-bold mb-2">Szélsebbeség</h3>
-              <p class="text-2xl">↗ %</p>
-            </div>
-      
-            <div class="bg-[#476D98] rounded-2xl p-4 text-white">
-              <h3 class="font-bold mb-2">uv index</h3>
-              <p class="text-2xl">%</p>
-            </div>
-            <div class="bg-[#476D98] rounded-2xl p-4 text-white">
-              <h3 class="font-bold mb-2">Légnyomás</h3>
-              <p class="text-2xl">%</p>
-            </div>
-      
-            <div class="bg-[#476D98] rounded-2xl p-4 text-white">
-              <h3 class="font-bold mb-2">Látótávolság</h3>
-              <p class="text-2xl">%</p>
-            </div>
-            <div class="bg-[#476D98] rounded-2xl p-4 text-white">
-              <h3 class="font-bold mb-2">Harmatpont</h3>
-              <p class="text-2xl">–</p>
+            <div class="mt-6 bg-white rounded-lg overflow-hidden">
+              <div class="p-4 bg-[#1F6AA5] text-white">
+                <svg id="sunriseSvg" viewBox="0 0 300 120" class="w-full h-32" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                  <path id="sunArc" d="M20,100 A130,130 0 0,1 280,100" fill="none" stroke="#d7f0ff" stroke-width="3" stroke-linecap="round" />
+                  <circle id="sunMarker" cx="40" cy="30" r="12" fill="#F4C542" stroke="#fff" stroke-width="2" />
+                </svg>
+                <div class="flex justify-between items-center text-sm mt-2">
+                  <div class="text-left">
+                    <div class="font-medium">6:30</div>
+                    <div class="text-xs">Napkelte</div>
+                  </div>
+                  <div class="text-right">
+                    <div class="font-medium">17:00</div>
+                    <div class="text-xs">Napnyugta</div>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-[#2f618c] text-white p-4 flex items-center justify-between">
+                <div class="text-center w-1/3">
+                  <p class="text-sm">Holdkelte</p>
+                </div>
+                <div class="w-1/3 flex justify-center">
+                  <div class="w-12 h-12 bg-white rounded-full shadow-lg"></div>
+                </div>
+                <div class="text-center w-1/3">
+                  <p class="text-sm">Holdnyugta</p>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="mt-6 bg-white rounded-lg overflow-hidden">
-            <div class="p-4 bg-[#1F6AA5] text-white">
-              <svg id="sunriseSvg" viewBox="0 0 300 120" class="w-full h-32" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-                <!-- full semicircle path (invisible fill, visible stroke) -->
-                <path id="sunArc" d="M20,100 A130,130 0 0,1 280,100" fill="none" stroke="#d7f0ff" stroke-width="3" stroke-linecap="round"/>
-                <!-- sun marker (will be positioned on the arc by script) -->
-                <circle id="sunMarker" cx="40" cy="30" r="12" fill="#F4C542" stroke="#fff" stroke-width="2" />
-              </svg>
-      
-              <div class="flex justify-between items-center text-sm mt-2">
-                <div class="text-left">
-                  <div class="font-medium">6:30</div>
-                  <div class="text-xs">Napkelte</div>
-                </div>
-                <div class="text-right">
-                  <div class="font-medium">17:00</div>
-                  <div class="text-xs">Napnyugta</div>
-                </div>
-              </div>
-            </div>
-      
-            <!-- moon phase row -->
-            <div class="bg-[#2f618c] text-white p-4 flex items-center justify-between">
-              <div class="text-center w-1/3">
-                <p class="text-sm">Holdkelte</p>
-              </div>
-              <div class="w-1/3 flex justify-center">
-                <!-- simple moon circle -->
-                <div class="w-12 h-12 bg-white rounded-full shadow-lg"></div>
-              </div>
-              <div class="text-center w-1/3">
-                <p class="text-sm">Holdnyugta</p>
-              </div>
-            </div>
-    <script>
-        (function() {
+        </section>
+      </div>
+      <script>
+        (function () {
           const arc = document.getElementById('sunArc');
           const sun = document.getElementById('sunMarker');
           if (!arc || !sun) return;
-
+      
           // Example: compute sun position between sunrise and sunset
-          // Replace these with real times or percentDay as needed.
-          const sunrise = '06:30', sunset = '17:00';
-          // Example current time or a normalized progress (0..1) across daylight
-          // Here we set a demo progress; you can compute dynamically from Date and times.
+          const sunrise = '06:30',
+            sunset = '17:00';
           const demoProgress = 0.25; // 0 => at sunrise, 1 => at sunset
-
+      
           const L = arc.getTotalLength();
           const point = arc.getPointAtLength(demoProgress * L);
-
+      
           // Position sun circle (cx, cy) on the arc
           sun.setAttribute('cx', point.x);
           sun.setAttribute('cy', point.y);
-
-          // Optional: small drop shadow effect via filter (works if supported)
-          // (kept minimal to avoid external CSS changes)
+      
+          // Ensure the entire arc is visible by adjusting the SVG's viewBox dynamically
+          const svg = document.getElementById('sunriseSvg');
+          if (svg) {
+            const padding = 20; // Add padding to ensure visibility
+            const bbox = arc.getBBox();
+            svg.setAttribute(
+              'viewBox',
+              `${bbox.x - padding} ${bbox.y - padding} ${bbox.width + 2 * padding} ${bbox.height + 2 * padding}`
+            );
+          }
         })();
       </script>
     </div>
@@ -192,62 +188,110 @@ s
 
 <div id="rendezes 2" class="flex-col gap-4">
 
-<section class="bg-[#82B3DB] h-75  mb-5 w-xxl justify-items-center  " >
-    <div id="napi_idojaras" class=" text-center grid  xs:grid-cols-2 gap-4 w-xl"  >
-        <div class="bg-[#476D98] rounded-2xl h-10  mt-5  ">
-            <div class="flex justify-between px-xl ">
-                <p>Ma</p>
-                <p>70%</p>
-                
-               
-                <p>6°18°</p>
-
+    <section class="bg-[#82B3DB] h-auto mb-5 w-full justify-items-center p-4">
+        <div id="napi_idojaras" class="text-center grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+          <div class="bg-[#476D98] rounded-2xl h-auto p-4">
+            <div class="flex justify-between">
+              <p>Ma</p>
+              <p>70%</p>
+              <p>6°18°</p>
             </div>
-        </div>
-
-        <div class="bg-[#476D98] rounded-2xl h-10  ">
-            <div class="flex justify-between px-xl w-xl">
-                <p>Csütörtök</p>
-                <p>70%</p>
-               
-            
-                <p>6°18°</p>
-
+          </div>
+      
+          <div class="bg-[#476D98] rounded-2xl h-auto  p-4">
+            <div class="flex justify-between">
+              <p>Csütörtök</p>
+              <p>70%</p>
+              <p>6°18°</p>
             </div>
-        </div>
-
-        <div class="bg-[#476D98] rounded-2xl h-10  ">
-            <div class="flex justify-between px-xl">
-                <p>Csütörtök</p>
-                <p>70%</p>
-               
-            
-                <p>6°18°</p>
-
+          </div>
+      
+          <div class="bg-[#476D98] rounded-2xl h-auto p-4">
+            <div class="flex justify-between">
+              <p>Csütörtök</p>
+              <p>70%</p>
+              <p>6°18°</p>
             </div>
-        </div>
-
-        <div class="bg-[#476D98] rounded-2xl h-10  ">
-            <div class="flex justify-between px-xl">
-                <p>Csütörtök</p>
-                <p>70%</p>
-               
-            
-                <p>6°18°</p>
-
+          </div>
+      
+          <div class="bg-[#476D98] rounded-2xl h-auto p-4">
+            <div class="flex justify-between">
+              <p>Csütörtök</p>
+              <p>70%</p>
+              <p>6°18°</p>
             </div>
-        </div>
-
-        <div class="bg-[#476D98] rounded-2xl h-10  ">
-            <div class="flex justify-between px-xl">
-                <p>Csütörtök</p>
-                <p>70%</p>
-               
-            
-                <p>6°18°</p>
-
+          </div>
+      
+          <div class="bg-[#476D98] rounded-2xl h-auto p-4">
+            <div class="flex justify-between">
+              <p>Csütörtök</p>
+              <p>70%</p>
+              <p>6°18°</p>
             </div>
+          </div>
         </div>
+      </section>
+
+      <section id="Vitaminok" class="bg-[#82B3DB] h-auto p-2 sm:p-4 justify-items-center">
+        <div class="w-full">
+          <h2 class="text-2xl sm:text-4xl text-center pb-5">Vitaminajánló</h2>
+      
+          <div class="text-center grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+            <div class="bg-[#476D98] rounded-2xl p-4">
+              <div class="flex justify-between px-5">
+                <p>Kálcium:</p>
+                <p class="text-white font-bold">200mg/nap</p>
+              </div>
+            </div>
+      
+            <div class="bg-[#476D98] rounded-2xl p-4">
+              <div class="flex justify-between px-5">
+                <p>Magnézium:</p>
+                <p class="text-white font-bold">300mg/nap</p>
+              </div>
+            </div>
+      
+            <div class="bg-[#476D98] rounded-2xl p-4">
+              <div class="flex justify-between px-5">
+                <p>D-vitamin:</p>
+                <p class="text-white font-bold">400IU/nap</p>
+              </div>
+            </div>
+      
+            <div class="bg-[#476D98] rounded-2xl p-4">
+              <div class="flex justify-between px-5">
+                <p>C-vitamin:</p>
+                <p class="text-white font-bold">75mg/nap</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+
+        
+    
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -266,122 +310,13 @@ s
 
 
 
+    
+        
 
+    
 
 </section>
-
-
-<section id="Vitaminok" class="bg-[#82B3DB] h-70 size-200 justify-items-center " >
-
-    <div>
-        <h2 class="text-4xl text-center pb-5">Vitaminajánló</h2>
-
-        <div class=" text-center grid  xs:grid-cols-2 gap-4 w-xl">
-            <div class="bg-[#476D98] rounded-2xl h-10  ">
-                <div class="flex justify-between px-5">
-                    <p>Kálcium:  </p>
-                    <p class="text-black font-bold"> 200mg/nap</p>
-                  
-                </div>
-            </div>
-
-            <div class="bg-[#476D98] rounded-2xl h-10  ">
-                <div class="flex justify-between px-5">
-                    <p>Kálcium:  </p>
-                    <p class="text-black font-bold">200mg/nap</p>
-                  
-                </div>
-                
-            </div>
-    
-            <div class="bg-[#476D98] rounded-2xl h-10 ">
-                
-                <div class="flex justify-between px-5">
-                    <p>Kálcium:  </p>
-                    <p class="text-black font-bold ">200mg/nap</p>
-                  
-                </div>
-                    
-            </div>
-
-            <div class="bg-[#476D98] rounded-2xl h-10 ">
-                <div class="flex justify-between px-5">
-                    <p>Kálcium:  </p>
-                    <p class="text-black font-bold">200mg/nap</p>
-                  
-                </div>
-                
-            </div>
-
-        </div>
-        
-
-        
-    
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </div>
-
-
-
-    
-        
-
-    
-
-    </section>
-    </div>
-    </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            new Swiper(".swiper", {
-                slidesPerView: 5,
-                spaceBetween: 50,
-                pagination: {
-                    el: ".swiper-pagination",
-                    clickable: true,
-                },
-                navigation: {
-                    nextEl: ".swiper-button-next",
-                    prevEl: ".swiper-button-prev",
-                },
-            });
-        });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+</div>
+</div>
 </body>
 </html>
