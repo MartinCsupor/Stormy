@@ -8,3 +8,7 @@ body{
 @theme{
     --breakpoint-xs:520px;
 }
+
+@utility flex-center {
+    @apply flex justify-center items-center
+}

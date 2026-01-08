@@ -55,28 +55,39 @@ getHourlyWeather().then( async data => {
 
     const orankenti = document.getElementById("orankenti_idojaras");
 
+    const swiper = document.createElement("div");
+    const swiperwrapper = document.createElement("div");
+    
+    swiper.classList.add("swiper-slides slide1 bg-red-500");
+    swiperwrapper.classList.add("swiper-wrapper flex-center");
+
+    orankenti.appendChild(swiper);
+    swiper.appendChild(swiper)
+    
     hourlyWeather.list.slice(0, 8).forEach( ora => {
-        const oraDiv = document.createElement("div");
+        const slide = document.createElement("div");
         const oraIdo = document.createElement("p");
         const oraIkon = document.createElement("img");
         const oraLeiras = document.createElement("p");
         const oraFok = document.createElement("p");
         const oraEso = document.createElement("p");
 
+        slide.classList.add("swiper-slide")
         oraIdo.innerHTML = new Date(ora.dt * 1000).getHours() + ":00";
         oraIkon.src = ``;
         oraLeiras.innerHTML = ora.weather[0].description.charAt(0).toUpperCase() + ora.weather[0].description.slice(1);
         oraFok.innerHTML = hofok(ora.main.temp) + (celsius ? "°C" : "°F");
         oraEso.innerHTML = ora.pop*100 + "%";
 
-        orankenti.appendChild(oraDiv);
 
-        oraDiv.appendChild(oraIdo);
-        oraDiv.appendChild(oraIkon);
-        oraDiv.appendChild(oraLeiras);
-        oraDiv.appendChild(oraFok);
-        oraDiv.appendChild(oraEso);
+        slide.appendChild(oraIdo);
+        slide.appendChild(oraIkon);
+        slide.appendChild(oraLeiras);
+        slide.appendChild(oraFok);
+        slide.appendChild(oraEso);
     });
+
+
 
     //napi időjárás
 
