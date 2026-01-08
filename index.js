@@ -57,34 +57,65 @@ getHourlyWeather().then( async data => {
 
     const swiper = document.createElement("div");
     const swiperwrapper = document.createElement("div");
-    
-    swiper.classList.add("swiper-slides slide1 bg-red-500");
-    swiperwrapper.classList.add("swiper-wrapper flex-center");
 
+    swiper.classList.add("swiper", "w-full");
+    swiperwrapper.classList.add("swiper-wrapper");
+ 
     orankenti.appendChild(swiper);
-    swiper.appendChild(swiper)
-    
+    swiper.appendChild(swiperwrapper)
+ 
+    let id = 0;
+ 
     hourlyWeather.list.slice(0, 8).forEach( ora => {
+     
         const slide = document.createElement("div");
         const oraIdo = document.createElement("p");
         const oraIkon = document.createElement("img");
         const oraLeiras = document.createElement("p");
         const oraFok = document.createElement("p");
+        const oraEsoWrapper = document.createElement("div");
+        const oraEsoIkon = document.createElement("img")
         const oraEso = document.createElement("p");
-
-        slide.classList.add("swiper-slide")
+ 
+        slide.classList.add("swiper-slide", `slide${id}`, "bg-[#476D98]", "rounded-2xl", "px-15" , "py-2","!flex", "flex-col","items-center", "justify-evenly", "!min-w-[120px]", "text-center")
         oraIdo.innerHTML = new Date(ora.dt * 1000).getHours() + ":00";
-        oraIkon.src = ``;
+        oraIkon.src = "images/svg/snowflake.svg";
+        oraIkon.classList.add("max-w-[35px]");
         oraLeiras.innerHTML = ora.weather[0].description.charAt(0).toUpperCase() + ora.weather[0].description.slice(1);
+        oraLeiras.classList.add("text-xs");
         oraFok.innerHTML = hofok(ora.main.temp) + (celsius ? "°C" : "°F");
+        oraFok.classList.add("font-bold");
+        oraEsoWrapper.classList.add("flex", "items-center")
+        oraEsoIkon.src = "images/svg/water-drop.svg";
+        oraEsoIkon.classList.add("max-w-[12px]", "mr-0.5");
         oraEso.innerHTML = ora.pop*100 + "%";
-
-
+        oraEso.classList.add("text-sm");
+ 
+ 
         slide.appendChild(oraIdo);
         slide.appendChild(oraIkon);
         slide.appendChild(oraLeiras);
         slide.appendChild(oraFok);
-        slide.appendChild(oraEso);
+        slide.appendChild(oraEsoIkon)
+        slide.appendChild(oraEsoWrapper);
+        oraEsoWrapper.appendChild(oraEsoIkon)
+        oraEsoWrapper.appendChild(oraEso);
+        swiperwrapper.appendChild(slide)
+ 
+        id++;
+    });
+ 
+ 
+    new Swiper(".swiper", {
+        slidesPerView: 3,
+        spaceBetween: 16,
+        freeMode: true,
+        freeModeSticky: false,
+      
+        resistance: false,
+        momentumBounce: false,
+      
+        watchOverflow: false,
     });
 
 
