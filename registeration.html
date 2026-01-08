@@ -7,23 +7,55 @@
     <title>Regisztráció</title>
 </head>
 <body class="bg-[#C7E1EE] text-white font-bold text-3xl">
-    <header>
-        <img src="images/logo.png" alt="Stormy logo">
-        <h1 >Stormy</h1>
+    <header class="flex items-center justify-center py-4">
+        <img src="images/logo.png" alt="Stormy logo" class="h-30 w-30 mr-2">
+        <h1 class=" text-6xl font-bold">Stormy</h1>
     </header>
 
-
     <main class="flex flex-col items-center justify-center min-h-screen">
-        
-        <form action="#" method="POST" class="bg-[#476D98] p-8 rounded-2xl flex flex-col space-y-6 w-96">
+        <form action="#" method="POST" class="bg-[#82B3DB] p-8 rounded-2xl flex flex-col space-y-6 w-96">
             <h2 class="mb-8 text-4xl text-center">Regisztráció</h2>
-            <input type="text" name="username" placeholder="Felhasználónév" class="p-3 rounded-md text-white" required>
-            <input type="email" name="email" placeholder="Email cím" class="p-3 rounded-md text-white" required>
-            <input type="password" name="password" placeholder="Jelszó" class="p-3 rounded-md text-white" required>
-            <button type="submit" class="bg-[#82B3DB] text-white font-bold py-3 rounded-md hover:bg-[#6fa0c8] transition duration-300">Regisztráció</button>
+            
+            <!-- Email Field -->
+            <div class="flex items-center bg-[#5A7BAA] p-3 rounded-md">
+                <span class="material-icons text-white mr-3"><img src="images/svg/email icon.svg" class="w-5"></span>
+                <input type="email" name="email" placeholder="Email cím" class="bg-transparent text-white flex-1 outline-none text-base" required>
+            </div>
+            
+            <!-- Username Field -->
+            <div class="flex items-center bg-[#5A7BAA] p-3 rounded-md">
+                <span class="material-icons text-white mr-3"><img src="images/svg/ember icon.svg" class="w-5"></span>
+                <input type="text" name="username" placeholder="Felhasználónév" class="bg-transparent text-white flex-1 outline-none text-base" required>
+            </div>
+            
+            <!-- Password Field -->
+            <div class="flex items-center bg-[#5A7BAA] p-3 rounded-md ">
+                <span class="material-icons text-white mr-3"><img src="images/svg/lakat icon.svg" class="w-5"></span>
+                <input type="password" name="password" placeholder="Jelszó" class="bg-transparent text-white flex-1 outline-none w-12 text-base" required>
+                <span class="material-icons text-white cursor-pointer"><img src="images/svg/szem icon.svg" class="w-5"></span>
+            </div>
+            
+            <!-- Password Confirmation Field -->
+            <div class="flex items-center bg-[#5A7BAA] p-3 rounded-md">
+                <span class="material-icons text-white mr-3 "><img src="images/svg/lakat icon.svg" class="w-5"></span>
+                <input type="password" name="password_confirmation" placeholder="Jelszó megerősítése" class="bg-transparent text-white flex-1 outline-none w-12 text-base" required>
+                <span class="material-icons text-white cursor-pointer "><img src="images/svg/szem icon.svg" class="w-5"></span>
+            </div>
+            
+            <!-- Remember Me Checkbox -->
+            <div class="flex items-center">
+                <input type="checkbox" name="remember_me" id="remember_me" class="mr-2 ">
+                <label for="remember_me" class="text-white text-sm ">Emlékezz rám</label>
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="bg-[#5A7BAA] text-white font-bold py-3 rounded-md hover:bg-[#6fa0c8] transition duration-300">Regisztráció</button>
+            
+            <!-- Login Link -->
+            <p class="text-center text-white text-sm mt-4">
+                Van fiókod? <a href="#" class="underline">Jelentkezz be!</a>
+            </p>
         </form>
-
-
-
+    </main>
 </body>
 </html>
