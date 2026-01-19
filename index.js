@@ -21,6 +21,9 @@ const getDailyWeather = async () => {
 
 getDailyWeather().then( async data => {
     dailyWeather = await data.json();
+    console.log(dailyWeather)
+
+    //jelenlegi időjárás
 
     const fok = document.getElementById("jelenlegi_fok");
     const ikon = document.getElementById("jelenlegi_idojaras_ikon");
@@ -37,6 +40,43 @@ getDailyWeather().then( async data => {
     varos.innerHTML = dailyWeather.name;
     ido.innerHTML = new Date().toLocaleTimeString("hu-HU", {hour: "2-digit", minute: "2-digit"});
     minmax.innerHTML = hofok(dailyWeather.main.temp_min) + (celsius ? "°C" : "°F") + "/" + hofok(dailyWeather.main.temp_max) + (celsius ? "°C" : "°F");
+
+
+    //napi jellemzők
+
+    const jellemzok = [
+        { nev: "Páratartalom", root: dailyWeather.main.humidity }, 
+        { nev: "Szélsebesség", root: dailyWeather.wind.speed },
+        { nev: "UV Index", root: dailyWeather.main.uv_index }, //nem tartalmaz
+        { nev: "Légnyomás", root: dailyWeather.main.pressure },
+        { nev: "Látótávolság", root: dailyWeather.visibility },
+        { nev: "Harmatpont", root: dailyWeather.dew_point } //nem tartalmaz ki lehet szamolni
+    ]
+
+    const jellemzokContainer = document.getElementById("idojaras_jellemzoi");
+    const jellemzokWrapper = document.createElement("div")
+
+    jellemzokContainer.classList.add("max-w-md", "mx-auto");
+    jellemzokWrapper.classList.add("grid", "grid-cols-2", "gap-4");
+
+    jellemzok.map(({ nev, root }) => {
+        const jellemzokDiv = document.createElement("div");
+        const cim = document.createElement("h3");
+        const adat = document.createElement("p");
+
+        jellemzokDiv.classList.add("bg-[#476D98]", "rounded-2xl", "p-4", "text-white");
+        cim.classList.add("font-bold", "mb-2");
+        adat.classList.add("text-2xl");
+
+        cim.innerHTML = nev;
+        adat.innerHTML = root
+
+        jellemzokDiv.appendChild(cim);
+        jellemzokDiv.appendChild(adat);
+        jellemzokWrapper.appendChild(jellemzokDiv);
+    })
+
+    jellemzokContainer.appendChild(jellemzokWrapper);
 
 });
 
