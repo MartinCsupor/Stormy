@@ -58,7 +58,7 @@ getHourlyWeather().then( async data => {
     const swiper = document.createElement("div");
     const swiperwrapper = document.createElement("div");
 
-    swiper.classList.add("swiper", "w-full");
+    swiper.classList.add("swiper", "w-full", "!px-5", "!py-5", "bg-[#82B3DB]", "rounded-lg");
     swiperwrapper.classList.add("swiper-wrapper");
  
     orankenti.appendChild(swiper);
@@ -77,16 +77,16 @@ getHourlyWeather().then( async data => {
         const oraEsoIkon = document.createElement("img")
         const oraEso = document.createElement("p");
  
-        slide.classList.add("swiper-slide", `slide${id}`, "bg-[#476D98]", "rounded-2xl", "px-15" , "py-2","!flex", "flex-col","items-center", "justify-evenly", "!min-w-[120px]", "text-center")
+        slide.classList.add("swiper-slide", `slide${id}`, "bg-[#476D98]", "rounded-2xl", "select-none", "px-15" , "py-2","!flex", "flex-col","items-center", "justify-evenly", "!w-[120px]", "text-center")
         oraIdo.innerHTML = new Date(ora.dt * 1000).getHours() + ":00";
-        oraIkon.src = "images/svg/snowflake.svg";
+        oraIkon.src = "images/icons/snowflake.svg";
         oraIkon.classList.add("max-w-[35px]");
         oraLeiras.innerHTML = ora.weather[0].description.charAt(0).toUpperCase() + ora.weather[0].description.slice(1);
         oraLeiras.classList.add("text-xs");
         oraFok.innerHTML = hofok(ora.main.temp) + (celsius ? "°C" : "°F");
         oraFok.classList.add("font-bold");
         oraEsoWrapper.classList.add("flex", "items-center")
-        oraEsoIkon.src = "images/svg/water-drop.svg";
+        oraEsoIkon.src = "images/icons/water-drop.svg";
         oraEsoIkon.classList.add("max-w-[12px]", "mr-0.5");
         oraEso.innerHTML = ora.pop*100 + "%";
         oraEso.classList.add("text-sm");
@@ -107,14 +107,11 @@ getHourlyWeather().then( async data => {
  
  
     new Swiper(".swiper", {
-        slidesPerView: 3,
+        slidesPerView: "auto",
         spaceBetween: 16,
-        freeMode: true,
-        freeModeSticky: false,
-      
+        freeMode: true,      
         resistance: false,
         momentumBounce: false,
-      
         watchOverflow: false,
     });
 
@@ -172,14 +169,25 @@ getHourlyWeather().then( async data => {
         }
     });
 
+    const napDivWrapper = document.createElement("div");
+    napi.appendChild(napDivWrapper);
+    napDivWrapper.classList.add("flex", "flex-col", "rounded-lg","bg-[#82B3DB]");
+
     for (let i = 0; i < 5; i++){
 
         const napDiv = document.createElement("div");
         const napNev = document.createElement("p");
+        const napEsoWrapper = document.createElement("div");
+        const napEsoIkon = document.createElement("img")
         const napEso = document.createElement("p");
         const napIkon = document.createElement("img");
+        const napminmaxWrapper = document.createElement("div")
         const napMin = document.createElement("p");
         const napMax = document.createElement("p");
+
+        napDiv.classList.add("grid", "grid-cols-4", "bg-[#476D98]","m-2", "p-3", "rounded-lg");
+        napEsoWrapper.classList.add("flex", "gap-3");
+        napminmaxWrapper.classList.add("flex", "justify-end", "gap-3");
 
         if (i == 0){
             napNev.innerHTML = "Ma";
@@ -192,11 +200,19 @@ getHourlyWeather().then( async data => {
         napMax.innerHTML = maxok[i]+ (celsius ? "°C" : "°F");
 
 
-        napi.appendChild(napDiv);
-        napi.appendChild(napNev);
-        napi.appendChild(napEso);
-        napi.appendChild(napIkon);
-        napi.appendChild(napMin);
-        napi.appendChild(napMax);
+        napDivWrapper.appendChild(napDiv);
+
+        napEsoWrapper.appendChild(napEsoIkon);
+        napEsoWrapper.appendChild(napEso);
+        
+        napminmaxWrapper.appendChild(napMin);
+        napminmaxWrapper.appendChild(napMax);
+    
+        napDiv.appendChild(napNev);
+        napDiv.appendChild(napEsoWrapper)
+        napDiv.appendChild(napIkon);
+        napDiv.appendChild(napminmaxWrapper)
+
+        napDivWrapper.append(napDiv)
     }
 });
