@@ -261,10 +261,74 @@
             </div>
           </div>
         </div>
-      </section>
-      
-    </main>
+    </div>
+</section>
+</div>
+</div>
 
-    <script src="index.js"></script>
+<div id="zene ikon">
+    <audio id="background-music" src="music/background-music.mp3" loop></audio>
+    <button id="music-toggle" class="fixed bottom-4 right-4 bg-[#8CD9FF] text-white p-3 rounded-full shadow-lg hover:bg-[#2F8BB7] focus:outline-none"> 
+        <img id="music-icon" src="images/icons/zene icon.svg" alt="Music Icon" class="w-8 h-8">
+    </button>
+    <script>
+        const musicToggle = document.getElementById('music-toggle');
+        const backgroundMusic = document.getElementById('background-music');
+        const musicIcon = document.getElementById('music-icon');
+        let isPlaying = false;
+        musicToggle.addEventListener('click', () => {
+            if (isPlaying) {
+                backgroundMusic.pause();
+                musicIcon.src = 'images/icons/zene icon.svg'; // Change to 'music off' icon
+            } else {
+                backgroundMusic.play();
+                musicIcon.src = 'images/icons/zene icon.svg'; // Change to 'music on' icon
+            }
+            isPlaying = !isPlaying;
+        });
+    </script>
+</div>
+
+<div class="bg-[#476D98] rounded-2xl p-6 w-80">
+  <div class="flex justify-between items-center mb-4">
+      <div class="flex items-center">
+          <div class="w-12 h-12 bg-gray-300 rounded-md"></div>
+          <div class="ml-4">
+              <p class="text-lg font-bold">Zene címe</p>
+              <p class="text-sm">Előadó neve</p>
+          </div>
+      </div>
+      <button class="text-white text-xl">&times;</button>
+  </div>
+  <div class="flex justify-between items-center mt-4">
+      <button class="text-white text-xl">&#x21bb;</button>
+      <button class="text-white text-xl">&#x23f5;</button>
+      <button class="text-white text-xl">&#x23f5;</button>
+      <button class="text-white text-xl w-5 h-5"><img src="images/icons/next icon.svg" ></button>
+      <button class="text-white text-xl">&#x2764;</button>
+  </div>
+</div>
+
+<!-- Add Music Modal -->
+<div class="bg-[#82B3DB] rounded-2xl p-6 w-80 mt-8">
+  <h2 class="text-lg font-bold mb-4 text-center">Egyéni zene hozzáadása</h2>
+  <div class="mb-4">
+      <input type="text" placeholder="Zene url..." class="w-full p-2 rounded-md bg-[#5A7BAA] text-white outline-none">
+  </div>
+  <div class="mb-4">
+      <select class="w-full p-2 rounded-md bg-[#5A7BAA] text-white outline-none">
+          <option>Borús</option>
+          <option>Napfényes</option>
+          <option>Esős</option>
+      </select>
+  </div>
+  <div class="flex justify-between">
+      <button class="bg-[#8CD9FF] text-white py-2 px-4 rounded-md hover:bg-[#2F8BB7]">Mégse</button>
+      <button class="bg-[#476D98] text-white py-2 px-4 rounded-md hover:bg-[#2F8BB7]">Hozzáadás</button>
+  </div>
+</div>
+
+<!-- Add Music Button -->
+
 </body>
 </html>
