@@ -13,32 +13,32 @@
     </header>
 
     <main class="flex flex-col items-center justify-center min-h-screen min-w-full">
-        <form action="#" method="POST" class="bg-[#82B3DB] p-8 rounded-2xl flex flex-col space-y-6 ">
+        <form id="form" method="POST" class="bg-[#82B3DB] p-8 rounded-2xl flex flex-col space-y-6 ">
             <h2 class="mb-8 text-4xl text-center">Regisztráció</h2>
-            
+            <script src="User.js" defer></script>
             <!-- Email Field -->
             <div class="flex items-center bg-[#5A7BAA] p-3 rounded-md">
                 <span class="material-icons text-white mr-3"><img src="images/svg/email icon.svg" class="w-5 "></span>
-                <input type="email" name="email" placeholder="Email cím" class="bg-transparent text-white flex-1 outline-none text-base" required>
+                <input id="Email" aria-required="true" type="email" name="email" placeholder="Email cím" class="bg-transparent text-white flex-1 outline-none text-base" required>
             </div>
             
             <!-- Username Field -->
             <div class="flex items-center bg-[#5A7BAA] p-3 rounded-md">
                 <span class="material-icons text-white mr-3"><img src="images/svg/ember icon.svg" class="w-5"></span>
-                <input type="text" name="username" placeholder="Felhasználónév" class="bg-transparent text-white flex-1 outline-none text-base" required>
+                <input id="felhaszNev" type="text" name="username" placeholder="Felhasználónév" class="bg-transparent text-white flex-1 outline-none text-base" required>
             </div>
             
             <!-- Password Field -->
             <div class="flex items-center bg-[#5A7BAA] p-3 rounded-md ">
-                <span class="material-icons text-white mr-3"><img src="images/svg/lakat icon.svg" class="w-5"></span>
-                <input type="password" name="password" placeholder="Jelszó" class="bg-transparent text-white flex-1 outline-none w-12 text-base" required>
+                <span class="material-icons text-white mr-3"><img src="images/icons/lakat icon.svg" class="w-5"></span>
+                <input id="jelszo" type="password" name="password" placeholder="Jelszó" class="bg-transparent text-white flex-1 outline-none w-12 text-base" required>
                 <span class="material-icons text-white cursor-pointer"><img src="images/svg/szem icon.svg" class="w-5"></span>
             </div>
             
             <!-- Password Confirmation Field -->
             <div class="flex items-center bg-[#5A7BAA] p-3 rounded-md">
                 <span class="material-icons text-white mr-3 "><img src="images/svg/lakat icon.svg" class="w-5"></span>
-                <input type="password" name="password_confirmation" placeholder="Jelszó megerősítése" class="bg-transparent text-white flex-1 outline-none w-12 text-base" required>
+                <input id="jelszoHit" type="password" name="password_confirmation" placeholder="Jelszó megerősítése" class="bg-transparent text-white flex-1 outline-none w-12 text-base" required>
                 <span class="material-icons text-white cursor-pointer "><img src="images/svg/szem icon.svg" class="w-5"></span>
             </div>
             
@@ -49,11 +49,11 @@
             </div>
             
             <!-- Submit Button -->
-            <button type="submit" class="bg-[#5A7BAA] text-white font-bold py-3 rounded-md hover:bg-[#6fa0c8] transition duration-300">Regisztráció</button>
+            <button id="kuldes" type="submit" class="bg-[#5A7BAA] text-white font-bold py-3 rounded-md hover:bg-[#6fa0c8] transition duration-300">Regisztráció</button>
             
             <!-- Login Link -->
             <p class="text-center text-white text-sm mt-4">
-                Van fiókod? <a href="#" class="underline">Jelentkezz be!</a>
+                Van fiókod? <a href="login.html" class="underline">Jelentkezz be!</a>
             </p>
         </form>
     </main>
