@@ -19,9 +19,23 @@ const getDailyWeather = async () => {
     return dailyWeather;
 };
 
+const getUVIndexAndDewPoint = async () => {
+    const UVandDew = await fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=46.181793&longitude=18.954306&current=temperature_2m,relative_humidity_2m,dew_point_2m,uv_index&timezone=auto`
+    );
+    const data = await UVandDew.json();
+
+    return {
+        dew_point: data.current.dew_point_2m,
+        uv_index: data.current.uv_index
+    }
+}
+
 getDailyWeather().then( async data => {
     dailyWeather = await data.json();
     console.log(dailyWeather)
+
+    const extraJellemzo = await getUVIndexAndDewPoint();
 
     //jelenlegi időjárás
 
@@ -45,12 +59,12 @@ getDailyWeather().then( async data => {
     //napi jellemzők
 
     const jellemzok = [
-        { nev: "Páratartalom", root: dailyWeather.main.humidity }, 
-        { nev: "Szélsebesség", root: dailyWeather.wind.speed },
-        { nev: "UV Index", root: dailyWeather.main.uv_index }, //nem tartalmaz
-        { nev: "Légnyomás", root: dailyWeather.main.pressure },
-        { nev: "Látótávolság", root: dailyWeather.visibility },
-        { nev: "Harmatpont", root: dailyWeather.dew_point } //nem tartalmaz ki lehet szamolni
+        { nev: "Páratartalom", ertek: dailyWeather.main.humidity, egyseg: "%" }, 
+        { nev: "Szélsebesség", ertek: dailyWeather.wind.speed, egyseg: " km/h" },
+        { nev: "UV Index", ertek: extraJellemzo.uv_index, egyseg: "" },
+        { nev: "Légnyomás", ertek: dailyWeather.main.pressure, egyseg: " mb" },
+        { nev: "Látótávolság", ertek: dailyWeather.visibility/1000, egyseg: " km" },
+        { nev: "Harmatpont", ertek: extraJellemzo.dew_point, egyseg: " °" }
     ]
 
     const jellemzokContainer = document.getElementById("idojaras_jellemzoi");
@@ -59,17 +73,17 @@ getDailyWeather().then( async data => {
     jellemzokContainer.classList.add("max-w-md", "mx-auto");
     jellemzokWrapper.classList.add("grid", "grid-cols-2", "gap-4");
 
-    jellemzok.map(({ nev, root }) => {
+    jellemzok.map(({ nev, ertek, egyseg }) => {
         const jellemzokDiv = document.createElement("div");
         const cim = document.createElement("h3");
         const adat = document.createElement("p");
 
         jellemzokDiv.classList.add("bg-[#476D98]", "rounded-2xl", "p-4", "text-white");
         cim.classList.add("font-bold", "mb-2");
-        adat.classList.add("text-2xl");
+        adat.classList.add("text-2xl", "text-center");
 
         cim.innerHTML = nev;
-        adat.innerHTML = root
+        adat.innerHTML = ertek + egyseg;
 
         jellemzokDiv.appendChild(cim);
         jellemzokDiv.appendChild(adat);
@@ -228,6 +242,8 @@ getHourlyWeather().then( async data => {
         napDiv.classList.add("grid", "grid-cols-4", "bg-[#476D98]","m-2", "p-3", "rounded-lg");
         napEsoWrapper.classList.add("flex", "gap-3");
         napminmaxWrapper.classList.add("flex", "justify-end", "gap-3");
+        napEsoIkon.classList.add("w-5");
+        napEsoIkon.src = "images/icons/water-drop.svg";
 
         if (i == 0){
             napNev.innerHTML = "Ma";
