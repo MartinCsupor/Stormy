@@ -13,40 +13,57 @@
     </header>
 
     <main class="flex flex-col items-center justify-center min-h-screen min-w-full">
-        <form action="#" method="POST" class="bg-[#82B3DB] p-8 rounded-2xl flex flex-col space-y-6 ">
+        <form id="loginForm" action="#" method="POST" class="bg-[#82B3DB] p-8 rounded-2xl flex flex-col space-y-6 ">
             <h2 class="mb-8 text-4xl text-center">Bejelentkezés</h2>
             
             <!-- Email Field -->
             <div class="flex items-center bg-[#5A7BAA] p-3 rounded-md">
-                <span class="material-icons text-white mr-3"><img src="images/svg/email icon.svg" class="w-5 "></span>
-                <input type="email" name="email" placeholder="Email cím" class="bg-transparent text-white flex-1 outline-none text-base" required>
+                <img src="images/icons/email icon.svg" alt="Email Icon" class="w-5 mr-3">
+                <input id="loginEmail" type="email" name="email" placeholder="Email cím" class="bg-transparent text-white flex-1 outline-none text-base" required>
             </div>
             
-           
             <!-- Password Field -->
-            <div class="flex items-center bg-[#5A7BAA] p-3 rounded-md ">
-                <span class="material-icons text-white mr-3"><img src="images/svg/lakat icon.svg" class="w-5"></span>
-                <input type="password" name="password" placeholder="Jelszó" class="bg-transparent text-white flex-1 outline-none w-12 text-base" required>
-                <span class="material-icons text-white cursor-pointer"><img src="images/svg/szem icon.svg" class="w-5"></span>
+            <div class="flex items-center bg-[#5A7BAA] p-3 rounded-md">
+                <img src="images/icons/lakat icon.svg" alt="Lock Icon" class="w-5 mr-3">
+                <input id="loginPassword" type="password" name="password" placeholder="Jelszó" class="bg-transparent text-white flex-1 outline-none h-6" required>
+                <img id="togglePassword" src="images/icons/szem icon.svg" alt="Eye Icon" class="w-5 h-5 ml-3 cursor-pointer">
             </div>
-            
-            
             
             <!-- Remember Me Checkbox -->
             <div class="flex items-center">
-                <input type="checkbox" name="remember_me" id="remember_me" class="mr-2 ">
-                <label for="remember_me" class="text-white text-sm ">Emlékezz rám</label>
-                <label for="forgot_password" class="text-white text-xs ml-5 underline " href="">Elfeljtetted a jelszavad?</label>
+                <input type="checkbox" name="remember_me" id="remember_me" class="mr-2">
+                <label for="remember_me" class="text-white text-sm">Emlékezz rám</label>
+                <a href="#" class="text-white text-xs ml-5 underline">Elfelejtetted a jelszavad?</a>
             </div>
             
             <!-- Submit Button -->
-            <button type="submit" class="bg-[#5A7BAA] text-white font-bold py-3 rounded-md hover:bg-[#6fa0c8] transition duration-300">Regisztráció</button>
+            <button type="submit" class="bg-[#5A7BAA] text-white font-bold py-3 rounded-md hover:bg-[#6fa0c8] transition duration-300">
+                Bejelentkezés
+            </button>
             
-            <!-- Login Link -->
+            <!-- Registration Link -->
             <p class="text-center text-white text-sm mt-4">
-                Nincs fiókod? <a href="#" class="underline">Regisztrálj be!</a>
+                Nincs fiókod? <a href="registeration.html" class="underline">Regisztrálj be!</a>
             </p>
         </form>
     </main>
+
+    <script>
+        // Toggle password visibility
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordField = document.getElementById('loginPassword');
+
+        togglePassword.addEventListener('click', () => {
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+
+            // Optionally, toggle the eye icon (if you have a different icon for "show" and "hide")
+            if (type === 'text') {
+                togglePassword.src = 'images/icons/szem icon open.svg'; // Change to "eye open" icon
+            } else {
+                togglePassword.src = 'images/icons/szem becsukott'; // Change back to "eye closed" icon
+            }
+        });
+    </script>
 </body>
 </html>
