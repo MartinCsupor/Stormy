@@ -65,3 +65,40 @@ function getSignUpErrors(email, username, password, password_confirmation) {
     }
     return errors;
 }
+
+// Ikon utak
+const eyeOpen = "images/icons/szem icon.svg";
+const eyeClosed = "images/icons/szem csukott.svg";
+
+// Jelszó mező
+const togglePassword = document.getElementById("togglePassword");
+const password = document.getElementById("password");
+const passwordIcon = togglePassword.querySelector("img");
+
+// Jelszó megerősítés mező
+const togglePasswordConfirm = document.getElementById("togglePasswordConfirm");
+const passwordConfirm = document.getElementById("passwordConfirm");
+const passwordConfirmIcon = togglePasswordConfirm.querySelector("img");
+
+// Jelszó megjelenítés + ikon váltás
+togglePassword.addEventListener("click", () => {
+    if (password.type === "password") {
+        password.type = "text";
+        passwordIcon.src = "images/icons/szem csukott.svg";
+    } else {
+        password.type = "password";
+        passwordIcon.src = "images/icons/szem icon.svg";
+    }
+});
+
+// Jelszó megerősítés megjelenítés + ikon váltás
+togglePasswordConfirm.addEventListener("click", () => {
+    if (passwordConfirm.type === "password") {
+        passwordConfirm.type = "text";
+        passwordConfirmIcon.src = eyeClosed;
+    } else {
+        passwordConfirm.type = "password";
+        passwordConfirmIcon.src = eyeOpen;
+    }
+});
+

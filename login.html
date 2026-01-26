@@ -57,13 +57,40 @@
             const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordField.setAttribute('type', type);
 
-            // Optionally, toggle the eye icon (if you have a different icon for "show" and "hide")
+            
             if (type === 'text') {
-                togglePassword.src = 'images/icons/szem icon open.svg'; // Change to "eye open" icon
+                togglePassword.src = 'images/icons/szem icon.svg'; 
             } else {
-                togglePassword.src = 'images/icons/szem becsukott'; // Change back to "eye closed" icon
+                togglePassword.src = 'images/icons/szem csukott.svg'; 
             }
         });
-    </script>
+    togglePassword.addEventListener("click", () => {
+        passwordField.type =
+            passwordField.type === "password" ? "text" : "password";
+    });
+
+    // Login logika
+    const form = document.getElementById("loginForm");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const email = document.getElementById("loginEmail").value;
+        const password = document.getElementById("loginPassword").value;
+
+        if (email === "admin@stormy.hu" && password === "1234") {
+            message.textContent = "Sikeres bejelentkezés!";
+            message.className = "text-green-500 text-center text-sm";
+            // opcionális:
+            // window.location.href = "dashboard.html";
+        } else {
+            message.textContent = "Hibás email vagy jelszó!";
+            message.className = "text-red-500 text-center text-sm";
+        }
+    });
+</script>
+
+   
 </body>
 </html>
