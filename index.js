@@ -272,3 +272,18 @@ getHourlyWeather().then( async data => {
         napDivWrapper.append(napDiv)
     }
 });
+
+const changeUnit = (unit) => {
+    const celsiusDiv = document.querySelector(".toggle-celsius");
+    const fahrenheitDiv = document.querySelector(".toggle-fahrenheit");
+
+    if (unit === "celsius") {
+        fahrenheitDiv.classList.remove("bg-[#476D98]");
+        celsiusDiv.classList.add("bg-[#476D98]");
+        celsius = true;
+    } else if(unit === "fahrenheit"){
+        celsiusDiv.classList.remove("bg-[#476D98]");
+        fahrenheitDiv.classList.add("bg-[#476D98]");
+        celsius = false;
+    }
+}
