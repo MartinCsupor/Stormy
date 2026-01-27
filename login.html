@@ -59,36 +59,46 @@
 
             
             if (type === 'text') {
-                togglePassword.src = 'images/icons/szem icon.svg'; 
-            } else {
                 togglePassword.src = 'images/icons/szem csukott.svg'; 
+            } else {
+                togglePassword.src = 'images/icons/szem icon.svg'; 
             }
         });
-    togglePassword.addEventListener("click", () => {
-        passwordField.type =
-            passwordField.type === "password" ? "text" : "password";
-    });
+
 
     // Login logika
-    const form = document.getElementById("loginForm");
-    const message = document.getElementById("message");
+    const form = document.forms['loginForm'];
+const message = document.getElementById('message');
 
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
+// Betöltjük a regisztrált usereket
+const users = JSON.parse(localStorage.getItem('users')) || [];
 
-        const email = document.getElementById("loginEmail").value;
-        const password = document.getElementById("loginPassword").value;
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-        if (email === "admin@stormy.hu" && password === "1234") {
-            message.textContent = "Sikeres bejelentkezés!";
-            message.className = "text-green-500 text-center text-sm";
-            // opcionális:
-            // window.location.href = "dashboard.html";
-        } else {
-            message.textContent = "Hibás email vagy jelszó!";
-            message.className = "text-red-500 text-center text-sm";
-        }
-    });
+    const email = form.elements['email'].value.trim();
+    const password = form.elements['password'].value;
+
+    // Megkeressük a felhasználót
+    const user = users.find(
+        u => u.email === email && u.password === password
+    );
+
+    if (user) {
+        message.textContent = 'Sikeres bejelentkezés! 🎉';
+        message.className = 'text-green-500 text-center text-sm';
+
+        // opcionális: belépett user eltárolása
+        localStorage.setItem('loggedUser', JSON.stringify(user));
+
+        // átirányítás
+        // window.location.href = "dashboard.html";
+    } else {
+        message.textContent = 'Hibás email vagy jelszó!';
+        message.className = 'text-red-500 text-center text-sm';
+    }
+});
+
 </script>
 
    

@@ -1,104 +1,87 @@
-const form = document.getElementById('form');
-const FelhaszEmail = document.getElementById('Email');
-const felhaszN = document.getElementById('felhaszNev');
-const FelhaszJel = document.getElementById('jelszo');
-const JelHit = document.getElementById('jelszoHit');
+// ===== FORM =====
+const form = document.getElementById('form1');
 
-// Array to store user data
-const users = [];
+// ===== INPUTOK =====
+const emailInput = document.getElementById('Email');
+const usernameInput = document.getElementById('felhaszNev');
+const passwordInput = document.getElementById('password');
+const passwordConfirmInput = document.getElementById('passwordConfirm');
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
+// ===== TOGGLE ELEMEK =====
+const togglePassword = document.getElementById('togglePassword');
+const togglePasswordConfirm = document.getElementById('togglePasswordConfirm');
 
-    const email = FelhaszEmail.value;
-    const username = felhaszN.value;
-    const password = FelhaszJel.value;
-    const password_confirmation = JelHit.value;
+const passwordIcon = togglePassword.querySelector('img');
+const passwordConfirmIcon = togglePasswordConfirm.querySelector('img');
 
-    let errors = getSignUpErrors(email, username, password, password_confirmation);
-
-    if (errors.length > 0) {
-        // Display errors (you can customize this part to show errors in the UI)
-        console.log(errors);
-    } else {
-        // If no errors, store user data in the array
-        const newUser = {
-            email: email,
-            username: username,
-            password: password,
-        };
-        users.push(newUser);
-
-        // Clear form fields
-        FelhaszEmail.value = '';
-        felhaszN.value = '';
-        FelhaszJel.value = '';
-        JelHit.value = '';
-
-        console.log('User registered successfully:', newUser);
-        console.log('All users:', users);
-    }
-});
-
-function getSignUpErrors(email, username, password, password_confirmation) {
-    let errors = [];
-    if (email === '' || email == null) {
-        errors.push('Az email mező nem lehet üres.');
-        FelhaszEmail.parentElement.classList.add('Nem jó');
-    }
-    if (username === '' || username == null) {
-        errors.push('A felhasználó mező nem lehet üres.');
-        felhaszN.parentElement.classList.add('Nem jó');
-    }
-    if (password === '' || password == null) {
-        errors.push('A jelszó mező nem lehet üres.');
-        FelhaszJel.parentElement.classList.add('Nem jó');
-    }
-    if (password_confirmation === '' || password_confirmation == null) {
-        errors.push('A jelszó hitelesítő mező nem lehet üres.');
-        JelHit.parentElement.classList.add('Nem jó');
-    }
-    if (password !== password_confirmation) {
-        errors.push('A jelszavak nem egyeznek.');
-        FelhaszJel.parentElement.classList.add('Nem jó');
-        JelHit.parentElement.classList.add('Nem jó');
-    }
-    return errors;
-}
-
-// Ikon utak
+// ===== IKONOK =====
 const eyeOpen = "images/icons/szem icon.svg";
 const eyeClosed = "images/icons/szem csukott.svg";
 
-// Jelszó mező
-const togglePassword = document.getElementById("togglePassword");
-const password = document.getElementById("password");
-const passwordIcon = togglePassword.querySelector("img");
+// ===== FELHASZNÁLÓK BETÖLTÉSE (FONTOS) =====
+const users = JSON.parse(localStorage.getItem('users')) || [];
 
-// Jelszó megerősítés mező
-const togglePasswordConfirm = document.getElementById("togglePasswordConfirm");
-const passwordConfirm = document.getElementById("passwordConfirm");
-const passwordConfirmIcon = togglePasswordConfirm.querySelector("img");
-
-// Jelszó megjelenítés + ikon váltás
-togglePassword.addEventListener("click", () => {
-    if (password.type === "password") {
-        password.type = "text";
-        passwordIcon.src = "images/icons/szem csukott.svg";
-    } else {
-        password.type = "password";
-        passwordIcon.src = "images/icons/szem icon.svg";
-    }
+// ===== JELSZÓ MUTATÁS =====
+togglePassword.addEventListener('click', () => {
+    const hidden = passwordInput.type === 'password';
+    passwordInput.type = hidden ? 'text' : 'password';
+    passwordIcon.src = hidden ? eyeClosed : eyeOpen;
 });
 
-// Jelszó megerősítés megjelenítés + ikon váltás
-togglePasswordConfirm.addEventListener("click", () => {
-    if (passwordConfirm.type === "password") {
-        passwordConfirm.type = "text";
-        passwordConfirmIcon.src = eyeClosed;
-    } else {
-        passwordConfirm.type = "password";
-        passwordConfirmIcon.src = eyeOpen;
-    }
+togglePasswordConfirm.addEventListener('click', () => {
+    const hidden = passwordConfirmInput.type === 'password';
+    passwordConfirmInput.type = hidden ? 'text' : 'password';
+    passwordConfirmIcon.src = hidden ? eyeClosed : eyeOpen;
 });
 
+// ===== REGISZTRÁCIÓ =====
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const email = emailInput.value.trim();
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value;
+    const passwordConfirm = passwordConfirmInput.value;
+
+    // Alap ellenőrzések
+    if (!email || !username || !password || !passwordConfirm) {
+        alert('Minden mező kitöltése kötelező!');
+        return;
+    }
+
+    if (password !== passwordConfirm) {
+        alert('A jelszavak nem egyeznek!');
+        return;
+    }
+
+    if (password.length < 6) {
+        alert('A jelszónak legalább 6 karakteresnek kell lennie!');
+        return;
+    }
+
+    // DUPLIKÁCIÓ ELLENŐRZÉS
+    if (users.some(u => u.email === email)) {
+        alert('Ez az email már regisztrálva van!');
+        return;
+    }
+
+    if (users.some(u => u.username === username)) {
+        alert('Ez a felhasználónév már foglalt!');
+        return;
+    }
+
+    // ÚJ FELHASZNÁLÓ
+    const newUser = {
+        email,
+        username,
+        password
+    };
+
+    users.push(newUser);
+    localStorage.setItem('users', JSON.stringify(users));
+
+    console.log('Regisztrált userek:', users);
+    alert('Sikeres regisztráció! 🎉');
+
+    form.reset();
+});
