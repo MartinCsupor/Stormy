@@ -1,3 +1,6 @@
+
+
+
 const API_KEY = "8bbe3807862344f523a5e8a6532780f5";
 
 let dailyWeather = [];
@@ -5,11 +8,6 @@ let hourlyWeather = [];
 let weeklyWeather = [];
 let celsius = true;
 
-let hofok = (temp) => {
-    return celsius ? Math.round(temp - 273.15) 
-        : Math.round((temp - 273.15) * 9/5 + 32);
-
-} ;
 
 const getDailyWeather = async () => {
 
@@ -137,12 +135,15 @@ getHourlyWeather().then( async data => {
         oraIkon.classList.add("max-w-[35px]");
         oraLeiras.innerHTML = ora.weather[0].description.charAt(0).toUpperCase() + ora.weather[0].description.slice(1);
         oraLeiras.classList.add("text-xs");
+        rawHourlyTemps.push(ora.main.temp);
         oraFok.innerHTML = hofok(ora.main.temp) + (celsius ? "°C" : "°F");
+
         oraFok.classList.add("font-bold");
         oraEsoWrapper.classList.add("flex", "items-center")
         oraEsoIkon.src = "images/icons/water-drop.svg";
         oraEsoIkon.classList.add("max-w-[12px]", "mr-0.5");
-        oraEso.innerHTML = ora.pop*100 + "%";
+        oraEso.innerHTML = Math.round(ora.pop * 100) + "%";
+
         oraEso.classList.add("text-sm");
  
  
@@ -250,7 +251,8 @@ getHourlyWeather().then( async data => {
         } else {
             napNev.innerHTML = napok[i].charAt(0).toUpperCase() + napok[i].slice(1);
         }
-        napEso.innerHTML = esok[i]+"%";
+        napEso.innerHTML = Math.round(esok[i]) + "%";
+;
         // napIkon.src = `img/icons/$idojaras${ikon[i]}.png`;
         napMin.innerHTML = minek[i]+ (celsius ? "°C" : "°F");
         napMax.innerHTML = maxok[i]+ (celsius ? "°C" : "°F");
@@ -274,16 +276,53 @@ getHourlyWeather().then( async data => {
 });
 
 const changeUnit = (unit) => {
-    const celsiusDiv = document.querySelector(".toggle-celsius");
-    const fahrenheitDiv = document.querySelector(".toggle-fahrenheit");
+    celsius = unit === "celsius";
 
-    if (unit === "celsius") {
-        fahrenheitDiv.classList.remove("bg-[#476D98]");
-        celsiusDiv.classList.add("bg-[#476D98]");
-        celsius = true;
-    } else if(unit === "fahrenheit"){
-        celsiusDiv.classList.remove("bg-[#476D98]");
-        fahrenheitDiv.classList.add("bg-[#476D98]");
-        celsius = false;
-    }
-}
+    document.querySelector(".toggle-celsius")
+        .classList.toggle("bg-[#476D98]", celsius);
+
+    document.querySelector(".toggle-fahrenheit")
+        .classList.toggle("bg-[#476D98]", !celsius);
+
+    // aktuális
+    document.getElementById("jelenlegi_fok").innerHTML =
+        hofok(dailyWeather.main.temp) + (celsius ? "°C" : "°F");
+
+    document.getElementById("jelenlegi_hoerzet").innerHTML =
+        "Hőérzet: " + hofok(dailyWeather.main.feels_like) + (celsius ? "°C" : "°F");
+
+    document.getElementById("jelenlegi_minmax").innerHTML =
+        hofok(dailyWeather.main.temp_min) + (celsius ? "°C" : "°F") +
+        "/" +
+        hofok(dailyWeather.main.temp_max) + (celsius ? "°C" : "°F");
+
+    // óránkénti
+    document.querySelectorAll(".swiper-slide .font-bold").forEach((el, i) => {
+        el.innerHTML = hofok(rawHourlyTemps[i]) + (celsius ? "°C" : "°F");
+    });
+
+    // napi
+    document.querySelectorAll("#napi_idojaras .flex.justify-end").forEach((el, i) => {
+        el.children[0].innerHTML = hofok(rawDailyMin[i]) + (celsius ? "°C" : "°F");
+        el.children[1].innerHTML = hofok(rawDailyMax[i]) + (celsius ? "°C" : "°F");
+    });
+};
+
+
+
+const hofok = (kelvin) => {
+    if (typeof kelvin !== "number") return "";
+
+    const isCelsius = typeof celsius === "boolean" ? celsius : true;
+
+    return isCelsius
+        ? Math.round(kelvin - 273.15)
+        : Math.round((kelvin - 273.15) * 9 / 5 + 32);
+};
+
+let rawHourlyTemps = [];
+let rawDailyMin = [];
+let rawDailyMax = [];
+
+
+
