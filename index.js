@@ -56,20 +56,21 @@ getDailyWeather().then( async data => {
 
     //napi jellemzők
 
+    const jellemzokContainer = document.getElementById("idojaras_jellemzoi")
+
     const jellemzok = [
-        { nev: "Páratartalom", ertek: dailyWeather.main.humidity, egyseg: "%" }, 
-        { nev: "Szélsebesség", ertek: dailyWeather.wind.speed, egyseg: " km/h" },
-        { nev: "UV Index", ertek: extraJellemzo.uv_index, egyseg: "" },
-        { nev: "Légnyomás", ertek: dailyWeather.main.pressure, egyseg: " mb" },
-        { nev: "Látótávolság", ertek: dailyWeather.visibility/1000, egyseg: " km" },
-        { nev: "Harmatpont", ertek: extraJellemzo.dew_point, egyseg: " °" }
+        { nev: "Páratartalom", ertek: dailyWeather.main.humidity, egyseg: "%", icon: "/images/icons/paratartalom.svg" }, 
+        { nev: "Szélsebesség", ertek: dailyWeather.wind.speed, egyseg: " km/h", icon: "/images/icons/szelsebesség.svg" },
+        { nev: "UV Index", ertek: extraJellemzo.uv_index, egyseg: "", icon: "/images/icons/uv_index.svg" },
+        { nev: "Légnyomás", ertek: dailyWeather.main.pressure, egyseg: " mb", icon: "/images/icons/legnyomas.svg" },
+        { nev: "Látótávolság", ertek: dailyWeather.visibility/1000, egyseg: " km", icon: "/images/icons/latotavolsag.svg" },
+        { nev: "Harmatpont", ertek: extraJellemzo.dew_point, egyseg: " °", icon: "/images/icons/harmatpont.svg" }
     ]
 
-    const jellemzokContainer = document.getElementById("idojaras_jellemzoi");
+    const jellemzokDiv = document.createElement("div");
     const jellemzokWrapper = document.createElement("div")
 
-    jellemzokContainer.classList.add("max-w-md", "mx-auto");
-    jellemzokWrapper.classList.add("grid", "grid-cols-2", "gap-4");
+    jellemzokWrapper.classList.add("grid", "grid-cols-3", "gap-4");
 
     jellemzok.map(({ nev, ertek, egyseg }) => {
         const jellemzokDiv = document.createElement("div");
@@ -88,7 +89,54 @@ getDailyWeather().then( async data => {
         jellemzokWrapper.appendChild(jellemzokDiv);
     })
 
-    jellemzokContainer.appendChild(jellemzokWrapper);
+    jellemzokDiv.appendChild(jellemzokWrapper);
+    jellemzokContainer.appendChild(jellemzokDiv)
+
+
+    const sunWrapper = document.createElement("div")
+    
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 300 120");
+    svg.setAttribute("class", "w-full h-32");
+    svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", "M20,100 A130,130 0 0,1 280,100");
+    path.setAttribute("fill", "none");
+    path.setAttribute("stroke", "#d7f0ff");
+    path.setAttribute("stroke-width", "3");
+
+    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    circle.setAttribute("cx", "40");
+    circle.setAttribute("cy", "30");
+    circle.setAttribute("r", "12");
+    circle.setAttribute("fill", "#F4C542");
+    circle.setAttribute("stroke", "#fff");
+    circle.setAttribute("stroke-width", "2");
+
+    sunWrapper.appendChild(svg)
+    sunWrapper.appendChild(path)
+    sunWrapper.appendChild(circle)
+
+    idoWrapper = document.createElement("div")
+
+    const kelteWrapper = document.createElement("div")
+    const keltetext1 = document.createElement("p")
+    const keltetext2 = document.createElement("p")
+
+    keltetext1.textContent = new Date(dailyWeather.sys.sunrise)
+    keltetext2.textContent = "Napkelte"
+    kelteWrapper.appendChild(keltetext1)
+    kelteWrapper.appendChild(keltetext2)
+
+    const nyugtaWrapper = document.createElement("div")
+    const nyugtatext1 = document.createElement("p")
+    const nyugtatext2 = document.createElement("p")
+
+    nyugtatext1.textContent = new Date(dailyWeather.sys.sunset)
+    nyugtatext2.textContent = "Napnyugta"
+    nyugtaWrapper.appendChild(nyugtatext1)
+    nyugtaWrapper.appendChild(nyugtatext2)
 
 });
 
