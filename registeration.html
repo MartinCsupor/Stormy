@@ -7,96 +7,98 @@
     <title>Regisztráció</title>
 </head>
 <body class="bg-[#C7E1EE] text-white font-bold text-3xl">
-    <header class="flex items-center justify-center py-4">
-        <img src="images/logo.png" alt="Stormy logo" class="h-30 w-30 mr-2">
-        <h1 class=" text-6xl font-bold">Stormy</h1>
-        <div class="topnav">
-          
-            <button id="menuOpen" class="p-2">
-              <img src="images/icons/hambuger-menu.svg" class="w-20 h-20 ml-3" alt="Menü">
-            </button>
-          
-           
-            <div id="myLinks" class="menu">
-              
-              <button id="menuClose" class="close-btn">✕</button>
-          
-              <a href="index.html">Főoldal</a>
-              <a href="registeration.html">Regisztráció</a>
-              <a href="login.html">Bejelentkezés</a>
-            </div>
-          </div>
-          
-            
-            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-              <i class="fa fa-bars"></i>
-            </a>
-          </div>
-          <style>
-          .topnav {
-            position: relative;
-          }
-          
-         
-          .menu {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 70%;
-            max-width: 300px;
-            height: 100vh;
-            background: #476D98;
-            display: flex;
-            flex-direction: column;
-            padding: 2rem 1rem;
-            transition: right 0.3s ease;
-            z-index: 1000;
-          }
-          
-         
-          .menu.active {
-            right: 0;
-          }
-          
-          .menu a {
-            color: white;
-            text-decoration: none;
-            padding: 1rem;
-            font-size: 1.2rem;
-          }
-          
-          .menu a:hover {
-            background: rgba(255,255,255,0.2);
-            border-radius: 8px;
-          }
-          
-         
-          .close-btn {
-            align-self: flex-end;
-            font-size: 2rem;
-            color: white;
-            background: none;
-            border: none;
-            cursor: pointer;
-            margin-bottom: 1rem;
-          }
-          
-  </style>
-  <script>
-    const menuOpen = document.getElementById("menuOpen");
-    const menuClose = document.getElementById("menuClose");
-    const menu = document.getElementById("myLinks");
-  
-    menuOpen.addEventListener("click", () => {
-      menu.classList.add("active");
-    });
-  
-    menuClose.addEventListener("click", () => {
-      menu.classList.remove("active");
-    });
-  </script>
-    </header>
+  <header class="flex justify-between items-center lg:px-20">
+    <img src="images/logo.png" alt="Stormy logo" class="h-auto w-1/4 max-w-50">
+    <h1 class="font-bold text-center text-4xl w-2/4 md:text-5xl lg:text-7xl">Stormy</h1>
+    <div class="topnav">
+      
+      <button id="menuOpen" class="p-2">
+        <img src="images/icons/hambuger-menu.svg" class="w-20 h-20 ml-35" alt="Menü">
+      </button>
+    
+     
+      <div id="myLinks" class="menu">
+        
+        <button id="menuClose" class="close-btn">✕</button>
+    
+        <a href="index.html">Főoldal</a>
+        <a href="registeration.html">Regisztráció</a>
+        <a href="login.html">Bejelentkezés</a>
+      </div>
+    </div>
+    
+      
+      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+      </a>
+    </div>
+    <style>
+    .topnav {
+      position: relative;
+    }
+    
+   
+    .menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 70%;
+      max-width: 300px;
+      height: 100vh;
+      background: #476D98;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 1rem;
+      transition: right 0.3s ease;
+      z-index: 1000;
+    }
+    
+   
+    .menu.active {
+      right: 0;
+    }
+    
+    .menu a {
+      color: white;
+      text-decoration: none;
+      padding: 1rem;
+      font-size: 1.2rem;
+    }
+    
+    .menu a:hover {
+      background: rgba(255,255,255,0.2);
+      border-radius: 8px;
+    }
+    
+   
+    .close-btn {
+      align-self: flex-end;
+      font-size: 2rem;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 1rem;
+    }
+    
+</style>
+<script>
+const menuOpen = document.getElementById("menuOpen");
+const menuClose = document.getElementById("menuClose");
+const menu = document.getElementById("myLinks");
 
+menuOpen.addEventListener("click", () => {
+menu.classList.add("active");
+});
+
+menuClose.addEventListener("click", () => {
+menu.classList.remove("active");
+});
+</script>
+
+
+
+  </header>
     <main class="flex flex-col items-center justify-center min-h-screen min-w-full ">
         <form id="form1" method="POST" class="bg-[#82B3DB] p-8 rounded-2xl flex flex-col space-y-6 w-xl ">
             <h2 class="mb-8 text-4xl text-center">Regisztráció</h2>
