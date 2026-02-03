@@ -1,6 +1,3 @@
-
-
-
 const API_KEY = "8bbe3807862344f523a5e8a6532780f5";
 
 let dailyWeather = [];
@@ -26,6 +23,20 @@ const getUVIndexAndDewPoint = async () => {
     return {
         dew_point: data.current.dew_point_2m,
         uv_index: data.current.uv_index
+        
+    }
+}
+
+const getMoonData = async () => {
+    const MoonData = await fetch(
+        `https://api.solunar.org/solunar/46.181793,18.954306/20260203/1`
+    )
+    const data = await MoonData
+
+    return {
+        moonrise: MoonData.moonrise,
+        moonset: MoonData.moonset,
+        moonphase: MoonData.moonphase
     }
 }
 
@@ -67,8 +78,7 @@ getDailyWeather().then( async data => {
         { nev: "Harmatpont", ertek: extraJellemzo.dew_point, egyseg: " °", icon: "/images/icons/harmatpont.svg" }
     ]
 
-    const jellemzokDiv = document.createElement("div");
-    const jellemzokWrapper = document.createElement("div")
+    const jellemzokWrapper = document.createElement("div");
 
     jellemzokWrapper.classList.add("grid", "grid-cols-3", "gap-4");
 
@@ -89,11 +99,14 @@ getDailyWeather().then( async data => {
         jellemzokWrapper.appendChild(jellemzokDiv);
     })
 
-    jellemzokDiv.appendChild(jellemzokWrapper);
-    jellemzokContainer.appendChild(jellemzokDiv)
+    jellemzokContainer.appendChild(jellemzokWrapper)
 
+    //nap jellemzők
+
+    const napholdWrapper = document.createElement("div");
 
     const sunWrapper = document.createElement("div")
+    const sunDiv = document.createElement("div")
     
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("viewBox", "0 0 300 120");
@@ -114,17 +127,17 @@ getDailyWeather().then( async data => {
     circle.setAttribute("stroke", "#fff");
     circle.setAttribute("stroke-width", "2");
 
-    sunWrapper.appendChild(svg)
-    sunWrapper.appendChild(path)
-    sunWrapper.appendChild(circle)
+    sunDiv.appendChild(svg)
+    sunDiv.appendChild(path)
+    sunDiv.appendChild(circle)
 
-    idoWrapper = document.createElement("div")
+    sunWrapper.appendChild(sunDiv)
 
     const kelteWrapper = document.createElement("div")
     const keltetext1 = document.createElement("p")
     const keltetext2 = document.createElement("p")
 
-    keltetext1.textContent = new Date(dailyWeather.sys.sunrise)
+    keltetext1.textContent = `${new Date(dailyWeather.sys.sunrise).getHours()}:${new Date(dailyWeather.sys.sunrise).getMinutes()}`
     keltetext2.textContent = "Napkelte"
     kelteWrapper.appendChild(keltetext1)
     kelteWrapper.appendChild(keltetext2)
@@ -133,11 +146,37 @@ getDailyWeather().then( async data => {
     const nyugtatext1 = document.createElement("p")
     const nyugtatext2 = document.createElement("p")
 
-    nyugtatext1.textContent = new Date(dailyWeather.sys.sunset)
+    nyugtatext1.textContent = `${new Date(dailyWeather.sys.sunset).getHours()}:${new Date(dailyWeather.sys.sunset).getMinutes()}`
     nyugtatext2.textContent = "Napnyugta"
     nyugtaWrapper.appendChild(nyugtatext1)
     nyugtaWrapper.appendChild(nyugtatext2)
 
+    const sunTextWrapper = document.createElement("div")
+
+    sunTextWrapper.classList.add("flex", "justify-evenly", "text-center")
+
+    sunTextWrapper.appendChild(kelteWrapper)
+    sunTextWrapper.appendChild(nyugtaWrapper)
+    sunWrapper.appendChild(sunTextWrapper)
+
+    napholdWrapper.appendChild(sunWrapper)
+
+    
+    //hold jellemzők
+    
+    const holdWrapper = document.createElement("div")
+    const holdKelteDiv = document.createElement("div")
+    const holdNyugtaDiv = document.createElement("div")
+    const holdFazisDiv = document.createElement("div")
+
+    const kelteText = document.createElement("p")
+    const nyugtaText = document.createElement("p")
+
+    kelteText.textContent = 
+    
+    
+    jellemzokContainer.appendChild(napholdWrapper)
+    
 });
 
 const getHourlyWeather = async () => {
