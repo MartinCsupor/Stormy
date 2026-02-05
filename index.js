@@ -5,6 +5,17 @@ let hourlyWeather = [];
 let weeklyWeather = [];
 let celsius = true;
 
+const moonPhasesHU = {
+    "New Moon": "Újhold",
+    "Waxing Crescent": "Növekvő sarló",
+    "First Quarter": "Első negyed",
+    "Waxing Gibbous": "Növekvő hold",
+    "Full Moon": "Telihold",
+    "Waning Gibbous": "Fogyó hold",
+    "Last Quarter": "Utolsó negyed",
+    "Waning Crescent": "Fogyó sarló"
+  };
+  
 
 const getDailyWeather = async () => {
 
