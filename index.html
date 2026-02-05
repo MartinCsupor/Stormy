@@ -15,13 +15,8 @@
         <h1 class="font-bold text-center text-4xl w-2/4 md:text-5xl lg:text-7xl">Stormy</h1>
         <div class="topnav">
           
-<<<<<<< HEAD
           <button id="menuOpen" class="p-2 cursor-pointer">
             <img src="images/icons/hambuger-menu.svg" class="w-20 h-20 ml-3" alt="Menü">
-=======
-          <button id="menuOpen" class="p-2">
-            <img src="images/icons/hambuger-menu.svg" class="w-20 h-20 ml-35" alt="Menü">
->>>>>>> 4c2ac12fbce445ce31b8d224191caa8d9444fabd
           </button>
         
          
@@ -154,7 +149,7 @@
         </section>
 
         <section>
-            <div id="idojaras_jellemzoi" class="flex flex-col m-2">
+            <div id="idojaras_jellemzoi" class="flex flex-col m-2 p-2 rounded-lg bg-blue-200">
                 <!-- <div class="bg-[#476D98] text-white rounded-lg ">
                     <svg id="sunriseSvg" viewBox="0 0 300 120" class="w-full h-32" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
                     <path id="sunArc" d="M20,100 A130,130 0 0,1 280,100" fill="none" stroke="#d7f0ff" stroke-width="3" stroke-linecap="round" />
@@ -184,86 +179,12 @@
                 </div> -->
             </div>
         </section>
-        <script>
-            (function () {
-            const arc = document.getElementById('sunArc');
-            const sun = document.getElementById('sunMarker');
-            if (!arc || !sun) return;
-        
-            // Example: compute sun position between sunrise and sunset
-            const sunrise = '06:30',
-                sunset = '17:00';
-            const demoProgress = 0.25; // 0 => at sunrise, 1 => at sunset
-        
-            const L = arc.getTotalLength();
-            const point = arc.getPointAtLength(demoProgress * L);
-        
-            // Position sun circle (cx, cy) on the arc
-            sun.setAttribute('cx', point.x);
-            sun.setAttribute('cy', point.y);
-        
-            // Ensure the entire arc is visible by adjusting the SVG's viewBox dynamically
-            const svg = document.getElementById('sunriseSvg');
-            if (svg) {
-                const padding = 20; // Add padding to ensure visibility
-                const bbox = arc.getBBox();
-                svg.setAttribute(
-                'viewBox',
-                `${bbox.x - padding} ${bbox.y - padding} ${bbox.width + 2 * padding} ${bbox.height + 2 * padding}`
-                );
-            }
-            })();
-        </script>
         </div>
     </section>
 
 
 
     <div id="rendezes 2" class="flex-col gap-4">
-
-    <section class="premium  bg-[#82B3DB] h-auto mb-5 w-full justify-items-center p-4">
-        <div id="napi_idojaras" class="text-center grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-          <div class="bg-[#476D98] rounded-2xl h-auto p-4">
-            <div class="flex justify-between">
-              <p>Ma</p>
-              <p>70%</p>
-              <p>6°18°</p>
-            </div>
-          </div>
-      
-          <div class="bg-[#476D98] rounded-2xl h-auto  p-4">
-            <div class="flex justify-between">
-              <p>Csütörtök</p>
-              <p>70%</p>
-              <p>6°18°</p>
-            </div>
-          </div>
-      
-          <div class="bg-[#476D98] rounded-2xl h-auto p-4">
-            <div class="flex justify-between">
-              <p>Csütörtök</p>
-              <p>70%</p>
-              <p>6°18°</p>
-            </div>
-          </div>
-      
-          <div class="bg-[#476D98] rounded-2xl h-auto p-4">
-            <div class="flex justify-between">
-              <p>Csütörtök</p>
-              <p>70%</p>
-              <p>6°18°</p>
-            </div>
-          </div>
-      
-          <div class="bg-[#476D98] rounded-2xl h-auto p-4">
-            <div class="flex justify-between">
-              <p>Csütörtök</p>
-              <p>70%</p>
-              <p>6°18°</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <section id="Vitaminok" class="premium  bg-[#82B3DB] h-auto p-2 sm:p-4 justify-items-center">
         <div class="w-full">

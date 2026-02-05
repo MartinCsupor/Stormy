@@ -28,15 +28,15 @@ const getUVIndexAndDewPoint = async () => {
 }
 
 const getMoonData = async () => {
-    const MoonData = await fetch(
-        `https://api.solunar.org/solunar/46.181793,18.954306/20260203/1`
+    const data = await fetch(
+        `https://api.solunar.org/solunar/46.181793,18.954306,20260205,1` //válts át h aznapi legyen!!
     )
-    const data = await MoonData
+    const MoonData = await data.json()
 
     return {
-        moonrise: MoonData.moonrise,
-        moonset: MoonData.moonset,
-        moonphase: MoonData.moonphase
+        moonrise: MoonData.moonRise,
+        moonset: MoonData.moonSet,
+        moonphase: MoonData.moonPhase
     }
 }
 
@@ -45,6 +45,7 @@ getDailyWeather().then( async data => {
     console.log(dailyWeather)
 
     const extraJellemzo = await getUVIndexAndDewPoint();
+    const holdJellemzok = await getMoonData();
 
     //jelenlegi időjárás
 
@@ -104,19 +105,24 @@ getDailyWeather().then( async data => {
     //nap jellemzők
 
     const napholdWrapper = document.createElement("div");
+    napholdWrapper.classList.add("flex")
 
     const sunWrapper = document.createElement("div")
+    sunWrapper.classList.add("w-1/2")
+
     const sunDiv = document.createElement("div")
     
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("viewBox", "0 0 300 120");
     svg.setAttribute("class", "w-full h-32");
     svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+    svg.id="sunriseSvg"
 
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     path.setAttribute("d", "M20,100 A130,130 0 0,1 280,100");
     path.setAttribute("fill", "none");
     path.setAttribute("stroke", "#d7f0ff");
+    path.id="sunArc"
     path.setAttribute("stroke-width", "3");
 
     const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
@@ -126,6 +132,7 @@ getDailyWeather().then( async data => {
     circle.setAttribute("fill", "#F4C542");
     circle.setAttribute("stroke", "#fff");
     circle.setAttribute("stroke-width", "2");
+    circle.id="sunMarker"
 
     sunDiv.appendChild(svg)
     sunDiv.appendChild(path)
@@ -169,15 +176,69 @@ getDailyWeather().then( async data => {
     const holdNyugtaDiv = document.createElement("div")
     const holdFazisDiv = document.createElement("div")
 
-    const kelteText = document.createElement("p")
-    const nyugtaText = document.createElement("p")
+    const holdKelteText1 = document.createElement("p")
+    const holdKelteText2 = document.createElement("p")
+    const holdNyugtaText1 = document.createElement("p")
+    const holdNyugtaText2 = document.createElement("p")
+    const fazisKep = document.createElement("img")
+    const fazistText = document.createElement("p")
 
-    kelteText.textContent = 
+    holdWrapper.classList.add("flex", "w-1/2", "items-center", "text-center")
+    holdFazisDiv.classList.add("flex", "flex-col","items-center", "px-2")
+    fazisKep.classList.add("w-1/2")
+
+    fazisKep.src = "https://placehold.co/100"
+    holdKelteText1.textContent = holdJellemzok.moonrise
+    holdKelteText2.textContent = "Holdkelte"
+    holdNyugtaText1.textContent = holdJellemzok.moonset
+    holdNyugtaText2.textContent = "Holdnyugta"
+    fazistText.textContent = holdJellemzok.moonphase
+
+    holdKelteDiv.appendChild(holdKelteText1)
+    holdKelteDiv.appendChild(holdKelteText2)
     
+    holdNyugtaDiv.appendChild(holdNyugtaText1)
+    holdNyugtaDiv.appendChild(holdNyugtaText2)
+
+    holdFazisDiv.appendChild(fazisKep)
+    holdFazisDiv.appendChild(fazistText)
     
+    holdWrapper.appendChild(holdNyugtaDiv)
+    holdWrapper.appendChild(holdFazisDiv)
+    holdWrapper.appendChild(holdKelteDiv)
+
+    napholdWrapper.appendChild(holdWrapper)
     jellemzokContainer.appendChild(napholdWrapper)
     
 });
+
+function sunMove () {
+    const arc = document.getElementById('sunArc');
+    const sun = document.getElementById('sunMarker');
+    if (!arc || !sun) return;
+
+    const sunrise = '06:30';
+    const sunset = '17:00';
+    const demoProgress = 0.25; //progress
+
+    const L = arc.getTotalLength();
+    const point = arc.getPointAtLength(demoProgress * L);
+
+    // Position sun circle (cx, cy) on the arc
+    sun.setAttribute('cx', point.x);
+    sun.setAttribute('cy', point.y);
+
+    // Ensure the entire arc is visible by adjusting the SVG's viewBox dynamically
+    const svg = document.getElementById('sunriseSvg');
+    if (svg) {
+        const padding = 20; // Add padding to ensure visibility
+        const bbox = arc.getBBox();
+        svg.setAttribute(
+        'viewBox',
+        `${bbox.x - padding} ${bbox.y - padding} ${bbox.width + 2 * padding} ${bbox.height + 2 * padding}`
+        );
+    }
+}
 
 const getHourlyWeather = async () => {
     const weeklyWeather = await fetch(
@@ -411,5 +472,4 @@ let rawHourlyTemps = [];
 let rawDailyMin = [];
 let rawDailyMax = [];
 
-
-
+sunMove()
