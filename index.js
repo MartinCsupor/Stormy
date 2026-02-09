@@ -14,7 +14,7 @@ const moonPhasesHU = {
     "Waning Gibbous": "Fogyó hold",
     "Last Quarter": "Utolsó negyed",
     "Waning Crescent": "Fogyó sarló"
-  };
+};
   
 
 const getDailyWeather = async () => {
@@ -92,7 +92,7 @@ getDailyWeather().then( async data => {
 
     const jellemzokWrapper = document.createElement("div");
 
-    jellemzokWrapper.classList.add("grid", "grid-cols-3", "gap-4");
+    jellemzokWrapper.classList.add("grid", "grid-cols-2", "sm:grid-cols-3","gap-4");
 
     jellemzok.map(({ nev, ertek, egyseg }) => {
         const jellemzokDiv = document.createElement("div");
@@ -116,16 +116,17 @@ getDailyWeather().then( async data => {
     //nap jellemzők
 
     const napholdWrapper = document.createElement("div");
-    napholdWrapper.classList.add("flex")
+    napholdWrapper.classList.add("flex", "flex-col")
 
     const sunWrapper = document.createElement("div")
-    sunWrapper.classList.add("w-1/2")
+    sunWrapper.classList.add("bg-[#476D98]", "rounded-lg", "my-5")
 
     const sunDiv = document.createElement("div")
-    
+    sunDiv.classList.add("flex", "justify-center")
+
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.setAttribute("viewBox", "0 0 300 120");
-    svg.setAttribute("class", "w-full h-32");
+    svg.setAttribute("viewBox", "0 0 300 40");
+    svg.setAttribute("class", "w-full h-25");
     svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
     svg.id="sunriseSvg"
 
@@ -133,8 +134,9 @@ getDailyWeather().then( async data => {
     path.setAttribute("d", "M20,100 A130,130 0 0,1 280,100");
     path.setAttribute("fill", "none");
     path.setAttribute("stroke", "#d7f0ff");
-    path.id="sunArc"
     path.setAttribute("stroke-width", "3");
+    svg.setAttribute("class", "w-full max-w-115 h-45");
+    path.id="sunArc"
 
     const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     circle.setAttribute("cx", "40");
@@ -145,9 +147,9 @@ getDailyWeather().then( async data => {
     circle.setAttribute("stroke-width", "2");
     circle.id="sunMarker"
 
+    svg.appendChild(path)
+    svg.appendChild(circle)
     sunDiv.appendChild(svg)
-    sunDiv.appendChild(path)
-    sunDiv.appendChild(circle)
 
     sunWrapper.appendChild(sunDiv)
 
@@ -155,7 +157,7 @@ getDailyWeather().then( async data => {
     const keltetext1 = document.createElement("p")
     const keltetext2 = document.createElement("p")
 
-    keltetext1.textContent = `${new Date(dailyWeather.sys.sunrise).getHours()}:${new Date(dailyWeather.sys.sunrise).getMinutes()}`
+    keltetext1.textContent = `${new Date(dailyWeather.sys.sunrise * 1000).getHours()}:${new Date(dailyWeather.sys.sunrise).getMinutes()}`
     keltetext2.textContent = "Napkelte"
     kelteWrapper.appendChild(keltetext1)
     kelteWrapper.appendChild(keltetext2)
@@ -164,7 +166,7 @@ getDailyWeather().then( async data => {
     const nyugtatext1 = document.createElement("p")
     const nyugtatext2 = document.createElement("p")
 
-    nyugtatext1.textContent = `${new Date(dailyWeather.sys.sunset).getHours()}:${new Date(dailyWeather.sys.sunset).getMinutes()}`
+    nyugtatext1.textContent = `${new Date(dailyWeather.sys.sunset * 1000).getHours()}:${new Date(dailyWeather.sys.sunset).getMinutes()}`
     nyugtatext2.textContent = "Napnyugta"
     nyugtaWrapper.appendChild(nyugtatext1)
     nyugtaWrapper.appendChild(nyugtatext2)
@@ -194,16 +196,19 @@ getDailyWeather().then( async data => {
     const fazisKep = document.createElement("img")
     const fazistText = document.createElement("p")
 
-    holdWrapper.classList.add("flex", "w-1/2", "items-center", "text-center")
+    holdWrapper.classList.add("flex", "justify-evenly", "items-center", "text-center", "bg-[#476D98]", "rounded-lg", "mb-5", "py-5")
     holdFazisDiv.classList.add("flex", "flex-col","items-center", "px-2")
-    fazisKep.classList.add("w-1/2")
 
-    fazisKep.src = "https://placehold.co/100"
+    fazisKep.src = `./images/icons/${
+        holdJellemzok.moonphase.toLowerCase().replace(/\s+/g, "-")
+    }-moon.svg`;
+    fazisKep.classList.add("w-25", "h-auto")
+
     holdKelteText1.textContent = holdJellemzok.moonrise
     holdKelteText2.textContent = "Holdkelte"
     holdNyugtaText1.textContent = holdJellemzok.moonset
     holdNyugtaText2.textContent = "Holdnyugta"
-    fazistText.textContent = holdJellemzok.moonphase
+    fazistText.textContent = moonPhasesHU[holdJellemzok.moonphase]
 
     holdKelteDiv.appendChild(holdKelteText1)
     holdKelteDiv.appendChild(holdKelteText2)
@@ -482,5 +487,3 @@ const hofok = (kelvin) => {
 let rawHourlyTemps = [];
 let rawDailyMin = [];
 let rawDailyMax = [];
-
-sunMove()
