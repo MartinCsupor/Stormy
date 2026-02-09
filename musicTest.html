@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<title>Music Player</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white p-6">
+
+<!-- Music Panel -->
+<div id="music-panel" class="bg-[#476D98] rounded-2xl p-6 w-80">
+  <div class="flex justify-between items-center mb-4">
+    <div class="flex items-center">
+      <div class="w-12 h-12 bg-gray-300 rounded-md"></div>
+      <div class="ml-4">
+        <p id="song-title" class="text-lg font-bold">Zene címe</p>
+        <p id="song-artist" class="text-sm">Előadó neve</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-between items-center text-xl mb-4">
+    <button id="prev">⏮</button>
+    <button id="play-pause">▶</button>
+    <button id="next">⏭</button>
+  </div>
+
+  <div class="mb-4">
+    <h3 class="font-bold mb-2">Egyéni zene hozzáadása</h3>
+    <input id="music-url" type="text" placeholder="MP3 link" class="w-full mb-2 p-2 rounded bg-[#5A7BAA] text-white">
+    <input id="music-title" type="text" placeholder="Zene címe" class="w-full mb-2 p-2 rounded bg-[#5A7BAA] text-white">
+    <button id="add-music" class="bg-[#476D98] px-4 py-2 rounded w-full">Hozzáadás</button>
+  </div>
+</div>
+
+<!-- Hidden Audio Element -->
+<audio id="audio-player"></audio>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const audio = document.getElementById('audio-player');
+  const playPauseBtn = document.getElementById('play-pause');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  const addBtn = document.getElementById('add-music');
+
+  const urlInput = document.getElementById('music-url');
+  const titleInput = document.getElementById('music-title');
+
+  const titleText = document.getElementById('song-title');
+  const artistText = document.getElementById('song-artist');
+
+  let playlist = [];
+  let currentIndex = 0;
+  let isPlaying = false;
+
+  function loadSong(index) {
+    const song = playlist[index];
+    audio.src = song.url;
+    titleText.textContent = song.title;
+    artistText.textContent = song.artist || 'Felhasználó';
+  }
+
+  playPauseBtn.addEventListener('click', () => {
+    if (!playlist.length) { alert('Nincs zene a listában!'); return; }
+
+    if (!isPlaying) {
+      audio.play();
+      playPauseBtn.textContent = '⏸';
+    } else {
+      audio.pause();
+      playPauseBtn.textContent = '▶';
+    }
+    isPlaying = !isPlaying;
+  });
+
+  nextBtn.addEventListener('click', () => {
+    if (!playlist.length) return;
+    currentIndex = (currentIndex + 1) % playlist.length;
+    loadSong(currentIndex);
+    audio.play();
+    playPauseBtn.textContent = '⏸';
+    isPlaying = true;
+  });
+
+  prevBtn.addEventListener('click', () => {
+    if (!playlist.length) return;
+    currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+    loadSong(currentIndex);
+    audio.play();
+    playPauseBtn.textContent = '⏸';
+    isPlaying = true;
+  });
+
+  addBtn.addEventListener('click', () => {
+    const url = urlInput.value.trim();
+    const title = titleInput.value.trim();
+
+    if (!url || !title) { alert('Tölts ki minden mezőt!'); return; }
+
+    playlist.push({ url: url, title: title });
+
+    if (playlist.length === 1) loadSong(0);
+
+    urlInput.value = '';
+    titleInput.value = '';
+    alert('Zene hozzáadva!');
+  });
+});
+</script>
+
+</body>
+</html>

@@ -244,13 +244,16 @@
     
 
 
+
+<!-- MUSIC PANEL -->
+<!-- Music Panel -->
 <div id="music-panel" class="hidden fixed bottom-24 right-4 bg-[#476D98] rounded-2xl p-6 w-80 z-50">
   <div class="flex justify-between items-center mb-4">
     <div class="flex items-center">
       <div class="w-12 h-12 bg-gray-300 rounded-md"></div>
       <div class="ml-4">
-        <p class="text-lg font-bold">Zene címe</p>
-        <p class="text-sm">Előadó neve</p>
+        <p id="song-title" class="text-lg font-bold">Zene címe</p>
+        <p id="song-artist" class="text-sm">Előadó neve</p>
       </div>
     </div>
     <button id="close-music" class="w-5 h-5">
@@ -258,57 +261,168 @@
     </button>
   </div>
 
-  <div class="flex justify-between items-center">
-    <button>⏮</button>
-    <button>▶</button>
-    <button>⏭</button>
+  <div class="flex justify-between items-center text-xl">
+    <button id="prev">⏮</button>
+    <button id="play-pause">▶</button>
+    <button id="next">⏭</button>
     <button>❤️</button>
   </div>
 </div>
 
-
+<!-- Add Music Modal -->
 <div id="add-music-modal"
   class="hidden fixed bottom-24 right-96 bg-[#82B3DB] rounded-2xl p-6 w-80 z-50">
   <h2 class="text-lg font-bold mb-4 text-center">Egyéni zene hozzáadása</h2>
 
-  <input type="text" placeholder="Zene URL"
+  <input id="music-url" type="text" placeholder="Zene URL"
     class="w-full mb-3 p-2 rounded bg-[#5A7BAA] text-white">
 
-  <select class="w-full mb-4 p-2 rounded bg-[#5A7BAA] text-white">
-    <option>Borús</option>
-    <option>Napfényes</option>
-    <option>Esős</option>
-  </select>
+  <input id="music-title" type="text" placeholder="Zene címe"
+    class="w-full mb-4 p-2 rounded bg-[#5A7BAA] text-white">
 
   <div class="flex justify-between">
     <button id="cancel-music" class="bg-[#476D98] px-4 py-2 rounded">Mégse</button>
-    <button class="bg-[#476D98] px-4 py-2 rounded">Hozzáadás</button>
+    <button id="add-music" class="bg-[#476D98] px-4 py-2 rounded">Hozzáadás</button>
   </div>
 </div>
+
+<!-- Hidden Audio -->
+<audio id="audio-player"></audio>
+
+<!-- Hidden YouTube Player -->
+<div style="position:fixed; bottom:0; left:0; width:320px; height:180px; opacity:0.1; pointer-events:none;">
+  <div id="yt-player"></div>
+</div>
+
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const musicToggle = document.getElementById('music-toggle');
-    const musicPanel = document.getElementById('music-panel');
-    const addMusicModal = document.getElementById('add-music-modal');
-    const cancelMusicBtn = document.getElementById('cancel-music');
-    const closeMusicBtn = document.getElementById('close-music');
-  
-    musicToggle.addEventListener('click', () => {
-      musicPanel.classList.toggle('hidden');
-      addMusicModal.classList.toggle('hidden');
-    });
-  
-    cancelMusicBtn.addEventListener('click', () => {
-      addMusicModal.classList.add('hidden');
-    });
-  
-    closeMusicBtn.addEventListener('click', () => {
-      musicPanel.classList.add('hidden');
-      addMusicModal.classList.add('hidden');
-    });
+document.addEventListener('DOMContentLoaded', () => {
+
+  // ================= UI =================
+  const musicToggle = document.getElementById('music-toggle');
+  const musicPanel = document.getElementById('music-panel');
+  const addMusicModal = document.getElementById('add-music-modal');
+  const cancelMusicBtn = document.getElementById('cancel-music');
+  const closeMusicBtn = document.getElementById('close-music');
+
+  musicToggle?.addEventListener('click', () => {
+    musicPanel.classList.toggle('hidden');
+    addMusicModal.classList.toggle('hidden');
   });
-  </script>
-  
+
+  cancelMusicBtn?.addEventListener('click', () => {
+    addMusicModal.classList.add('hidden');
+  });
+
+  closeMusicBtn?.addEventListener('click', () => {
+    musicPanel.classList.add('hidden');
+    addMusicModal.classList.add('hidden');
+  });
+
+  // ================= Player =================
+  const audio = document.getElementById('audio-player');
+  const playPauseBtn = document.getElementById('play-pause');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  const addBtn = document.getElementById('add-music');
+
+  const urlInput = document.getElementById('music-url');
+  const titleInput = document.getElementById('music-title');
+
+  const titleText = document.getElementById('song-title');
+  const artistText = document.getElementById('song-artist');
+
+  let playlist = [];
+  let currentIndex = 0;
+  let isPlaying = false;
+  let mode = null; // "audio" | "youtube"
+
+  // ================= YOUTUBE =================
+  let ytPlayer = null;
+
+  function extractVideoId(url) {
+    const match = url.match(/v=([^&]+)/);
+    return match ? match[1] : null;
+  }
+
+  window.onYouTubeIframeAPIReady = () => {
+    ytPlayer = new YT.Player('yt-player', {
+      height: '180',
+      width: '320',
+      playerVars: { controls: 1 }
+    });
+  };
+
+  function loadSong(index) {
+    const song = playlist[index];
+    titleText.textContent = song.title;
+    artistText.textContent = 'Felhasználó';
+
+    if (song.type === 'youtube') {
+      mode = 'youtube';
+      audio.pause();
+      audio.src = '';
+      ytPlayer.loadVideoById(song.id);
+    } else {
+      mode = 'audio';
+      ytPlayer?.pauseVideo();
+      audio.src = song.url;
+    }
+  }
+
+  // ================= Controls =================
+  playPauseBtn.addEventListener('click', () => {
+    if (!playlist.length) { alert('Nincs zene!'); return; }
+
+    if (!isPlaying) {
+      if (mode === 'youtube') ytPlayer.playVideo();
+      else audio.play();
+      playPauseBtn.textContent = '⏸';
+    } else {
+      if (mode === 'youtube') ytPlayer.pauseVideo();
+      else audio.pause();
+      playPauseBtn.textContent = '▶';
+    }
+    isPlaying = !isPlaying;
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    if (!playlist.length) return;
+    currentIndex = (currentIndex + 1) % playlist.length;
+    loadSong(currentIndex);
+    isPlaying = false;
+    playPauseBtn.click();
+  });
+
+  prevBtn?.addEventListener('click', () => {
+    if (!playlist.length) return;
+    currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+    loadSong(currentIndex);
+    isPlaying = false;
+    playPauseBtn.click();
+  });
+
+  // ================= Add Music =================
+  addBtn?.addEventListener('click', () => {
+    if (!urlInput.value || !titleInput.value) { alert('Tölts ki mindent!'); return; }
+
+    if (urlInput.value.includes('youtube.com')) {
+      const videoId = extractVideoId(urlInput.value);
+      if (!videoId) { alert('Érvényes YouTube link kell!'); return; }
+
+      playlist.push({ type: 'youtube', id: videoId, title: titleInput.value });
+    } else {
+      playlist.push({ type: 'audio', url: urlInput.value, title: titleInput.value });
+    }
+
+    if (playlist.length === 1) loadSong(0);
+
+    urlInput.value = '';
+    titleInput.value = '';
+    alert('Zene hozzáadva!');
+  });
+
+});
+</script>
  
 
     <script src="index.js"></script>
