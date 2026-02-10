@@ -141,10 +141,8 @@ getDailyWeather().then( async data => {
     const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     circle.setAttribute("cx", "40");
     circle.setAttribute("cy", "30");
-    circle.setAttribute("r", "12");
+    circle.setAttribute("r", "15");
     circle.setAttribute("fill", "#F4C542");
-    circle.setAttribute("stroke", "#fff");
-    circle.setAttribute("stroke-width", "2");
     circle.id="sunMarker"
 
     svg.appendChild(path)
@@ -173,7 +171,7 @@ getDailyWeather().then( async data => {
 
     const sunTextWrapper = document.createElement("div")
 
-    sunTextWrapper.classList.add("flex", "justify-evenly", "text-center")
+    sunTextWrapper.classList.add("flex", "justify-around", "text-center")
 
     sunTextWrapper.appendChild(kelteWrapper)
     sunTextWrapper.appendChild(nyugtaWrapper)
