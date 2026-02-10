@@ -146,7 +146,6 @@
 
         
 
-
         <section>
             <div id="napi_idojaras" class="flex flex-col m-2 col-span-2"> 
                 <!-- napi időjárási adatok -->
@@ -244,7 +243,6 @@
     
 
 
-
 <!-- MUSIC PANEL -->
 <!-- Music Panel -->
 <div id="music-panel" class="hidden fixed bottom-24 right-4 bg-[#476D98] rounded-2xl p-6 w-80 z-50">
@@ -265,7 +263,9 @@
     <button id="prev">⏮</button>
     <button id="play-pause">▶</button>
     <button id="next">⏭</button>
-    <button>❤️</button>
+    <button id="recommend-music" title="Zeneajánló (időjárás alapján)">🎵</button>
+    <button id="open-add-music" title="Zene hozzáadása">➕</button>
+    <button title="Kedvenc">❤️</button>
   </div>
 </div>
 
@@ -274,7 +274,7 @@
   class="hidden fixed bottom-24 right-96 bg-[#82B3DB] rounded-2xl p-6 w-80 z-50">
   <h2 class="text-lg font-bold mb-4 text-center">Egyéni zene hozzáadása</h2>
 
-  <input id="music-url" type="text" placeholder="Zene URL"
+  <input id="music-url" type="text" placeholder="Zene URL (YouTube vagy MP3)"
     class="w-full mb-3 p-2 rounded bg-[#5A7BAA] text-white">
 
   <input id="music-title" type="text" placeholder="Zene címe"
@@ -294,6 +294,9 @@
   <div id="yt-player"></div>
 </div>
 
+<!-- YouTube Iframe API -->
+<script src="https://www.youtube.com/iframe_api"></script>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -303,10 +306,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const addMusicModal = document.getElementById('add-music-modal');
   const cancelMusicBtn = document.getElementById('cancel-music');
   const closeMusicBtn = document.getElementById('close-music');
+  const openAddBtn = document.getElementById('open-add-music');
 
   musicToggle?.addEventListener('click', () => {
     musicPanel.classList.toggle('hidden');
-    addMusicModal.classList.toggle('hidden');
   });
 
   cancelMusicBtn?.addEventListener('click', () => {
@@ -318,12 +321,18 @@ document.addEventListener('DOMContentLoaded', () => {
     addMusicModal.classList.add('hidden');
   });
 
+  openAddBtn?.addEventListener('click', () => {
+    addMusicModal.classList.toggle('hidden');
+  });
+
   // ================= Player =================
   const audio = document.getElementById('audio-player');
+  audio.volume = 0.8;
   const playPauseBtn = document.getElementById('play-pause');
   const prevBtn = document.getElementById('prev');
   const nextBtn = document.getElementById('next');
   const addBtn = document.getElementById('add-music');
+  const recommendBtn = document.getElementById('recommend-music');
 
   const urlInput = document.getElementById('music-url');
   const titleInput = document.getElementById('music-title');
@@ -336,24 +345,122 @@ document.addEventListener('DOMContentLoaded', () => {
   let isPlaying = false;
   let mode = null; // "audio" | "youtube"
 
+  // ================= Ajánlott zenék (időjárás szűrő) =================
+  const RECOMMENDATIONS = {
+    clear: [
+      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', title: 'Napos Chill 1' },
+      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3', title: 'Napos Chill 2' }
+    ],
+    clouds: [
+      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', title: 'Borús Hangulat 1' },
+      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3', title: 'Borús Hangulat 2' }
+    ],
+    rain: [
+      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', title: 'Esős Nap 1' },
+      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3', title: 'Esős Nap 2' }
+    ],
+    thunder: [
+      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3', title: 'Viharos Energia' }
+    ],
+    snow: [
+      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3', title: 'Téli Nyugalom' }
+    ],
+    mist: [
+      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3', title: 'Ködös Hangulat' }
+    ],
+    wind: [
+      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3', title: 'Szeles Flow' }
+    ],
+    chill: [
+      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3', title: 'Laza Mix 1' },
+      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3', title: 'Laza Mix 2' }
+    ]
+  };
+
+  function getCurrentMood() {
+    const t = (document.getElementById('jelenglegi_idojaras_ikon_leiras')?.textContent || '').toLowerCase();
+    if (!t) return 'chill';
+
+    if (t.includes('tiszta') || t.includes('derült')) return 'clear';
+    if (t.includes('felhő') || t.includes('borús')) return 'clouds';
+    if (t.includes('eső') || t.includes('zápor') || t.includes('szitál')) return 'rain';
+    if (t.includes('zivatar') || t.includes('vihar')) return 'thunder';
+    if (t.includes('hó')) return 'snow';
+    if (t.includes('köd') || t.includes('pára') || t.includes('szmog') || t.includes('hamu')) return 'mist';
+    if (t.includes('szél') || t.includes('viharos')) return 'wind';
+    return 'chill';
+  }
+
+  function recommendByWeather() {
+    const mood = getCurrentMood();
+    const list = RECOMMENDATIONS[mood] || RECOMMENDATIONS['chill'];
+    playlist = list.map(item => item.type === 'youtube'
+      ? { type: 'youtube', id: item.id, title: item.title }
+      : { type: 'audio', url: item.url, title: item.title });
+    try { localStorage.setItem('stormy_playlist', JSON.stringify(playlist)); } catch {}
+    currentIndex = 0;
+    loadSong(0);
+  }
+
   // ================= YOUTUBE =================
   let ytPlayer = null;
+  let pendingVideoId = null;
+  let ytPlayRetryTimer = null;
+  let ytPendingPlay = false;
 
   function extractVideoId(url) {
-    const match = url.match(/v=([^&]+)/);
-    return match ? match[1] : null;
+    try {
+      const u = new URL(url);
+      if (u.searchParams.get('v')) return u.searchParams.get('v');
+      const parts = u.pathname.split('/').filter(Boolean);
+      if (u.hostname.includes('youtu.be')) return parts[0] || null;
+      const idxShorts = parts.indexOf('shorts');
+      if (idxShorts !== -1) return parts[idxShorts + 1] || null;
+      const idxEmbed = parts.indexOf('embed');
+      if (idxEmbed !== -1) return parts[idxEmbed + 1] || null;
+    } catch (e) {
+      const m = url.match(/(?:v=|youtu\.be\/|shorts\/|embed\/)([A-Za-z0-9_-]{6,})/);
+      if (m) return m[1];
+    }
+    return null;
   }
 
   window.onYouTubeIframeAPIReady = () => {
     ytPlayer = new YT.Player('yt-player', {
       height: '180',
       width: '320',
-      playerVars: { controls: 1 }
+      playerVars: { controls: 1 },
+      events: {
+        onReady: () => {
+          try { ytPlayer.unMute(); ytPlayer.setVolume(80); } catch {}
+          if (pendingVideoId) {
+            ytPlayer.cueVideoById(pendingVideoId);
+            pendingVideoId = null;
+          }
+          if (ytPendingPlay) {
+            ytPendingPlay = false;
+            try { ytPlayer.playVideo(); } catch {}
+          }
+        },
+        onStateChange: (e) => {
+          if (e.data === YT.PlayerState.PLAYING) {
+            isPlaying = true;
+            playPauseBtn.textContent = '⏸';
+          } else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.CUED) {
+            isPlaying = false;
+            playPauseBtn.textContent = '▶';
+          } else if (e.data === YT.PlayerState.ENDED) {
+            nextBtn?.click();
+          }
+        }
+      }
     });
   };
 
   function loadSong(index) {
     const song = playlist[index];
+    if (!song) return;
+
     titleText.textContent = song.title;
     artistText.textContent = 'Felhasználó';
 
@@ -361,28 +468,47 @@ document.addEventListener('DOMContentLoaded', () => {
       mode = 'youtube';
       audio.pause();
       audio.src = '';
-      ytPlayer.loadVideoById(song.id);
+      if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+        ytPlayer.loadVideoById(song.id);
+      } else {
+        pendingVideoId = song.id;
+      }
     } else {
       mode = 'audio';
-      ytPlayer?.pauseVideo();
+      try { ytPlayer?.pauseVideo?.(); } catch {}
       audio.src = song.url;
     }
   }
 
   // ================= Controls =================
   playPauseBtn.addEventListener('click', () => {
-    if (!playlist.length) { alert('Nincs zene!'); return; }
+    if (!playlist.length) { return; }
 
     if (!isPlaying) {
-      if (mode === 'youtube') ytPlayer.playVideo();
-      else audio.play();
-      playPauseBtn.textContent = '⏸';
+      if (mode === 'youtube') {
+        const tryNow = () => {
+          if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+            try { ytPlayer.unMute(); ytPlayer.setVolume(80); } catch {}
+            ytPlayer.playVideo();
+            return true;
+          }
+          return false;
+        };
+        if (!tryNow()) {
+          ytPendingPlay = true;
+          clearTimeout(ytPlayRetryTimer);
+          ytPlayRetryTimer = setTimeout(() => { if (!tryNow()) { ytPlayRetryTimer = setTimeout(() => { tryNow(); }, 700); } }, 300);
+        }
+      } else {
+        audio.play();
+      }
     } else {
-      if (mode === 'youtube') ytPlayer.pauseVideo();
-      else audio.pause();
-      playPauseBtn.textContent = '▶';
+      if (mode === 'youtube') {
+        try { ytPlayer?.pauseVideo?.(); } catch {}
+      } else {
+        audio.pause();
+      }
     }
-    isPlaying = !isPlaying;
   });
 
   nextBtn?.addEventListener('click', () => {
@@ -401,30 +527,59 @@ document.addEventListener('DOMContentLoaded', () => {
     playPauseBtn.click();
   });
 
+  // Keep button state synced with audio element
+  audio.addEventListener('play', () => { isPlaying = true; playPauseBtn.textContent = '⏸'; });
+  audio.addEventListener('pause', () => { isPlaying = false; playPauseBtn.textContent = '▶'; });
+  audio.addEventListener('ended', () => { nextBtn?.click(); });
+
   // ================= Add Music =================
   addBtn?.addEventListener('click', () => {
-    if (!urlInput.value || !titleInput.value) { alert('Tölts ki mindent!'); return; }
+    const url = urlInput.value.trim();
+    const title = titleInput.value.trim();
 
-    if (urlInput.value.includes('youtube.com')) {
-      const videoId = extractVideoId(urlInput.value);
+    if (!url || !title) { alert('Tölts ki mindent!'); return; }
+
+    if (/(youtube\.com|youtu\.be)/i.test(url)) {
+      const videoId = extractVideoId(url);
       if (!videoId) { alert('Érvényes YouTube link kell!'); return; }
-
-      playlist.push({ type: 'youtube', id: videoId, title: titleInput.value });
+      playlist.push({ type: 'youtube', id: videoId, title });
     } else {
-      playlist.push({ type: 'audio', url: urlInput.value, title: titleInput.value });
+      playlist.push({ type: 'audio', url, title });
     }
 
-    if (playlist.length === 1) loadSong(0);
+    // Persist
+    try { localStorage.setItem('stormy_playlist', JSON.stringify(playlist)); } catch {}
+
+    if (playlist.length === 1) {
+      currentIndex = 0;
+      loadSong(0);
+    }
 
     urlInput.value = '';
     titleInput.value = '';
+    addMusicModal.classList.add('hidden');
     alert('Zene hozzáadva!');
   });
+
+  // Weather-based recommend action
+  recommendBtn?.addEventListener('click', () => {
+    recommendByWeather();
+    isPlaying = false;
+    playPauseBtn.click();
+  });
+
+  // Restore playlist on load
+  try {
+    const saved = JSON.parse(localStorage.getItem('stormy_playlist') || '[]');
+    if (Array.isArray(saved) && saved.length) {
+      playlist = saved;
+      loadSong(0);
+    }
+  } catch {}
 
 });
 </script>
  
-
     <script src="index.js"></script>
 </body>
 </html>
