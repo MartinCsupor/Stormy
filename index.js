@@ -92,7 +92,7 @@ getDailyWeather().then( async data => {
 
     const jellemzokWrapper = document.createElement("div");
 
-    jellemzokWrapper.classList.add("grid", "grid-cols-2", "sm:grid-cols-3","gap-4");
+    jellemzokWrapper.classList.add("grid", "grid-cols-2", "xl:grid-cols-3","gap-4");
 
     jellemzok.map(({ nev, ertek, egyseg }) => {
         const jellemzokDiv = document.createElement("div");
@@ -388,7 +388,7 @@ getHourlyWeather().then( async data => {
 
     const napDivWrapper = document.createElement("div");
     napi.appendChild(napDivWrapper);
-    napDivWrapper.classList.add("flex", "flex-col", "rounded-lg","bg-[#82B3DB]");
+    napDivWrapper.classList.add("flex", "flex-col", "rounded-lg","bg-[#82B3DB]", "h-[-webkit-fill-available]!");
 
     for (let i = 0; i < 5; i++){
 

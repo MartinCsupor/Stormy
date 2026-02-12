@@ -10,99 +10,99 @@
     <title>Stormy</title>
 </head>
 <body>
-    <header class="flex justify-between items-center lg:px-20">
-        <img src="images/logo.png" alt="Stormy logo" class="h-auto w-1/4 max-w-50">
-        <h1 class="font-bold text-center text-4xl w-2/4 md:text-5xl lg:text-7xl">Stormy</h1>
-        <div class="topnav">
-          
-          <button id="menuOpen" class="p-2 cursor-pointer">
-            <img src="images/icons/hambuger-menu.svg" class="w-20 h-20 ml-3" alt="Menü">
-          </button>
-        
-         
-          <div id="myLinks" class="menu">
+    <header class="flex flex-col">
+        <section class="flex justify-between items-center lg:px-20">
+            <img src="images/logo.png" alt="Stormy logo" class="h-auto w-1/4 max-w-50">
+            <h1 class="font-bold text-center text-4xl w-2/4 md:text-5xl lg:text-7xl">Stormy</h1>
+            <div class="topnav">
+              
+              <button id="menuOpen" class="p-2 cursor-pointer">
+                <img src="images/icons/hambuger-menu.svg" class="w-20 h-20 ml-3" alt="Menü">
+              </button>
+             
+              <div id="myLinks" class="menu">
+                
+                <button id="menuClose" class="close-btn">✕</button>
             
-            <button id="menuClose" class="close-btn">✕</button>
-        
-            <a href="index.html">Főoldal</a>
-            <a href="registeration.html">Regisztráció</a>
-            <a href="login.html">Bejelentkezés</a>
-          </div>
-        </div>
-        
-          
-          <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-            <i class="fa fa-bars"></i>
-          </a>
-        </div>
-        <style>
-        .topnav {
-          position: relative;
-        }
-        
-       
-        .menu {
-          position: fixed;
-          top: 0;
-          right: -100%;
-          width: 70%;
-          max-width: 300px;
-          height: 100vh;
-          background: #476D98;
-          display: flex;
-          flex-direction: column;
-          padding: 2rem 1rem;
-          transition: right 0.3s ease;
-          z-index: 1000;
-        }
-        
-       
-        .menu.active {
-          right: 0;
-        }
-        
-        .menu a {
-          color: white;
-          text-decoration: none;
-          padding: 1rem;
-          font-size: 1.2rem;
-        }
-        
-        .menu a:hover {
-          background: rgba(255,255,255,0.2);
-          border-radius: 8px;
-        }
-        
-       
-        .close-btn {
-          align-self: flex-end;
-          font-size: 2rem;
-          color: white;
-          background: none;
-          border: none;
-          cursor: pointer;
-          margin-bottom: 1rem;
-        }
-        
-</style>
-<script>
-  const menuOpen = document.getElementById("menuOpen");
-  const menuClose = document.getElementById("menuClose");
-  const menu = document.getElementById("myLinks");
+                <a href="index.html">Főoldal</a>
+                <a href="registeration.html">Regisztráció</a>
+                <a href="login.html">Bejelentkezés</a>
+              </div>
+            </div>
+            
+            
+            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                <i class="fa fa-bars"></i>
+            </a>
 
-  menuOpen.addEventListener("click", () => {
-    menu.classList.add("active");
-  });
-
-  menuClose.addEventListener("click", () => {
-    menu.classList.remove("active");
-  });
-</script>
-
+            <style>
+                .topnav {
+                position: relative;
+                }
+                
+            
+                .menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                max-width: 300px;
+                height: 100vh;
+                background: #476D98;
+                display: flex;
+                flex-direction: column;
+                padding: 2rem 1rem;
+                transition: right 0.3s ease;
+                z-index: 1000;
+                }
+                
+            
+                .menu.active {
+                right: 0;
+                }
+                
+                .menu a {
+                color: white;
+                text-decoration: none;
+                padding: 1rem;
+                font-size: 1.2rem;
+                }
+                
+                .menu a:hover {
+                background: rgba(255,255,255,0.2);
+                border-radius: 8px;
+                }
+                
+            
+                .close-btn {
+                align-self: flex-end;
+                font-size: 2rem;
+                color: white;
+                background: none;
+                border: none;
+                cursor: pointer;
+                margin-bottom: 1rem;
+                }
+            </style>
+            <script>
+                const menuOpen = document.getElementById("menuOpen");
+                const menuClose = document.getElementById("menuClose");
+                const menu = document.getElementById("myLinks");
+        
+                menuOpen.addEventListener("click", () => {
+                    menu.classList.add("active");
+                });
+        
+                menuClose.addEventListener("click", () => {
+                    menu.classList.remove("active");
+                });
+            </script>
+           
+        </section>
 
         <section class="flex justify-between p-5 items-center">
             <div>
-                <input type="text" id="varosinput" placeholder="Keresés..." class="h-8 bg-[#476D98] rounded-lg px-2">
+                <input type="text" id="varosinput" placeholder="Keresés..." class="h-8 w-auto bg-[#476D98] rounded-lg px-2">
             </div>
 
             <div class="flex flex-row justify-evenly bg-[#82B3DB] rounded-full h-auto w-25 py-1">
@@ -117,11 +117,10 @@
 
     </header>
 
-    <main class="grid grid-cols-1 lg:grid-rows-3 lg:grid-cols-3">
+    <main class="grid grid-cols-1 auto-rows-min lg:grid-cols-3">
       
-
         <section class="lg:col-start-1 lg:row-start-1">
-            <div class="flex justify-between bg-[#476D98] p-4 rounded-2xl m-2">
+            <div class="flex justify-between bg-[#476D98] p-4 rounded-2xl m-2 h-auto h-[-webkit-fill-available]!">
                 <div>
                     <h2 id="jelenlegi_fok" class="font-bold text-2xl"></h2>
                     <div>
@@ -145,7 +144,7 @@
         </section>
 
         <section class="lg:row-start-2 lg:col-start-2 lg:col-span-2">
-            <div id="napi_idojaras" class="flex flex-col m-2 col-span-2"> 
+            <div id="napi_idojaras" class="flex flex-col m-2 col-span-2 h-[-webkit-fill-available]!"> 
                 <!-- napi időjárási adatok -->
             </div>
         </section>
@@ -158,31 +157,31 @@
 
 
         <section class="lg:row-start-3 lg:col-start-2 lg:col-span-2">
-            <div class="w-full bg-[#82B3DB] h-auto p-2 sm:p-4 justify-items-center">
+            <div class="w-auto bg-[#82B3DB] h-auto rounded-lg m-2 p-2 sm:p-4 justify-items-center h-[-webkit-fill-available]!">
             <h2 class="text-2xl sm:text-4xl text-center pb-5">Vitaminajánló</h2>
             <div class="text-center grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                <div class="bg-[#476D98] rounded-2xl p-4">
+                <div class="bg-[#476D98] rounded-2xl p-4 w-[85%] mx-auto">
                 <div class="flex justify-between px-5">
                     <p>Kálcium:</p>
                     <p class="text-white font-bold">200mg/nap</p>
                 </div>
                 </div>
         
-                <div class="bg-[#476D98] rounded-2xl p-4">
+                <div class="bg-[#476D98] rounded-2xl p-4 w-[85%] mx-auto">
                 <div class="flex justify-between px-5">
                     <p>Magnézium:</p>
                     <p class="text-white font-bold">300mg/nap</p>
                 </div>
                 </div>
         
-                <div class="bg-[#476D98] rounded-2xl p-4">
+                <div class="bg-[#476D98] rounded-2xl p-4 w-[85%] mx-auto">
                 <div class="flex justify-between px-5">
                     <p>D-vitamin:</p>
                     <p class="text-white font-bold">400IU/nap</p>
                 </div>
                 </div>
         
-                <div class="bg-[#476D98] rounded-2xl p-4">
+                <div class="bg-[#476D98] rounded-2xl p-4 w-[85%] mx-auto">
                 <div class="flex justify-between px-5">
                     <p>C-vitamin:</p>
                     <p class="text-white font-bold">75mg/nap</p>
