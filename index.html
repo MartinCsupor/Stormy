@@ -49,20 +49,22 @@
       </script>
     </section>
 
-    <section class="flex justify-between p-5 items-center">
-      <div>
-        <input type="text" id="varosinput" placeholder="Keresés..." class="h-8 w-auto bg-[#476D98] rounded-lg px-2" />
-      </div>
-      <div class="flex flex-row justify-evenly bg-[#82B3DB] rounded-full h-auto w-25 py-1">
-        <div class="toggle-celsius bg-[#476D98] w-10 h-10 rounded-full flex justify-center items-center cursor-pointer" onclick="changeUnit('celsius')">
-          <p>°C</p>
-        </div>
-        <div class="toggle-fahrenheit w-10 h-10 rounded-full flex justify-center items-center cursor-pointer" onclick="changeUnit('fahrenheit')">
-          <p>°F</p>
-        </div>
-      </div>
-    </section>
-  </header>
+        <section class="flex justify-between mx-2 py-5 items-center">
+            <div>
+                <input type="text" id="varosinput" placeholder="Keresés..." class="h-10 w-auto bg-[#476D98] rounded-lg px-2">
+            </div>
+
+            <div class="flex flex-row justify-evenly bg-[#82B3DB] rounded-full h-auto w-25 py-1">
+                <div class="toggle-celsius bg-[#476D98] w-10 h-10 rounded-full flex justify-center items-center cursor-pointer" onclick="changeUnit('celsius')">
+                    <p>°C</p>
+                </div>
+                <div class="toggle-fahrenheit w-10 h-10 rounded-full flex justify-center items-center cursor-pointer" onclick="changeUnit('fahrenheit')">
+                    <p>°F</p>
+                </div>
+            </div>
+        </section>
+
+    </header>
 
   <main class="grid grid-cols-1 auto-rows-min lg:grid-cols-3">
     <section class="lg:col-start-1 lg:row-start-1">
@@ -94,10 +96,42 @@
       <div id="idojaras_jellemzoi" class="flex flex-col m-2 p-2 rounded-lg bg-[#82B3DB]"></div>
     </section>
 
-    <section class="lg:row-start-3 lg:col-start-2 lg:col-span-2">
-      <div class="w-auto bg-[#82B3DB] h-auto rounded-lg m-2 p-2 sm:p-4 justify-items-center h-[-webkit-fill-available]!"><h2 class="text-2xl sm:text-4xl text-center pb-5">Vitaminajánló</h2><div class="text-center grid grid-cols-1 sm:grid-cols-2 gap-4 w-full"><div class="bg-[#476D98] rounded-2xl p-4 w-[85%] mx-auto"><div class="flex justify-between px-5"><p>Kálcium:</p><p class="text-white font-bold">200mg/nap</p></div></div><div class="bg-[#476D98] rounded-2xl p-4 w-[85%] mx-auto"><div class="flex justify-between px-5"><p>Magnézium:</p><p class="text-white font-bold">300mg/nap</p></div></div><div class="bg-[#476D98] rounded-2xl p-4 w-[85%] mx-auto"><div class="flex justify-between px-5"><p>D-vitamin:</p><p class="text-white font-bold">400IU/nap</p></div></div><div class="bg-[#476D98] rounded-2xl p-4 w-[85%] mx-auto"><div class="flex justify-between px-5"><p>C-vitamin:</p><p class="text-white font-bold">75mg/nap</p></div></div></div></div>
-    </section>
-  </main>
+        <section class="lg:row-start-3 lg:col-start-2 lg:col-span-2">
+            <div class="w-auto bg-[#82B3DB] h-auto rounded-lg m-2 p-2 sm:p-4 justify-items-center h-[-webkit-fill-available]!">
+            <h2 class="text-2xl sm:text-4xl text-center pb-5">Vitaminajánló</h2>
+            <div class="text-center grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-10 w-full">
+                <div class="bg-[#476D98] rounded-2xl p-4 w-[85%] mx-auto">
+                <div class="flex justify-between px-5">
+                    <p>Kálcium:</p>
+                    <p class="text-white font-bold">200mg/nap</p>
+                </div>
+                </div>
+        
+                <div class="bg-[#476D98] rounded-2xl p-4 w-[85%] mx-auto">
+                <div class="flex justify-between px-5">
+                    <p>Magnézium:</p>
+                    <p class="text-white font-bold">300mg/nap</p>
+                </div>
+                </div>
+        
+                <div class="bg-[#476D98] rounded-2xl p-4 w-[85%] mx-auto">
+                <div class="flex justify-between px-5">
+                    <p>D-vitamin:</p>
+                    <p class="text-white font-bold">400IU/nap</p>
+                </div>
+                </div>
+        
+                <div class="bg-[#476D98] rounded-2xl p-4 w-[85%] mx-auto">
+                <div class="flex justify-between px-5">
+                    <p>C-vitamin:</p>
+                    <p class="text-white font-bold">75mg/nap</p>
+                </div>
+                </div>
+            </div>
+            </div>
+        </section>
+
+    </main>
 
   <div id="zene-ikon">
     <button id="music-toggle" class="fixed bottom-4 right-4 bg-[#8CD9FF] p-3 rounded-full shadow-lg hover:bg-[#2F8BB7]">

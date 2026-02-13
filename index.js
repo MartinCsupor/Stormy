@@ -40,7 +40,7 @@ const getUVIndexAndDewPoint = async () => {
 
 const getMoonData = async () => {
     const data = await fetch(
-        `https://api.solunar.org/solunar/46.181793,18.954306,20260205,1` //válts át h aznapi legyen!!
+        `https://api.solunar.org/solunar/46.181793,18.954306,${new Date().toLocaleDateString('sv-SE').replaceAll('-', '')},1`
     )
     const MoonData = await data.json()
 
@@ -50,6 +50,28 @@ const getMoonData = async () => {
         moonphase: MoonData.moonPhase
     }
 }
+
+const getCoords = async (varos) => {
+    const res = await fetch(
+        `https://api.openweathermap.org/geo/1.0/direct?q=${varos}&limit=1&appid=${API_KEY}`
+    );
+
+    const data = await res.json()
+
+    return {
+        lat: data[0].lat,
+        lon: data[0].lon
+    }
+}
+
+const varosKereses = (e) => {
+    const varos = e.target.value
+    getCoords(varos)
+    
+}
+
+const varosInput = document.getElementById("varosinput")
+varosInput.addEventListener("change", varosKereses);
 
 getDailyWeather().then( async data => {
     dailyWeather = await data.json();
@@ -225,7 +247,7 @@ getDailyWeather().then( async data => {
     jellemzokContainer.appendChild(napholdWrapper)
     
 });
-
+//NAPOCSKA MOZOOGJOOOON
 function sunMove () {
     const arc = document.getElementById('sunArc');
     const sun = document.getElementById('sunMarker');
@@ -280,8 +302,7 @@ getHourlyWeather().then( async data => {
  
     let id = 0;
  
-    hourlyWeather.list.slice(0, 8).forEach( ora => {
-     
+    hourlyWeather.list.slice(0, 9).forEach( ora => {
         const slide = document.createElement("div");
         const oraIdo = document.createElement("p");
         const oraIkon = document.createElement("img");
@@ -388,7 +409,7 @@ getHourlyWeather().then( async data => {
 
     const napDivWrapper = document.createElement("div");
     napi.appendChild(napDivWrapper);
-    napDivWrapper.classList.add("flex", "flex-col", "rounded-lg","bg-[#82B3DB]", "h-[-webkit-fill-available]!");
+    napDivWrapper.classList.add("flex", "flex-col", "lg:justify-evenly","rounded-lg","bg-[#82B3DB]", "h-[-webkit-fill-available]!");
 
     for (let i = 0; i < 5; i++){
 
