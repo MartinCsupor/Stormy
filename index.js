@@ -4,6 +4,8 @@ let dailyWeather = [];
 let hourlyWeather = [];
 let weeklyWeather = [];
 let celsius = true;
+let lat = 0
+let lon = 0
 
 const moonPhasesHU = {
     "New Moon": "Újhold",
@@ -20,7 +22,7 @@ const moonPhasesHU = {
 const getDailyWeather = async () => {
 
     const dailyWeather = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=46.181793&lon=18.954306&appid=${API_KEY}&lang=hu`
+    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&lang=hu`
     );
     return dailyWeather;
 };
@@ -56,18 +58,28 @@ const getCoords = async (varos) => {
         `https://api.openweathermap.org/geo/1.0/direct?q=${varos}&limit=1&appid=${API_KEY}`
     );
 
-    const data = await res.json()
-
-    return {
-        lat: data[0].lat,
-        lon: data[0].lon
+    if (!res.ok){
+        return false
     }
+    
+    const data = await res.json()
+    
+    if(data.length > 0)
+        return {
+            lat: data[0].lat,
+            lon: data[0].lon
+        }
+
+    return false
 }
 
-const varosKereses = (e) => {
+const varosKereses = async (e) => {
     const varos = e.target.value
-    getCoords(varos)
-    
+
+    const koordinatak = await getCoords(varos)
+    lat = koordinatak.lat
+    lon = koordinatak.lon
+    getDailyWeather()
 }
 
 const varosInput = document.getElementById("varosinput")
@@ -177,7 +189,7 @@ getDailyWeather().then( async data => {
     const keltetext1 = document.createElement("p")
     const keltetext2 = document.createElement("p")
 
-    keltetext1.textContent = `${new Date(dailyWeather.sys.sunrise * 1000).getHours()}:${new Date(dailyWeather.sys.sunrise).getMinutes()}`
+    keltetext1.textContent = `${new Date(dailyWeather.sys.sunrise * 1000).getHours()}:${new Date(dailyWeather.sys.sunrise * 1000).getMinutes()}`
     keltetext2.textContent = "Napkelte"
     kelteWrapper.appendChild(keltetext1)
     kelteWrapper.appendChild(keltetext2)
@@ -186,7 +198,7 @@ getDailyWeather().then( async data => {
     const nyugtatext1 = document.createElement("p")
     const nyugtatext2 = document.createElement("p")
 
-    nyugtatext1.textContent = `${new Date(dailyWeather.sys.sunset * 1000).getHours()}:${new Date(dailyWeather.sys.sunset).getMinutes()}`
+    nyugtatext1.textContent = `${new Date(dailyWeather.sys.sunset * 1000).getHours()}:${new Date(dailyWeather.sys.sunset * 1000).getMinutes()}`
     nyugtatext2.textContent = "Napnyugta"
     nyugtaWrapper.appendChild(nyugtatext1)
     nyugtaWrapper.appendChild(nyugtatext2)
