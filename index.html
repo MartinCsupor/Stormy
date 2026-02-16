@@ -1,160 +1,101 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <title>Stormy</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <title>Stormy</title>
 </head>
 <body>
-    <header class="flex flex-col">
-        <section class="flex justify-between items-center lg:px-20">
-            <img src="images/logo.png" alt="Stormy logo" class="h-auto w-1/4 max-w-50">
-            <h1 class="font-bold text-center text-4xl w-2/4 md:text-5xl lg:text-7xl">Stormy</h1>
-            <div class="topnav">
-              
-              <button id="menuOpen" class="p-2 cursor-pointer">
-                <img src="images/icons/hambuger-menu.svg" class="w-20 h-20 ml-3" alt="Menü">
-              </button>
-             
-              <div id="myLinks" class="menu">
-                
-                <button id="menuClose" class="close-btn">✕</button>
-            
-                <a href="index.html">Főoldal</a>
-                <a href="registeration.html">Regisztráció</a>
-                <a href="login.html">Bejelentkezés</a>
-              </div>
-            </div>
-            
-            
-            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-                <i class="fa fa-bars"></i>
-            </a>
+  <header class="flex flex-col">
+    <section class="flex justify-between items-center lg:px-20">
+      <img src="images/logo.png" alt="Stormy logo" class="h-auto w-1/4 max-w-50" />
+      <h1 class="font-bold text-center text-4xl w-2/4 md:text-5xl lg:text-7xl">Stormy</h1>
+      <div class="topnav">
+        <button id="menuOpen" class="p-2 cursor-pointer">
+          <img src="images/icons/hambuger-menu.svg" class="w-20 h-20 ml-3" alt="Menü" />
+        </button>
+        <div id="myLinks" class="menu">
+          <button id="menuClose" class="close-btn">✕</button>
+          <a href="index.html">Főoldal</a>
+          <a href="registeration.html">Regisztráció</a>
+          <a href="login.html">Bejelentkezés</a>
+        </div>
+      </div>
 
-            <style>
-                .topnav {
-                position: relative;
-                }
-                
-            
-                .menu {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                max-width: 300px;
-                height: 100vh;
-                background: #476D98;
-                display: flex;
-                flex-direction: column;
-                padding: 2rem 1rem;
-                transition: right 0.3s ease;
-                z-index: 1000;
-                }
-                
-            
-                .menu.active {
-                right: 0;
-                }
-                
-                .menu a {
-                color: white;
-                text-decoration: none;
-                padding: 1rem;
-                font-size: 1.2rem;
-                }
-                
-                .menu a:hover {
-                background: rgba(255,255,255,0.2);
-                border-radius: 8px;
-                }
-                
-            
-                .close-btn {
-                align-self: flex-end;
-                font-size: 2rem;
-                color: white;
-                background: none;
-                border: none;
-                cursor: pointer;
-                margin-bottom: 1rem;
-                }
-            </style>
-            <script>
-                const menuOpen = document.getElementById("menuOpen");
-                const menuClose = document.getElementById("menuClose");
-                const menu = document.getElementById("myLinks");
-        
-                menuOpen.addEventListener("click", () => {
-                    menu.classList.add("active");
-                });
-        
-                menuClose.addEventListener("click", () => {
-                    menu.classList.remove("active");
-                });
-            </script>
-           
-        </section>
+      <a href="javascript:void(0);" class="icon"><i class="fa fa-bars"></i></a>
+
+      <style>
+        .topnav { position: relative; }
+        .menu {
+          position: fixed; top: 0; right: -100%; width: 70%; max-width: 300px; height: 100vh;
+          background: #476D98; display: flex; flex-direction: column; padding: 2rem 1rem;
+          transition: right 0.3s ease; z-index: 1000;
+        }
+        .menu.active { right: 0; }
+        .menu a { color: white; text-decoration: none; padding: 1rem; font-size: 1.2rem; }
+        .menu a:hover { background: rgba(255,255,255,0.2); border-radius: 8px; }
+        .close-btn { align-self: flex-end; font-size: 2rem; color: white; background: none; border: none; cursor: pointer; margin-bottom: 1rem; }
+      </style>
+      <script>
+        const menuOpen = document.getElementById('menuOpen');
+        const menuClose = document.getElementById('menuClose');
+        const menu = document.getElementById('myLinks');
+        menuOpen?.addEventListener('click', () => menu.classList.add('active'));
+        menuClose?.addEventListener('click', () => menu.classList.remove('active'));
+      </script>
+    </section>
 
         <section class="flex justify-between mx-2 py-5 items-center">
             <div>
                 <input type="text" id="varosinput" placeholder="Keresés..." class="h-10 w-auto bg-[#476D98] rounded-lg px-2">
             </div>
 
-            <div class="flex flex-row justify-evenly bg-[#82B3DB] rounded-full h-auto w-25 py-1">
+            <div class="flex flex-row justify-evenly bg-[#82B3DB] rounded-full h-auto w-30 py-1 gap-1 px-1">
                 <div class="toggle-celsius bg-[#476D98] w-10 h-10 rounded-full flex justify-center items-center cursor-pointer" onclick="changeUnit('celsius')">
                     <p>°C</p>
                 </div>
                 <div class="toggle-fahrenheit w-10 h-10 rounded-full flex justify-center items-center cursor-pointer" onclick="changeUnit('fahrenheit')">
                     <p>°F</p>
                 </div>
+                
             </div>
         </section>
 
     </header>
 
-    <main class="grid grid-cols-1 auto-rows-min lg:grid-cols-3">
-      
-        <section class="lg:col-start-1 lg:row-start-1">
-            <div class="flex justify-between bg-[#476D98] p-4 rounded-2xl m-2 h-auto h-[-webkit-fill-available]!">
-                <div>
-                    <h2 id="jelenlegi_fok" class="font-bold text-2xl"></h2>
-                    <div>
-                        <img src="" alt="Időjárás ikon" id="jelenlegi_idojaras_ikon">
-                        <p id="jelenglegi_idojaras_ikon_leiras" class="font-bold"></p>
-                    </div>
-                    <p id="jelenlegi_hoerzet" class="font-bold"></p>
-                </div>
-                <div>
-                    <h2 id="jelenlegi_varos"  class="font-bold text-3xl"></h2>
-                    <p id="jelenlegi_ido" class="font-bold p-3 "></p>
-                    <p id="jelenlegi_minmax" class=" font-bold"></p>
-                </div>
-            </div>
-        </section>
+  <main class="grid grid-cols-1 auto-rows-min lg:grid-cols-3">
+    <section class="lg:col-start-1 lg:row-start-1">
+      <div class="flex justify-between bg-[#476D98] p-4 rounded-2xl m-2 h-auto h-[-webkit-fill-available]!"><div>
+          <h2 id="jelenlegi_fok" class="font-bold text-2xl"></h2>
+          <div>
+            <img src="" alt="Időjárás ikon" id="jelenlegi_idojaras_ikon" />
+            <p id="jelenglegi_idojaras_ikon_leiras" class="font-bold"></p>
+          </div>
+          <p id="jelenlegi_hoerzet" class="font-bold"></p>
+        </div>
+        <div>
+          <h2 id="jelenlegi_varos" class="font-bold text-3xl"></h2>
+          <p id="jelenlegi_ido" class="font-bold p-3 "></p>
+          <p id="jelenlegi_minmax" class=" font-bold"></p>
+        </div>
+      </div>
+    </section>
 
-        <section class="lg:row-start-1 lg:col-start-2 lg:col-span-2">
-            <div id="orankenti_idojaras" class="flex m-2">
-                <!-- óránkénti időjárási adatok -->
-            </div>
-        </section>
+    <section class="lg:row-start-1 lg:col-start-2 lg:col-span-2">
+      <div id="orankenti_idojaras" class="flex m-2"></div>
+    </section>
 
-        <section class="lg:row-start-2 lg:col-start-2 lg:col-span-2">
-            <div id="napi_idojaras" class="flex flex-col m-2 col-span-2 h-[-webkit-fill-available]!"> 
-                <!-- napi időjárási adatok -->
-            </div>
-        </section>
+    <section class="lg:row-start-2 lg:col-start-2 lg:col-span-2">
+      <div id="napi_idojaras" class="flex flex-col m-2 col-span-2 h-[-webkit-fill-available]!"></div>
+    </section>
 
-        <section class="lg:row-start-2 lg:col-start-1 lg:row-span-2">
-            <div id="idojaras_jellemzoi" class="flex flex-col m-2 p-2 rounded-lg bg-[#82B3DB]">
-                <!-- napi jellemzők, nap és hold jellemzők -->
-            </div>
-        </section>
-
+    <section class="lg:row-start-2 lg:col-start-1 lg:row-span-2">
+      <div id="idojaras_jellemzoi" class="flex flex-col m-2 p-2 rounded-lg bg-[#82B3DB]"></div>
+    </section>
 
         <section class="lg:row-start-3 lg:col-start-2 lg:col-span-2">
             <div class="w-auto bg-[#82B3DB] h-auto rounded-lg m-2 p-2 sm:p-4 justify-items-center h-[-webkit-fill-available]!">
@@ -193,39 +134,61 @@
 
     </main>
 
-<div id="zene-ikon">
-  <button id="music-toggle"
-    class="fixed bottom-4 right-4 bg-[#8CD9FF] p-3 rounded-full shadow-lg hover:bg-[#2F8BB7]">
-    <img src="images/icons/zene icon.svg" class="w-8 h-8">
-  </button>
-</div>
-
-    
-
-    
-
-
-<!-- MUSIC PANEL -->
-<!-- Music Panel -->
-<div id="music-panel" class="hidden fixed bottom-24 right-4 bg-[#476D98] rounded-2xl p-6 w-80 z-50">
-  <div class="flex justify-between items-center mb-4">
-    <div class="flex items-center">
-      <div class="w-12 h-12 bg-gray-300 rounded-md"></div>
-      <div class="ml-4">
-        <p id="song-title" class="text-lg font-bold">Zene címe</p>
-        <p id="song-artist" class="text-sm">Előadó neve</p>
-      </div>
-    </div>
-    <button id="close-music" class="w-5 h-5">
-      <img src="images/icons/close icon.svg">
+  <div id="zene-ikon">
+    <button id="music-toggle" class="fixed bottom-4 right-4 bg-[#8CD9FF] p-3 rounded-full shadow-lg hover:bg-[#2F8BB7]">
+      <img src="images/icons/zene icon.svg" class="w-8 h-8" />
     </button>
   </div>
 
-  <!-- Mood/Weather filter -->
-  <div class="mt-3">
-    <label for="mood-filter" class="block text-sm mb-1">Hangulat / Időjárás</label>
-    <select id="mood-filter" class="w-full p-2 rounded bg-[#5A7BAA] text-white">
-      <option value="" selected>Válassz hangulatot…</option>
+  <!-- Music Panel -->
+  <div id="music-panel" class="hidden fixed bottom-24 right-4 bg-[#476D98] rounded-2xl p-6 w-80 z-50">
+    <div class="flex justify-between items-center mb-4">
+      <div class="flex items-center">
+        <div class="w-12 h-12 bg-gray-300 rounded-md"></div>
+        <div class="ml-4">
+          <p id="song-title" class="text-lg font-bold">Zene címe</p>
+          <p id="song-artist" class="text-sm">Előadó neve</p>
+        </div>
+      </div>
+      <button id="close-music" class="w-5 h-5"><img src="images/icons/close icon.svg" /></button>
+    </div>
+
+    <div class="mt-3">
+      <label for="mood-filter" class="block text-sm mb-1">Hangulat / Időjárás</label>
+      <select id="mood-filter" class="w-full p-2 rounded bg-[#5A7BAA] text-white">
+        <option value="" selected>Válassz hangulatot…</option>
+        <option value="clear">Napos</option>
+        <option value="clouds">Borús</option>
+        <option value="rain">Esős</option>
+        <option value="thunder">Viharos</option>
+        <option value="snow">Havas</option>
+        <option value="mist">Ködös</option>
+        <option value="wind">Szeles</option>
+      </select>
+    </div>
+
+    <div class="flex justify-between items-center text-xl mt-3">
+      <button id="prev">⏮</button>
+      <button id="play-pause">▶</button>
+      <button id="next">⏭</button>
+      <button id="recommend-music" title="Zeneajánló (időjárás alapján)">🎵</button>
+      <button id="open-add-music" title="Zene hozzáadása">➕</button>
+      <button id="toggle-favorite" title="Kedvencek közé / onnan ki">🤍</button>
+      <button id="delete-track" title="Jelenlegi zene törlése">🗑</button>
+    </div>
+    <div class="flex justify-between items-center text-sm mt-2">
+      <button id="toggle-favorites-only" class="px-2 py-1 rounded bg-[#5A7BAA] text-white" title="Csak kedvencek megjelenítése">Csak kedvencek: KI</button>
+    </div>
+  </div>
+
+  <!-- Add Music Modal -->
+  <div id="add-music-modal" class="hidden fixed bottom-24 right-96 bg-[#82B3DB] rounded-2xl p-6 w-80 z-50">
+    <h2 class="text-lg font-bold mb-4 text-center">Egyéni zene hozzáadása</h2>
+    <input id="music-url" type="text" placeholder="Zene URL (YouTube, SoundCloud vagy MP3)" class="w-full mb-3 p-2 rounded bg-[#5A7BAA] text-white" />
+    <input id="music-title" type="text" placeholder="Zene címe" class="w-full mb-2 p-2 rounded bg-[#5A7BAA] text-white" />
+    <label for="music-mood" class="block text-sm mb-1">Hangulat / Időjárás</label>
+    <select id="music-mood" class="w-full mb-4 p-2 rounded bg-[#5A7BAA] text-white">
+      <option value="">(opcionális)</option>
       <option value="clear">Napos</option>
       <option value="clouds">Borús</option>
       <option value="rain">Esős</option>
@@ -233,520 +196,287 @@
       <option value="snow">Havas</option>
       <option value="mist">Ködös</option>
       <option value="wind">Szeles</option>
-     
+      <option value="chill">Laza</option>
     </select>
+    <div class="flex justify-between">
+      <button id="cancel-music" class="bg-[#476D98] px-4 py-2 rounded">Mégse</button>
+      <button id="add-music" class="bg-[#476D98] px-4 py-2 rounded">Hozzáadás</button>
+    </div>
   </div>
 
-  <div class="flex justify-between items-center text-xl">
-    <button id="prev">⏮</button>
-    <button id="play-pause">▶</button>
-    <button id="next">⏭</button>
-    <button id="recommend-music" title="Zeneajánló (időjárás alapján)">🎵</button>
-    <button id="open-add-music" title="Zene hozzáadása">➕</button>
-    <button id="toggle-favorite" title="Kedvencek közé / onnan ki">🤍</button>
-    <button id="delete-track" title="Jelenlegi zene törlése">🗑</button>
-  </div>
-  <div class="flex justify-between items-center text-sm mt-2">
-    <button id="toggle-favorites-only" class="px-2 py-1 rounded bg-[#5A7BAA] text-white" title="Csak kedvencek megjelenítése">Csak kedvencek: KI</button>
-  </div>
-</div>
+  <!-- Players -->
+  <audio id="audio-player"></audio>
+  <div style="position:fixed; bottom:0; left:0; width:320px; height:180px; opacity:0.1; pointer-events:none;" class="hidden"><div id="yt-player"></div></div>
+  <div style="position:fixed; bottom:0; left:330px; width:320px; height:180px; opacity:0.1; pointer-events:none;" class="hidden"><iframe id="sc-player" allow="autoplay"></iframe></div>
 
-<!-- Add Music Modal -->
-<div id="add-music-modal"
-  class="hidden fixed bottom-24 right-96 bg-[#82B3DB] rounded-2xl p-6 w-80 z-50">
-  <h2 class="text-lg font-bold mb-4 text-center">Egyéni zene hozzáadása</h2>
+  <script src="https://w.soundcloud.com/player/api.js"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
 
-  <input id="music-url" type="text" placeholder="Zene URL (YouTube vagy MP3)"
-    class="w-full mb-3 p-2 rounded bg-[#5A7BAA] text-white">
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // UI
+      const musicToggle = document.getElementById('music-toggle');
+      const musicPanel = document.getElementById('music-panel');
+      const addMusicModal = document.getElementById('add-music-modal');
+      const cancelMusicBtn = document.getElementById('cancel-music');
+      const closeMusicBtn = document.getElementById('close-music');
+      const openAddBtn = document.getElementById('open-add-music');
 
-  <input id="music-title" type="text" placeholder="Zene címe"
-    class="w-full mb-2 p-2 rounded bg-[#5A7BAA] text-white">
+      musicToggle?.addEventListener('click', () => musicPanel.classList.toggle('hidden'));
+      cancelMusicBtn?.addEventListener('click', () => addMusicModal.classList.add('hidden'));
+      closeMusicBtn?.addEventListener('click', () => { musicPanel.classList.add('hidden'); addMusicModal.classList.add('hidden'); });
+      openAddBtn?.addEventListener('click', () => addMusicModal.classList.toggle('hidden'));
 
-  <label for="music-mood" class="block text-sm mb-1">Hangulat / Időjárás</label>
-  <select id="music-mood" class="w-full mb-4 p-2 rounded bg-[#5A7BAA] text-white">
-    <option value="">(opcionális)</option>
-    <option value="clear">Napos</option>
-    <option value="clouds">Borús</option>
-    <option value="rain">Esős</option>
-    <option value="thunder">Viharos</option>
-    <option value="snow">Havas</option>
-    <option value="mist">Ködös</option>
-    <option value="wind">Szeles</option>
-    <option value="chill">Laza</option>
-  </select>
+      // Elements
+      const audio = document.getElementById('audio-player');
+      audio.volume = 0.8;
+      const playPauseBtn = document.getElementById('play-pause');
+      const prevBtn = document.getElementById('prev');
+      const nextBtn = document.getElementById('next');
+      const addBtn = document.getElementById('add-music');
+      const recommendBtn = document.getElementById('recommend-music');
 
-  <div class="flex justify-between">
-    <button id="cancel-music" class="bg-[#476D98] px-4 py-2 rounded">Mégse</button>
-    <button id="add-music" class="bg-[#476D98] px-4 py-2 rounded">Hozzáadás</button>
-  </div>
-</div>
+      const urlInput = document.getElementById('music-url');
+      const titleInput = document.getElementById('music-title');
+      const moodInput = document.getElementById('music-mood');
 
-<!-- Hidden Audio -->
-<audio id="audio-player"></audio>
+      const titleText = document.getElementById('song-title');
+      const artistText = document.getElementById('song-artist');
+      const moodSelect = document.getElementById('mood-filter');
+      const favBtn = document.getElementById('toggle-favorite');
+      const delBtn = document.getElementById('delete-track');
+      const favOnlyBtn = document.getElementById('toggle-favorites-only');
+      const scIframe = document.getElementById('sc-player');
+      let scWidget = null;
 
-<!-- Hidden YouTube Player -->
-<div style="position:fixed; bottom:0; left:0; width:320px; height:180px; opacity:0.1; pointer-events:none;" class="hidden">
-  <div id="yt-player"></div>
-</div>
+      // State
+      let playlist = [];
+      let currentIndex = 0;
+      let isPlaying = false;
+      let mode = null; // 'audio' | 'youtube' | 'soundcloud'
 
-<!-- Hidden SoundCloud Player -->
-<div style="position:fixed; bottom:0; left:330px; width:320px; height:180px; opacity:0.1; pointer-events:none;" class="hidden">
-  <iframe id="sc-player" allow="autoplay"></iframe>
-</div>
+      let favorites = new Set();
+      let favoritesOnly = false;
+      let fullPlaylistBackup = null;
 
-<!-- SoundCloud Widget API -->
-<script src="https://w.soundcloud.com/player/api.js"></script>
+      let library = [];
+      let moodFilter = null;
+      let moodPlaylistBackup = null;
 
-<!-- YouTube Iframe API -->
-<script src="https://www.youtube.com/iframe_api" ></script>
+      // Helpers
+      function getTrackKey(track) {
+        if (!track) return '';
+        if (track.type === 'youtube') return `youtube:${track.id}`;
+        if (track.type === 'soundcloud') return `soundcloud:${track.url}`;
+        return `audio:${track.url}`;
+      }
+      function loadFavorites() {
+        try { const arr = JSON.parse(localStorage.getItem('stormy_favorites') || '[]'); favorites = new Set(Array.isArray(arr) ? arr : []); }
+        catch { favorites = new Set(); }
+      }
+      function saveFavorites() {
+        try { localStorage.setItem('stormy_favorites', JSON.stringify(Array.from(favorites))); } catch {}
+      }
+      function isFavorite(track) { return favorites.has(getTrackKey(track)); }
+      function updateFavoriteButton() {
+        const song = playlist[currentIndex];
+        favBtn.textContent = song && isFavorite(song) ? '❤️' : '🤍';
+      }
+      function loadLibrary() {
+        try { const arr = JSON.parse(localStorage.getItem('stormy_library') || '[]'); library = Array.isArray(arr) ? arr : []; }
+        catch { library = []; }
+      }
+      function saveLibrary() { try { localStorage.setItem('stormy_library', JSON.stringify(library)); } catch {} }
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
+      // Recommendations
+      const RECOMMENDATIONS = {
+        clear: [
+          { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', title: 'Napos Chill 1' },
+          { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3', title: 'Napos Chill 2' }
+        ],
+        clouds: [
+          { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', title: 'Borús Hangulat 1' },
+          { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3', title: 'Borús Hangulat 2' }
+        ],
+        rain: [
+          { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', title: 'Esős Nap 1' },
+          { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3', title: 'Esős Nap 2' }
+        ],
+        thunder: [ { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3', title: 'Viharos Energia' } ],
+        snow: [ { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3', title: 'Téli Nyugalom' } ],
+        mist: [ { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3', title: 'Ködös Hangulat' } ],
+        wind: [ { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3', title: 'Szeles Flow' } ]
+      };
 
-  // ================= UI =================
-  const musicToggle = document.getElementById('music-toggle');
-  const musicPanel = document.getElementById('music-panel');
-  const addMusicModal = document.getElementById('add-music-modal');
-  const cancelMusicBtn = document.getElementById('cancel-music');
-  const closeMusicBtn = document.getElementById('close-music');
-  const openAddBtn = document.getElementById('open-add-music');
+      function getCurrentMood() {
+        const t = (document.getElementById('jelenglegi_idojaras_ikon_leiras')?.textContent || '').toLowerCase();
+        if (t.includes('tiszta') || t.includes('derült')) return 'clear';
+        if (t.includes('felhő') || t.includes('borús')) return 'clouds';
+        if (t.includes('eső') || t.includes('zápor') || t.includes('szitál')) return 'rain';
+        if (t.includes('zivatar') || t.includes('vihar')) return 'thunder';
+        if (t.includes('hó')) return 'snow';
+        if (t.includes('köd') || t.includes('pára') || t.includes('szmog') || t.includes('hamu')) return 'mist';
+        if (t.includes('szél') || t.includes('viharos')) return 'wind';
+        return 'clear';
+      }
+      function recommendByWeather() {
+        const mood = getCurrentMood();
+        const list = RECOMMENDATIONS[mood] || [];
+        playlist = list.map(item => item.type === 'youtube' ? { type: 'youtube', id: item.id, title: item.title } : { type: 'audio', url: item.url, title: item.title });
+        try { localStorage.setItem('stormy_playlist', JSON.stringify(playlist)); } catch {}
+        currentIndex = 0;
+        if (playlist.length) loadSong(0, true); else { titleText.textContent = 'Nincs dal'; artistText.textContent = ''; audio.src=''; updateFavoriteButton(); }
+      }
 
-  musicToggle?.addEventListener('click', () => {
-    musicPanel.classList.toggle('hidden');
-  });
+      // Mood filter
+      function applyMoodFilter(mood) {
+        if (!mood) {
+          moodFilter = null;
+          if (moodPlaylistBackup) { playlist = moodPlaylistBackup.slice(); moodPlaylistBackup = null; }
+          currentIndex = 0;
+          if (playlist.length) loadSong(0, false); else { titleText.textContent = 'Nincs dal'; artistText.textContent=''; try { audio.pause(); } catch {}; audio.src=''; updateFavoriteButton(); }
+          try { localStorage.setItem('stormy_playlist', JSON.stringify(playlist)); } catch {}
+          return;
+        }
+        if (!moodPlaylistBackup) moodPlaylistBackup = playlist.slice();
+        moodFilter = mood;
+        let filtered = library.filter(t => (t.mood || '') === mood);
+        if (favoritesOnly) filtered = filtered.filter(t => isFavorite(t));
+        playlist = filtered;
+        currentIndex = 0;
+        if (playlist.length) loadSong(0, false); else { titleText.textContent = 'Nincs dal'; artistText.textContent=''; try { audio.pause(); } catch {}; audio.src=''; updateFavoriteButton(); }
+        try { localStorage.setItem('stormy_playlist', JSON.stringify(playlist)); } catch {}
+      }
 
-  cancelMusicBtn?.addEventListener('click', () => {
-    addMusicModal.classList.add('hidden');
-  });
-
-  closeMusicBtn?.addEventListener('click', () => {
-    musicPanel.classList.add('hidden');
-    addMusicModal.classList.add('hidden');
-  });
-
-  openAddBtn?.addEventListener('click', () => {
-    addMusicModal.classList.toggle('hidden');
-  });
-
-  // ================= Player =================
-  const audio = document.getElementById('audio-player');
-  audio.volume = 0.8;
-  const playPauseBtn = document.getElementById('play-pause');
-  const prevBtn = document.getElementById('prev');
-  const nextBtn = document.getElementById('next');
-  const addBtn = document.getElementById('add-music');
-  const recommendBtn = document.getElementById('recommend-music');
-
-  const urlInput = document.getElementById('music-url');
-  const titleInput = document.getElementById('music-title');
-  const moodInput = document.getElementById('music-mood');
-
-  const titleText = document.getElementById('song-title');
-  const artistText = document.getElementById('song-artist');
-  const moodSelect = document.getElementById('mood-filter');
-  const favBtn = document.getElementById('toggle-favorite');
-  const delBtn = document.getElementById('delete-track');
-  const favOnlyBtn = document.getElementById('toggle-favorites-only');
-  const scIframe = document.getElementById('sc-player');
-  let scWidget = null;
-
-  let playlist = [];
-  let currentIndex = 0;
-  let isPlaying = false;
-  let mode = null; // "audio" | "youtube"
-
-  // Favorites and filtering state
-  let favorites = new Set();
-  let favoritesOnly = false;
-  let fullPlaylistBackup = null; // used when toggling favorites-only mode
-
-  // User library to keep all user-added tracks with optional mood
-  let library = [];
-  function loadLibrary() {
-    try { library = JSON.parse(localStorage.getItem('stormy_library') || '[]'); if (!Array.isArray(library)) library = []; } catch { library = []; }
-  }
-  function saveLibrary() {
-    try { localStorage.setItem('stormy_library', JSON.stringify(library)); } catch {}
-  }
-
-  // ================= Ajánlott zenék (időjárás szűrő) =================
-  const RECOMMENDATIONS = {
-    clear: [
-      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', title: 'Napos Chill 1', mood: 'clear' },
-      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3', title: 'Napos Chill 2', mood: 'clear' }
-    ],
-    clouds: [
-      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', title: 'Borús Hangulat 1', mood: 'clouds' },
-      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3', title: 'Borús Hangulat 2', mood: 'clouds' }
-    ],
-    rain: [
-      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', title: 'Esős Nap 1', mood: 'rain' },
-      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3', title: 'Esős Nap 2', mood: 'rain' }
-    ],
-    thunder: [
-      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3', title: 'Viharos Energia', mood: 'thunder' }
-    ],
-    snow: [
-      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3', title: 'Téli Nyugalom', mood: 'snow' }
-    ],
-    mist: [
-      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3', title: 'Ködös Hangulat', mood: 'mist' }
-    ],
-    wind: [
-      { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3', title: 'Szeles Flow', mood: 'wind' }
-    ],
-    
-  };
-
-  // Favorites helpers
-  function getTrackKey(track) {
-    if (!track) return '';
-    return track.type === 'youtube' ? `youtube:${track.id}` : `audio:${track.url}`;
-    }
-  function loadFavorites() {
-    try {
-      const arr = JSON.parse(localStorage.getItem('stormy_favorites') || '[]');
-      favorites = new Set(Array.isArray(arr) ? arr : []);
-    } catch { favorites = new Set(); }
-  }
-  function saveFavorites() {
-    try { localStorage.setItem('stormy_favorites', JSON.stringify(Array.from(favorites))); } catch {}
-  }
-  function isFavorite(track) { return favorites.has(getTrackKey(track)); }
-  function updateFavoriteButton() {
-    const song = playlist[currentIndex];
-    if (!song) { favBtn && (favBtn.textContent = '🤍'); return; }
-    favBtn && (favBtn.textContent = isFavorite(song) ? '❤️' : '🤍');
-  }
-
-  function getCurrentMood() {
-    const t = (document.getElementById('jelenglegi_idojaras_ikon_leiras')?.textContent || '').toLowerCase();
-    if (!t) return 'chill';
-
-    if (t.includes('tiszta') || t.includes('derült')) return 'clear';
-    if (t.includes('felhő') || t.includes('borús')) return 'clouds';
-    if (t.includes('eső') || t.includes('zápor') || t.includes('szitál')) return 'rain';
-    if (t.includes('zivatar') || t.includes('vihar')) return 'thunder';
-    if (t.includes('hó')) return 'snow';
-    if (t.includes('köd') || t.includes('pára') || t.includes('szmog') || t.includes('hamu')) return 'mist';
-    if (t.includes('szél') || t.includes('viharos')) return 'wind';
-    return 'chill';
-  }
-
-  function recommendByWeather() {
-    const mood = getCurrentMood();
-    const list = RECOMMENDATIONS[mood] || RECOMMENDATIONS['chill'];
-    playlist = list.map(item => item.type === 'youtube'
-      ? { type: 'youtube', id: item.id, title: item.title }
-      : { type: 'audio', url: item.url, title: item.title });
-    try { localStorage.setItem('stormy_playlist', JSON.stringify(playlist)); } catch {}
-    currentIndex = 0;
-    loadSong(0);
-  }
-
-  // ================= YOUTUBE =================
-  let ytPlayer = null;
-  let pendingVideoId = null;
-  let ytPlayRetryTimer = null;
-  let ytPendingPlay = false;
-
-  function extractVideoId(url) {
-    try {
-      const u = new URL(url);
-      if (u.searchParams.get('v')) return u.searchParams.get('v');
-      const parts = u.pathname.split('/').filter(Boolean);
-      if (u.hostname.includes('youtu.be')) return parts[0] || null;
-      const idxShorts = parts.indexOf('shorts');
-      if (idxShorts !== -1) return parts[idxShorts + 1] || null;
-      const idxEmbed = parts.indexOf('embed');
-      if (idxEmbed !== -1) return parts[idxEmbed + 1] || null;
-    } catch (e) {
-      const m = url.match(/(?:v=|youtu\.be\/|shorts\/|embed\/)([A-Za-z0-9_-]{6,})/);
-      if (m) return m[1];
-    }
-    return null;
-  }
-
-  window.onYouTubeIframeAPIReady = () => {
-    ytPlayer = new YT.Player('yt-player', {
-      height: '180',
-      width: '320',
-      playerVars: { controls: 1 },
-      events: {
-        onReady: () => {
-          try { ytPlayer.unMute(); ytPlayer.setVolume(80); } catch {}
-          if (pendingVideoId) {
-            ytPlayer.cueVideoById(pendingVideoId);
-            pendingVideoId = null;
+      // Players
+      let ytPlayer = null; let pendingVideoId = null; let ytPlayRetryTimer = null; let ytPendingPlay = false;
+      function extractVideoId(url) {
+        try {
+          const u = new URL(url);
+          if (u.searchParams.get('v')) return u.searchParams.get('v');
+          const parts = u.pathname.split('/').filter(Boolean);
+          if (u.hostname.includes('youtu.be')) return parts[0] || null;
+          const iS = parts.indexOf('shorts'); if (iS !== -1) return parts[iS+1] || null;
+          const iE = parts.indexOf('embed'); if (iE !== -1) return parts[iE+1] || null;
+        } catch(e) { const m = url.match(/(?:v=|youtu\.be\/|shorts\/|embed\/)([A-Za-z0-9_-]{6,})/); if (m) return m[1]; }
+        return null;
+      }
+      window.onYouTubeIframeAPIReady = () => {
+        ytPlayer = new YT.Player('yt-player', {
+          height: '180', width: '320', playerVars: { controls: 1 },
+          events: {
+            onReady: () => { try { ytPlayer.unMute(); ytPlayer.setVolume(80); } catch {} if (pendingVideoId) { ytPlayer.cueVideoById(pendingVideoId); pendingVideoId = null; } if (ytPendingPlay) { ytPendingPlay = false; try { ytPlayer.playVideo(); } catch {} } },
+            onStateChange: (e) => {
+              if (e.data === YT.PlayerState.PLAYING) { isPlaying = true; playPauseBtn.textContent = '⏸'; }
+              else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.CUED) { isPlaying = false; playPauseBtn.textContent = '▶'; }
+              else if (e.data === YT.PlayerState.ENDED) { nextBtn?.click(); }
+            }
           }
-          if (ytPendingPlay) {
-            ytPendingPlay = false;
-            try { ytPlayer.playVideo(); } catch {}
+        });
+      };
+
+      function loadSong(index, autoPlay = false) {
+        const song = playlist[index]; if (!song) return;
+        isPlaying = false; playPauseBtn.textContent = '▶';
+        titleText.textContent = song.title; artistText.textContent = 'Felhasználó'; updateFavoriteButton();
+        if (song.type === 'soundcloud') {
+          mode = 'soundcloud'; try { ytPlayer?.pauseVideo?.(); } catch {}; try { audio.pause(); } catch {}; audio.src = '';
+          const playerUrl = `https://w.soundcloud.com/player/?url=${encodeURIComponent(song.url)}&auto_play=${autoPlay ? 'true' : 'false'}`;
+          if (scIframe) {
+            scIframe.src = playerUrl;
+            if (!scWidget && window.SC && window.SC.Widget) {
+              scWidget = SC.Widget(scIframe);
+              try {
+                scWidget.bind(SC.Widget.Events.PLAY, () => { isPlaying = true; playPauseBtn.textContent = '⏸'; });
+                scWidget.bind(SC.Widget.Events.PAUSE, () => { isPlaying = false; playPauseBtn.textContent = '▶'; });
+                scWidget.bind(SC.Widget.Events.FINISH, () => { nextBtn?.click(); });
+              } catch {}
+            }
+            if (scWidget && scWidget.load) { try { scWidget.load(song.url, { auto_play: autoPlay, show_comments: false, visual: false }); } catch {} }
           }
-        },
-        onStateChange: (e) => {
-          if (e.data === YT.PlayerState.PLAYING) {
-            isPlaying = true;
-            playPauseBtn.textContent = '⏸';
-          } else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.CUED) {
-            isPlaying = false;
-            playPauseBtn.textContent = '▶';
-          } else if (e.data === YT.PlayerState.ENDED) {
-            nextBtn?.click();
-          }
+        } else if (song.type === 'youtube') {
+          mode = 'youtube'; try { audio.pause(); } catch {}; audio.src = '';
+          if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+            ytPlayer.loadVideoById(song.id);
+            if (autoPlay) { try { ytPlayer.unMute(); ytPlayer.setVolume(80); ytPlayer.playVideo(); } catch {} }
+          } else { pendingVideoId = song.id; if (autoPlay) ytPendingPlay = true; }
+        } else {
+          mode = 'audio'; try { ytPlayer?.pauseVideo?.(); } catch {};
+          audio.src = song.url; if (autoPlay) audio.play().catch(() => {});
         }
       }
+
+      // Controls
+      playPauseBtn.addEventListener('click', () => {
+        if (!playlist.length) return;
+        if (!isPlaying) {
+          if (mode === 'youtube') {
+            const tryNow = () => { if (ytPlayer && typeof ytPlayer.playVideo === 'function') { try { ytPlayer.unMute(); ytPlayer.setVolume(80); } catch {}; ytPlayer.playVideo(); return true; } return false; };
+            if (!tryNow()) { ytPendingPlay = true; clearTimeout(ytPlayRetryTimer); ytPlayRetryTimer = setTimeout(() => { if (!tryNow()) { ytPlayRetryTimer = setTimeout(() => { tryNow(); }, 700); } }, 300); }
+          } else if (mode === 'soundcloud') { try { scWidget && scWidget.play && scWidget.play(); } catch {} }
+          else { audio.play(); }
+        } else {
+          if (mode === 'youtube') { try { ytPlayer?.pauseVideo?.(); } catch {} }
+          else if (mode === 'soundcloud') { try { scWidget && scWidget.pause && scWidget.pause(); } catch {} }
+          else { audio.pause(); }
+        }
+      });
+      nextBtn?.addEventListener('click', () => { if (!playlist.length) return; currentIndex = (currentIndex + 1) % playlist.length; loadSong(currentIndex, true); });
+      prevBtn?.addEventListener('click', () => { if (!playlist.length) return; currentIndex = (currentIndex - 1 + playlist.length) % playlist.length; loadSong(currentIndex, true); });
+
+      favBtn?.addEventListener('click', () => { const song = playlist[currentIndex]; if (!song) return; const key = getTrackKey(song); if (favorites.has(key)) favorites.delete(key); else favorites.add(key); saveFavorites(); updateFavoriteButton(); });
+
+      delBtn?.addEventListener('click', () => {
+        if (!playlist.length) return;
+        try { ytPlayer?.pauseVideo?.(); } catch {}; try { scWidget && scWidget.pause && scWidget.pause(); } catch {}; try { audio.pause(); } catch {};
+        const removed = playlist.splice(currentIndex, 1)[0];
+        try { localStorage.setItem('stormy_playlist', JSON.stringify(playlist)); } catch {};
+        if (removed) { const rKey = getTrackKey(removed); const before = library.length; library = library.filter(t => getTrackKey(t) !== rKey); if (library.length !== before) saveLibrary(); }
+        if (fullPlaylistBackup) { const key = getTrackKey(removed); fullPlaylistBackup = fullPlaylistBackup.filter(t => getTrackKey(t) !== key); }
+        if (!playlist.length) { currentIndex = 0; titleText.textContent = 'Nincs dal'; artistText.textContent = ''; audio.src = ''; updateFavoriteButton(); return; }
+        if (currentIndex >= playlist.length) currentIndex = 0; loadSong(currentIndex);
+      });
+
+      favOnlyBtn?.addEventListener('click', () => {
+        favoritesOnly = !favoritesOnly;
+        if (favoritesOnly) { fullPlaylistBackup = playlist.slice(); playlist = fullPlaylistBackup.filter(t => isFavorite(t)); currentIndex = 0; favOnlyBtn.textContent = 'Csak kedvencek: BE'; }
+        else { if (fullPlaylistBackup) playlist = fullPlaylistBackup; fullPlaylistBackup = null; currentIndex = 0; favOnlyBtn.textContent = 'Csak kedvencek: KI'; }
+        if (playlist.length) loadSong(0); else { titleText.textContent = 'Nincs dal'; artistText.textContent=''; audio.src=''; updateFavoriteButton(); }
+      });
+
+      audio.addEventListener('play', () => { isPlaying = true; playPauseBtn.textContent = '⏸'; });
+      audio.addEventListener('pause', () => { isPlaying = false; playPauseBtn.textContent = '▶'; });
+      audio.addEventListener('ended', () => { nextBtn?.click(); });
+
+      // Add Music
+      addBtn?.addEventListener('click', () => {
+        const url = urlInput.value.trim(); const title = titleInput.value.trim(); const moodVal = (moodInput?.value || '').trim();
+        if (!url || !title) { alert('Tölts ki mindent!'); return; }
+        let newTrack = null;
+        if (/(youtube\.com|youtu\.be)/i.test(url)) { const videoId = extractVideoId(url); if (!videoId) { alert('Érvényes YouTube link kell!'); return; } newTrack = { type: 'youtube', id: videoId, title, mood: moodVal || undefined }; }
+        else if (/(soundcloud\.com)/i.test(url)) { newTrack = { type: 'soundcloud', url, title, mood: moodVal || undefined }; }
+        else { newTrack = { type: 'audio', url, title, mood: moodVal || undefined }; }
+        library.push(newTrack); saveLibrary();
+        if (moodFilter) { applyMoodFilter(moodFilter); } else {
+          playlist.push(newTrack); try { localStorage.setItem('stormy_playlist', JSON.stringify(playlist)); } catch {};
+          if (playlist.length === 1) { currentIndex = 0; loadSong(0, false); }
+        }
+        urlInput.value = ''; titleInput.value = ''; if (moodInput) moodInput.value = '';
+        addMusicModal.classList.add('hidden'); alert('Zene hozzáadva!');
+      });
+
+      // Weather-based recommend
+      recommendBtn?.addEventListener('click', () => { recommendByWeather(); });
+
+      // Mood select filter
+      moodSelect?.addEventListener('change', (e) => { const val = (e.target.value || '').trim(); applyMoodFilter(val || null); });
+
+      // Init
+      loadFavorites(); loadLibrary();
+      try { const saved = JSON.parse(localStorage.getItem('stormy_playlist') || '[]'); if (Array.isArray(saved) && saved.length) { playlist = saved; loadSong(0, false); } else { updateFavoriteButton(); } } catch { updateFavoriteButton(); }
     });
-  };
+  </script>
 
-  function loadSong(index, autoPlay = false) {
-    const song = playlist[index];
-    if (!song) return;
-
-    // Reset UI state
-    isPlaying = false;
-    playPauseBtn.textContent = '▶';
-
-    titleText.textContent = song.title;
-    artistText.textContent = 'Felhasználó';
-    updateFavoriteButton();
-
-    if (song.type === 'soundcloud') {
-      mode = 'soundcloud';
-      try { ytPlayer?.pauseVideo?.(); } catch {}
-      try { audio.pause(); } catch {}
-      audio.src = '';
-      const playerUrl = `https://w.soundcloud.com/player/?url=${encodeURIComponent(song.url)}&auto_play=${autoPlay ? 'true' : 'false'}`;
-      if (scIframe) {
-        scIframe.src = playerUrl;
-        if (!scWidget && window.SC && window.SC.Widget) {
-          scWidget = SC.Widget(scIframe);
-          try {
-            scWidget.bind(SC.Widget.Events.PLAY, () => { isPlaying = true; playPauseBtn.textContent = '⏸'; });
-            scWidget.bind(SC.Widget.Events.PAUSE, () => { isPlaying = false; playPauseBtn.textContent = '▶'; });
-            scWidget.bind(SC.Widget.Events.FINISH, () => { nextBtn?.click(); });
-          } catch {}
-        }
-        if (scWidget && scWidget.load) {
-          try { scWidget.load(song.url, { auto_play: autoPlay, show_comments: false, visual: false }); } catch {}
-        }
-      }
-    } else if (song.type === 'youtube') {
-      mode = 'youtube';
-      try { audio.pause(); } catch {}
-      audio.src = '';
-      if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
-        ytPlayer.loadVideoById(song.id);
-        if (autoPlay) {
-          try { ytPlayer.unMute(); ytPlayer.setVolume(80); ytPlayer.playVideo(); } catch {}
-        }
-      } else {
-        pendingVideoId = song.id;
-        if (autoPlay) { ytPendingPlay = true; }
-      }
-    } else {
-      mode = 'audio';
-      try { ytPlayer?.pauseVideo?.(); } catch {}
-      audio.src = song.url;
-      if (autoPlay) {
-        // some browsers need a direct play after src set
-        audio.play().catch(() => {});
-      }
-    }
-  }
-
-  // ================= Controls =================
-  playPauseBtn.addEventListener('click', () => {
-    if (!playlist.length) { return; }
-
-    if (!isPlaying) {
-      if (mode === 'youtube') {
-        const tryNow = () => {
-          if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
-            try { ytPlayer.unMute(); ytPlayer.setVolume(80); } catch {}
-            ytPlayer.playVideo();
-            return true;
-          }
-          return false;
-        };
-        if (!tryNow()) {
-          ytPendingPlay = true;
-          clearTimeout(ytPlayRetryTimer);
-          ytPlayRetryTimer = setTimeout(() => { if (!tryNow()) { ytPlayRetryTimer = setTimeout(() => { tryNow(); }, 700); } }, 300);
-        }
-      } else if (mode === 'soundcloud') {
-        try { scWidget && scWidget.play && scWidget.play(); } catch {}
-      } else {
-        audio.play();
-      }
-    } else {
-      if (mode === 'youtube') {
-        try { ytPlayer?.pauseVideo?.(); } catch {}
-      } else if (mode === 'soundcloud') {
-        try { scWidget && scWidget.pause && scWidget.pause(); } catch {}
-      } else {
-        audio.pause();
-      }
-    }
-  });
-
-  nextBtn?.addEventListener('click', () => {
-    if (!playlist.length) return;
-    currentIndex = (currentIndex + 1) % playlist.length;
-    loadSong(currentIndex, true);
-  });
-
-  prevBtn?.addEventListener('click', () => {
-    if (!playlist.length) return;
-    currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
-    loadSong(currentIndex, true);
-  });
-
-  // Favorite toggle
-  favBtn?.addEventListener('click', () => {
-    const song = playlist[currentIndex];
-    if (!song) return;
-    const key = getTrackKey(song);
-    if (favorites.has(key)) favorites.delete(key); else favorites.add(key);
-    saveFavorites();
-    updateFavoriteButton();
-  });
-
-  // Delete current track
-  delBtn?.addEventListener('click', () => {
-    if (!playlist.length) return;
-    // Pause any playing
-    try { ytPlayer?.pauseVideo?.(); } catch {}
-    try { scWidget && scWidget.pause && scWidget.pause(); } catch {}
-    try { audio.pause(); } catch {}
-
-    const removed = playlist.splice(currentIndex, 1)[0];
-    try { localStorage.setItem('stormy_playlist', JSON.stringify(playlist)); } catch {}
-
-    // Also remove from library if present
-    if (removed) {
-      const rKey = getTrackKey(removed);
-      const before = library.length;
-      library = library.filter(t => getTrackKey(t) !== rKey);
-      if (library.length !== before) saveLibrary();
-    }
-
-    // Also remove from backup if exists
-    if (fullPlaylistBackup) {
-      const key = getTrackKey(removed);
-      fullPlaylistBackup = fullPlaylistBackup.filter(t => getTrackKey(t) !== key);
-    }
-
-    if (!playlist.length) {
-      currentIndex = 0;
-      titleText.textContent = 'Nincs dal';
-      artistText.textContent = '';
-      audio.src = '';
-      updateFavoriteButton();
-      return;
-    }
-    if (currentIndex >= playlist.length) currentIndex = 0;
-    loadSong(currentIndex);
-  });
-
-  // Toggle favorites-only
-  favOnlyBtn?.addEventListener('click', () => {
-    favoritesOnly = !favoritesOnly;
-    if (favoritesOnly) {
-      fullPlaylistBackup = playlist.slice();
-      const favList = fullPlaylistBackup.filter(t => isFavorite(t));
-      playlist = favList;
-      currentIndex = 0;
-      favOnlyBtn.textContent = 'Csak kedvencek: BE';
-    } else {
-      if (fullPlaylistBackup) playlist = fullPlaylistBackup;
-      fullPlaylistBackup = null;
-      currentIndex = 0;
-      favOnlyBtn.textContent = 'Csak kedvencek: KI';
-    }
-    if (playlist.length) {
-      loadSong(0);
-    } else {
-      titleText.textContent = 'Nincs dal';
-      artistText.textContent = '';
-      audio.src = '';
-      updateFavoriteButton();
-    }
-  });
-
-  // Keep button state synced with audio element
-  audio.addEventListener('play', () => { isPlaying = true; playPauseBtn.textContent = '⏸'; });
-  audio.addEventListener('pause', () => { isPlaying = false; playPauseBtn.textContent = '▶'; });
-  audio.addEventListener('ended', () => { nextBtn?.click(); });
-
-  // ================= Add Music =================
-  addBtn?.addEventListener('click', () => {
-    const url = urlInput.value.trim();
-    const title = titleInput.value.trim();
-
-    if (!url || !title) { alert('Tölts ki mindent!'); return; }
-
-    let newTrack = null;
-    if (/(youtube\.com|youtu\.be)/i.test(url)) {
-      const videoId = extractVideoId(url);
-      if (!videoId) { alert('Érvényes YouTube link kell!'); return; }
-      newTrack = { type: 'youtube', id: videoId, title, mood: moodInput?.value || undefined };
-    } else if (/(soundcloud\.com)/i.test(url)) {
-      newTrack = { type: 'soundcloud', url, title, mood: moodInput?.value || undefined };
-    } else {
-      // Próbáljuk meg sima audio forrásként (MP3/M4A/OGG, stb.)
-      newTrack = { type: 'audio', url, title, mood: moodInput?.value || undefined };
-    }
-
-    // Add to user library and persist
-    library.push(newTrack);
-    saveLibrary();
-
-    // Also make it available in current playlist context (append)
-    playlist.push(newTrack);
-    try { localStorage.setItem('stormy_playlist', JSON.stringify(playlist)); } catch {}
-
-    if (playlist.length === 1) {
-      currentIndex = 0;
-      loadSong(0, false);
-    }
-
-    urlInput.value = '';
-    titleInput.value = '';
-    if (moodInput) moodInput.value = '';
-    addMusicModal.classList.add('hidden');
-    alert('Zene hozzáadva!');
-  });
-
-  // Weather-based recommend action
-  recommendBtn?.addEventListener('click', () => {
-    recommendByWeather();
-    loadSong(0, true);
-  });
-
-  // Mood select filtering (user library + recommendations)
-  moodSelect?.addEventListener('change', (e) => {
-    const mood = e.target.value;
-    if (!mood) return;
-    applyMoodFilter(mood);
-  });
-
-  // Restore favorites, library and playlist on load
-  loadFavorites();
-  loadLibrary();
-  try {
-    const saved = JSON.parse(localStorage.getItem('stormy_playlist') || '[]');
-    if (Array.isArray(saved) && saved.length) {
-      playlist = saved;
-      loadSong(0, false);
-    } else {
-      updateFavoriteButton();
-    }
-  } catch { updateFavoriteButton(); }
-
-});
-</script>
- 
-    <script src="index.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>

@@ -3,6 +3,7 @@ const API_KEY = "8bbe3807862344f523a5e8a6532780f5";
 let dailyWeather = [];
 let hourlyWeather = [];
 let weeklyWeather = [];
+let unit = "celsius";
 let celsius = true;
 let lat = 0
 let lon = 0
@@ -102,13 +103,13 @@ getDailyWeather().then( async data => {
     const ido = document.getElementById("jelenlegi_ido");
     const minmax = document.getElementById("jelenlegi_minmax");
 
-    fok.innerHTML = (hofok(dailyWeather.main.temp) + (celsius ? "°C" : "°F"));
-    ikon.src = "";
+    fok.innerHTML = hofok(dailyWeather.main.temp) + getUnitSymbol();
+    ikon.src = `/images/icons/weather/${dailyWeather.weather[0].icon}.svg`;
     leiras.innerHTML = dailyWeather.weather[0].description.charAt(0).toUpperCase() + dailyWeather.weather[0].description.slice(1);
-    hoerzet.innerHTML = "Hőérzet: " + hofok(dailyWeather.main.feels_like) + (celsius ? "°C" : "°F");
+    hoerzet.innerHTML = "Hőérzet: " + hofok(dailyWeather.main.feels_like) + getUnitSymbol();
     varos.innerHTML = dailyWeather.name;
     ido.innerHTML = new Date().toLocaleTimeString("hu-HU", {hour: "2-digit", minute: "2-digit"});
-    minmax.innerHTML = hofok(dailyWeather.main.temp_min) + (celsius ? "°C" : "°F") + "/" + hofok(dailyWeather.main.temp_max) + (celsius ? "°C" : "°F");
+    minmax.innerHTML = hofok(dailyWeather.main.temp_min) + getUnitSymbol() + "/" + hofok(dailyWeather.main.temp_max) + getUnitSymbol();
 
 
     //napi jellemzők
@@ -331,7 +332,7 @@ getHourlyWeather().then( async data => {
         oraLeiras.innerHTML = ora.weather[0].description.charAt(0).toUpperCase() + ora.weather[0].description.slice(1);
         oraLeiras.classList.add("text-xs");
         rawHourlyTemps.push(ora.main.temp);
-        oraFok.innerHTML = hofok(ora.main.temp) + (celsius ? "°C" : "°F");
+        oraFok.innerHTML = hofok(ora.main.temp) + getUnitSymbol();
 
         oraFok.classList.add("font-bold");
         oraEsoWrapper.classList.add("flex", "items-center")
@@ -389,8 +390,8 @@ getHourlyWeather().then( async data => {
 
         esokO.push(nap.pop*100);
         ikonokO.push(nap.weather[0].icon);
-        minekO.push(hofok(nap.main.temp_min));
-        maxokO.push(hofok(nap.main.temp_max));
+        minekO.push(nap.main.temp_min);
+        maxokO.push(nap.main.temp_max);
 
 
         if(db == 8){
@@ -409,13 +410,14 @@ getHourlyWeather().then( async data => {
             ikonok.push(ikonokO);
 
 
-            minekO = esokO.reduce((a,b) => a + b, 0) / minekO.length;  
-            minek.push(minekO);
-            minekO = []
-
-            maxokO = maxokO.reduce((a,b) => a + b, 0) / maxokO.length;
-            maxok.push(maxokO);
-            maxokO = []
+            const dayMinK = Math.min(...minekO);
+            const dayMaxK = Math.max(...maxokO);
+            minek.push(dayMinK);
+            maxok.push(dayMaxK);
+            rawDailyMin.push(dayMinK);
+            rawDailyMax.push(dayMaxK);
+            minekO = [];
+            maxokO = [];
         }
     });
 
@@ -449,8 +451,8 @@ getHourlyWeather().then( async data => {
         napEso.innerHTML = Math.round(esok[i]) + "%";
 ;
         // napIkon.src = `img/icons/$idojaras${ikon[i]}.png`;
-        napMin.innerHTML = minek[i]+ (celsius ? "°C" : "°F");
-        napMax.innerHTML = maxok[i]+ (celsius ? "°C" : "°F");
+        napMin.innerHTML = hofok(minek[i]) + getUnitSymbol();
+        napMax.innerHTML = hofok(maxok[i]) + getUnitSymbol();
 
 
         napDivWrapper.appendChild(napDiv);
@@ -470,49 +472,52 @@ getHourlyWeather().then( async data => {
     }
 });
 
-const changeUnit = (unit) => {
-    celsius = unit === "celsius";
+const changeUnit = (newUnit) => {
+    unit = newUnit === "fahrenheit" ? "fahrenheit" : "celsius"; // only C/F
 
-    document.querySelector(".toggle-celsius")
-        .classList.toggle("bg-[#476D98]", celsius);
+    const cOn = unit === "celsius";
+    const fOn = unit === "fahrenheit";
 
-    document.querySelector(".toggle-fahrenheit")
-        .classList.toggle("bg-[#476D98]", !celsius);
+    const cT = document.querySelector(".toggle-celsius");
+    const fT = document.querySelector(".toggle-fahrenheit");
+
+    cT && cT.classList.toggle("bg-[#476D98]", cOn);
+    fT && fT.classList.toggle("bg-[#476D98]", fOn);
 
     // aktuális
     document.getElementById("jelenlegi_fok").innerHTML =
-        hofok(dailyWeather.main.temp) + (celsius ? "°C" : "°F");
+        hofok(dailyWeather.main.temp) + getUnitSymbol();
 
     document.getElementById("jelenlegi_hoerzet").innerHTML =
-        "Hőérzet: " + hofok(dailyWeather.main.feels_like) + (celsius ? "°C" : "°F");
+        "Hőérzet: " + hofok(dailyWeather.main.feels_like) + getUnitSymbol();
 
     document.getElementById("jelenlegi_minmax").innerHTML =
-        hofok(dailyWeather.main.temp_min) + (celsius ? "°C" : "°F") +
+        hofok(dailyWeather.main.temp_min) + getUnitSymbol() +
         "/" +
-        hofok(dailyWeather.main.temp_max) + (celsius ? "°C" : "°F");
+        hofok(dailyWeather.main.temp_max) + getUnitSymbol();
 
     // óránkénti
     document.querySelectorAll(".swiper-slide .font-bold").forEach((el, i) => {
-        el.innerHTML = hofok(rawHourlyTemps[i]) + (celsius ? "°C" : "°F");
+        el.innerHTML = hofok(rawHourlyTemps[i]) + getUnitSymbol();
     });
 
     // napi
     document.querySelectorAll("#napi_idojaras .flex.justify-end").forEach((el, i) => {
-        el.children[0].innerHTML = hofok(rawDailyMin[i]) + (celsius ? "°C" : "°F");
-        el.children[1].innerHTML = hofok(rawDailyMax[i]) + (celsius ? "°C" : "°F");
+        if (!el || !el.children || el.children.length < 2) return;
+        el.children[0].innerHTML = hofok(rawDailyMin[i]) + getUnitSymbol();
+        el.children[1].innerHTML = hofok(rawDailyMax[i]) + getUnitSymbol();
     });
 };
 
 
 
+const getUnitSymbol = () => (unit === "fahrenheit" ? "°F" : "°C");
+
 const hofok = (kelvin) => {
     if (typeof kelvin !== "number") return "";
-
-    const isCelsius = typeof celsius === "boolean" ? celsius : true;
-
-    return isCelsius
-        ? Math.round(kelvin - 273.15)
-        : Math.round((kelvin - 273.15) * 9 / 5 + 32);
+    return unit === "fahrenheit"
+        ? Math.round((kelvin - 273.15) * 9 / 5 + 32)
+        : Math.round(kelvin - 273.15);
 };
 
 let rawHourlyTemps = [];
