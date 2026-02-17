@@ -1,0 +1,26 @@
+function getVitaminRecommendation(weatherData) {
+  const { weather, temp, uvIndex } = weatherData;
+  let vitamins = [];
+
+  if (weather === "Clouds" || weather === "Fog") {
+    vitamins.push("D-vitamin");
+  }
+
+  if (weather === "Snow" || temp < 0) {
+    vitamins.push("C-vitamin", "Cink", "D-vitamin");
+  }
+
+  if (weather === "Rain") {
+    vitamins.push("C-vitamin", "B-komplex");
+  }
+
+  if (temp > 30) {
+    vitamins.push("Magnézium", "Kálium", "B-vitamin");
+  }
+
+  if (uvIndex < 3) {
+    vitamins.push("D-vitamin");
+  }
+
+  return [...new Set(vitamins)];
+}
