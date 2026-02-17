@@ -8,8 +8,14 @@
 </head>
 <body class="bg-[#C7E1EE] text-white font-bold text-3xl">
     <header class="flex items-center justify-center py-4">
-        <img src="images/logo.png" alt="Stormy logo" class="h-30 w-30 mr-2">
-        <h1 class=" text-6xl font-bold">Stormy</h1>
+      <section class="flex justify-between items-center lg:px-20">
+        <img src="images/logo.png" alt="Stormy logo" class="h-auto w-1/4 max-w-50" />
+        <h1 class="font-bold text-center text-4xl w-2/4 md:text-5xl lg:text-7xl">
+          <a href="index.html" class="hover:opacity-80">
+            Stormy
+          </a>
+        </h1>
+        
         <div class="topnav">
           
             <button id="menuOpen" class="p-2">
@@ -98,7 +104,7 @@
     </header>
 
     <main class="flex flex-col items-center justify-center min-h-screen min-w-full">
-        <form id="loginForm" action="#" method="POST" class="bg-[#82B3DB] p-8 rounded-2xl flex flex-col space-y-6 ">
+        <form id="loginForm" action="#" method="POST" class="bg-[#82B3DB] p-8 rounded-2xl flex flex-col space-y-6 w-xl ">
             <h2 class="mb-8 text-4xl text-center">Bejelentkezés</h2>
             
             <!-- Email Field -->
@@ -108,9 +114,9 @@
             </div>
             
             <!-- Password Field -->
-            <div class="flex items-center bg-[#5A7BAA] p-3 rounded-md">
+            <div class="flex items-center bg-[#5A7BAA] p-3 rounded-md ">
                 <img src="images/icons/lakat icon.svg" alt="Lock Icon" class="w-5 mr-3">
-                <input id="loginPassword" type="password" name="password" placeholder="Jelszó" class="bg-transparent text-white flex-1 outline-none h-6" required>
+                <input id="loginPassword" type="password" name="password" placeholder="Jelszó" class="bg-transparent text-white flex-1 outline-none text-base " required>
                 <img id="togglePassword" src="images/icons/szem icon.svg" alt="Eye Icon" class="w-5 h-5 ml-3 cursor-pointer">
             </div>
             
@@ -170,14 +176,14 @@ form.addEventListener('submit', (e) => {
     );
 
     if (user) {
-        message.textContent = 'Sikeres bejelentkezés! 🎉';
-        message.className = 'text-green-500 text-center text-sm';
-
-        // opcionális: belépett user eltárolása
+          // Üzenet kiírása
+          alert('Sikeresen bejelentkeztél! 🎉');
+        
+        // Belépett user eltárolása
         localStorage.setItem('loggedUser', JSON.stringify(user));
-
-        // átirányítás
-        // window.location.href = "dashboard.html";
+        
+        // Átirányítás a főoldalra
+        window.location.href = "index.html";
     } else {
         message.textContent = 'Hibás email vagy jelszó!';
         message.className = 'text-red-500 text-center text-sm';
