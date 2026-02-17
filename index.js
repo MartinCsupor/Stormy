@@ -95,13 +95,25 @@ getDailyWeather().then( async data => {
 
     //jelenlegi időjárás
 
-    const fok = document.getElementById("jelenlegi_fok");
-    const ikon = document.getElementById("jelenlegi_idojaras_ikon");
-    const leiras = document.getElementById("jelenglegi_idojaras_ikon_leiras");
-    const hoerzet = document.getElementById("jelenlegi_hoerzet");
-    const varos = document.getElementById("jelenlegi_varos");
-    const ido = document.getElementById("jelenlegi_ido");
-    const minmax = document.getElementById("jelenlegi_minmax");
+    const jelenlegiDiv = document.getElementById("jelenlegi_idojaras")
+
+    const fok = document.createElement("h2");
+    const ikon = document.createElement("img")
+    const leiras = document.createElement("p")
+    const ikonWrapper = document.createElement("div")
+    const hoerzet = document.createElement("p")
+    const jelenlegiJellWrapper = document.createElement("div")
+    const varos = document.createElement("p")
+    const ido = document.createElement("p")
+    const minmax = document.createElement("p")
+
+    fok.classList.add("font-bold", "text-2xl")
+    ikon.alt = "Időjárás ikon"
+    leiras.classList.add("font-bold")
+    hoerzet.classList.add("font-bold")
+    varos.classList.add("font-bold", "text-3xl")
+    ido.classList.add("font-bold", "p-3")
+    minmax.classList.add("font-bold")
 
     fok.innerHTML = hofok(dailyWeather.main.temp) + getUnitSymbol();
     ikon.src = `/images/icons/weather/${dailyWeather.weather[0].icon}.svg`;
@@ -111,6 +123,17 @@ getDailyWeather().then( async data => {
     ido.innerHTML = new Date().toLocaleTimeString("hu-HU", {hour: "2-digit", minute: "2-digit"});
     minmax.innerHTML = hofok(dailyWeather.main.temp_min) + getUnitSymbol() + "/" + hofok(dailyWeather.main.temp_max) + getUnitSymbol();
 
+    ikonWrapper.appendChild(fok)
+    ikonWrapper.appendChild(ikon)
+    ikonWrapper.appendChild(leiras)
+    ikonWrapper.appendChild(hoerzet)
+
+    jelenlegiJellWrapper.appendChild(varos)    
+    jelenlegiJellWrapper.appendChild(ido)    
+    jelenlegiJellWrapper.appendChild(minmax)    
+
+    jelenlegiDiv.appendChild(ikonWrapper)
+    jelenlegiDiv.appendChild(jelenlegiJellWrapper)
 
     //napi jellemzők
 
@@ -523,3 +546,69 @@ const hofok = (kelvin) => {
 let rawHourlyTemps = [];
 let rawDailyMin = [];
 let rawDailyMax = [];
+
+
+const vitaminAjanlo = () => {
+
+    // <h2 class="text-2xl sm:text-4xl text-center pb-5">Vitaminajánló</h2>
+    // <div class="text-center grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-10 w-full">
+    //     <div class="bg-[#476D98] rounded-2xl p-4 w-[85%] mx-auto flex justify-between items-center px-5">
+    //         <p>Kálcium:</p>
+    //         <p class="text-white font-bold">200mg/nap</p>
+    //     </div>
+
+    //     <div class="bg-[#476D98] rounded-2xl p-4 w-[85%] mx-auto flex justify-between items-center px-5">
+    //         <p>Magnézium:</p>
+    //         <p class="text-white font-bold">300mg/nap</p>
+    //     </div>
+
+    //     <div class="bg-[#476D98] rounded-2xl p-4 w-[85%] mx-auto flex justify-between items-center px-5">
+    //         <p>D-vitamin:</p>
+    //         <p class="text-white font-bold">400IU/nap</p>
+    //     </div>
+
+    //     <div class="bg-[#476D98] rounded-2xl p-4 w-[85%] mx-auto flex justify-between items-center px-5">
+    //         <p>C-vitamin:</p>
+    //         <p class="text-white font-bold">75mg/nap</p>
+    //     </div>
+    // </div>
+
+    const vitaminok = [
+        { nev: "Kálcium", adag: "200mg/nap" },
+        { nev: "Magnézium", adag: "300mg/nap" },
+        { nev: "D-vitamin", adag: "400IU/nap" },
+        { nev: "C-vitamin", adag: "75mg/nap" }
+    ];
+    
+    const vitaminContainer = document.getElementById("vitamin_ajanlo");
+    
+    const cim = document.createElement("h2")
+    const vitaminWrapper = document.createElement("div");
+    
+    cim.textContent = "Vitamin ajánló"
+    cim.classList.add("text-2xl", "sm:text-4xl", "text-center", "pb-5")
+    vitaminWrapper.classList.add("text-center", "grid", "grid-cols-1", "sm:grid-cols-2", "gap-4", "lg:gap-10", "w-full");
+
+    vitaminok.forEach(vitamin => {
+    
+        const vitaminDiv = document.createElement("div");
+        vitaminDiv.classList.add("bg-[#476D98]", "rounded-2xl", "p-4", "w-[85%]", "mx-auto", "flex", "justify-between", "items-center", "px-5");
+    
+        const nev = document.createElement("p");
+        nev.textContent = vitamin.nev + ":";
+    
+        const adag = document.createElement("p");
+        adag.classList.add("text-white", "font-bold");
+        adag.textContent = vitamin.adag + "/nap";
+    
+        vitaminDiv.appendChild(nev)
+        vitaminDiv.appendChild(adag)
+
+        vitaminWrapper.appendChild(vitaminDiv)
+    });
+
+    vitaminContainer.appendChild(cim)
+    vitaminContainer.appendChild(vitaminWrapper)
+}
+
+vitaminAjanlo()
