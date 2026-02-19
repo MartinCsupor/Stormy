@@ -7,6 +7,9 @@ let unit = "celsius";
 let celsius = true;
 let lat = 0
 let lon = 0
+let rawHourlyTemps = [];
+let rawDailyMin = [];
+let rawDailyMax = [];
 
 const moonPhasesHU = {
     "New Moon": "Újhold",
@@ -92,6 +95,9 @@ getDailyWeather().then( async data => {
     const extraJellemzo = await getUVIndexAndDewPoint();
     const holdJellemzok = await getMoonData();
 
+    // Vitamin ajánló frissítése az adatokkal (Kelvin -> Celsius konverzióval)
+    vitaminAjanlo(dailyWeather.weather[0].main, dailyWeather.main.temp - 273.15, extraJellemzo.uv_index);
+
     //jelenlegi időjárás
 
     const jelenlegiDiv = document.getElementById("jelenlegi_idojaras")
@@ -115,13 +121,16 @@ getDailyWeather().then( async data => {
     minmax.classList.add("font-bold")
 
     fok.innerHTML = hofok(dailyWeather.main.temp) + getUnitSymbol();
+    fok.id = "jelenlegi_fok";
     ikon.src = `images/icons/weather/${dailyWeather.weather[0].icon}.svg`;
     ikon.classList.add("h-20")
     leiras.innerHTML = dailyWeather.weather[0].description.charAt(0).toUpperCase() + dailyWeather.weather[0].description.slice(1);
     hoerzet.innerHTML = "Hőérzet: " + hofok(dailyWeather.main.feels_like) + getUnitSymbol();
+    hoerzet.id = "jelenlegi_hoerzet";
     varos.innerHTML = dailyWeather.name;
     ido.innerHTML = new Date().toLocaleTimeString("hu-HU", {hour: "2-digit", minute: "2-digit"});
     minmax.innerHTML = hofok(dailyWeather.main.temp_min) + getUnitSymbol() + "/" + hofok(dailyWeather.main.temp_max) + getUnitSymbol();
+    minmax.id = "jelenlegi_minmax";
 
     ikonWrapper.appendChild(fok)
     ikonWrapper.appendChild(ikon)
@@ -282,6 +291,7 @@ getDailyWeather().then( async data => {
     napholdWrapper.appendChild(holdWrapper)
     jellemzokContainer.appendChild(napholdWrapper)
     
+    sunMove();
 });
 //NAPOCSKA MOZOOGJOOOON
 function sunMove () {
@@ -289,12 +299,30 @@ function sunMove () {
     const sun = document.getElementById('sunMarker');
     if (!arc || !sun) return;
 
-    const sunrise = '06:30';
-    const sunset = '17:00';
-    const demoProgress = 0.25; //progress
+    let sunriseTimestamp, sunsetTimestamp;
+    const now = new Date().getTime();
+
+    if (dailyWeather && dailyWeather.sys) {
+        sunriseTimestamp = dailyWeather.sys.sunrise * 1000;
+        sunsetTimestamp = dailyWeather.sys.sunset * 1000;
+    } else {
+        const d = new Date();
+        sunriseTimestamp = new Date(d.setHours(6, 30, 0, 0)).getTime();
+        sunsetTimestamp = new Date(d.setHours(17, 0, 0, 0)).getTime();
+    }
+
+    // Calculate progress (0 before sunrise, 1 after sunset)
+    let progress;
+    if (now <= sunriseTimestamp) {
+        progress = 0;
+    } else if (now >= sunsetTimestamp) {
+        progress = 1;
+    } else {
+        progress = (now - sunriseTimestamp) / (sunsetTimestamp - sunriseTimestamp);
+    }
 
     const L = arc.getTotalLength();
-    const point = arc.getPointAtLength(demoProgress * L);
+    const point = arc.getPointAtLength(progress * L);
 
     // Position sun circle (cx, cy) on the arc
     sun.setAttribute('cx', point.x);
@@ -311,6 +339,12 @@ function sunMove () {
         );
     }
 }
+
+// Update sun position every minute
+setInterval(sunMove, 60000);
+
+// Initial call to position sun on load
+sunMove();
 
 const getHourlyWeather = async () => {
     const weeklyWeather = await fetch(
@@ -543,44 +577,75 @@ const hofok = (kelvin) => {
         : Math.round(kelvin - 273.15);
 };
 
-let rawHourlyTemps = [];
-let rawDailyMin = [];
-let rawDailyMax = [];
+function getVitaminRecommendation(weatherData) {
+    const { weather, temp, uvIndex } = weatherData;
+    let vitamins = new Set();
+    const w = weather ? weather.toLowerCase() : "";
 
+    // Hőmérséklet alapú ajánlások
+    if (temp < 10) {
+        vitamins.add("C-vitamin");
+        vitamins.add("D-vitamin");
+        vitamins.add("Cink");
+        vitamins.add("Omega-3"); // Téli depresszió ellen, bőr hidratálás
+    } else if (temp > 25) {
+        vitamins.add("Magnézium"); // Izzadás miatt
+        vitamins.add("Kálium");
+        vitamins.add("B-komplex"); // Energia
+    }
 
-const vitaminAjanlo = () => {
+    // Időjárás jelenség alapú
+    if (w.includes("rain") || w.includes("drizzle") || w.includes("thunder")) {
+        vitamins.add("C-vitamin");
+        vitamins.add("E-vitamin"); // Bőr védelem
+        vitamins.add("Cink");
+    } else if (w.includes("snow")) {
+        vitamins.add("D-vitamin");
+        vitamins.add("C-vitamin");
+        vitamins.add("Vas"); // Energiaszint
+    } else if (w.includes("clear") || w.includes("sun")) {
+        if (uvIndex > 5) {
+            vitamins.add("E-vitamin"); // UV védelem
+            vitamins.add("A-vitamin"); // Szem védelem
+        }
+    } else if (w.includes("cloud") || w.includes("fog") || w.includes("mist")) {
+        vitamins.add("D-vitamin");
+        vitamins.add("B-komplex"); // Hangulatjavítás
+    }
 
-    // <h2 class="text-2xl sm:text-4xl text-center pb-5">Vitaminajánló</h2>
-    // <div class="text-center grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-10 w-full">
-    //     <div class="bg-[#476D98] rounded-2xl p-4 w-[85%] mx-auto flex justify-between items-center px-5">
-    //         <p>Kálcium:</p>
-    //         <p class="text-white font-bold">200mg/nap</p>
-    //     </div>
+    // UV Index alapú
+    if (uvIndex < 3) {
+        vitamins.add("D-vitamin");
+    }
 
-    //     <div class="bg-[#476D98] rounded-2xl p-4 w-[85%] mx-auto flex justify-between items-center px-5">
-    //         <p>Magnézium:</p>
-    //         <p class="text-white font-bold">300mg/nap</p>
-    //     </div>
+    // Alapértelmezett, ha nincs specifikus ajánlás
+    if (vitamins.size === 0) {
+        vitamins.add("C-vitamin");
+        vitamins.add("Magnézium");
+    }
+  
+    return Array.from(vitamins);
+}
 
-    //     <div class="bg-[#476D98] rounded-2xl p-4 w-[85%] mx-auto flex justify-between items-center px-5">
-    //         <p>D-vitamin:</p>
-    //         <p class="text-white font-bold">400IU/nap</p>
-    //     </div>
+const vitaminAjanlo = (weather, temp, uvIndex) => {
+    const ajanlottVitaminok = getVitaminRecommendation({ weather, temp, uvIndex });
 
-    //     <div class="bg-[#476D98] rounded-2xl p-4 w-[85%] mx-auto flex justify-between items-center px-5">
-    //         <p>C-vitamin:</p>
-    //         <p class="text-white font-bold">75mg/nap</p>
-    //     </div>
-    // </div>
+    const vitaminAdatok = {
+        "C-vitamin": { adag: "75-90mg", icon: "🍊" },
+        "D-vitamin": { adag: "1500-2000IU", icon: "☀️" },
+        "Magnézium": { adag: "300-400mg", icon: "🥑" },
+        "Kálium": { adag: "3500-4700mg", icon: "🍌" },
+        "Cink": { adag: "10-15mg", icon: "🥩" },
+        "B-komplex": { adag: "1 tabletta", icon: "⚡" },
+        "E-vitamin": { adag: "15mg", icon: "🌻" },
+        "A-vitamin": { adag: "700-900µg", icon: "🥕" },
+        "Omega-3": { adag: "250-500mg", icon: "🐟" },
+        "Vas": { adag: "8-18mg", icon: "🥬" },
+        "Kálcium": { adag: "1000mg", icon: "🥛" }
+    };
 
-    const vitaminok = [
-        { nev: "Kálcium", adag: "200mg/nap" },
-        { nev: "Magnézium", adag: "300mg/nap" },
-        { nev: "D-vitamin", adag: "400IU/nap" },
-        { nev: "C-vitamin", adag: "75mg/nap" }
-    ];
-    
     const vitaminContainer = document.getElementById("vitamin_ajanlo");
+    vitaminContainer.innerHTML = ""; // Előző tartalom törlése
     
     const cim = document.createElement("h2")
     const vitaminWrapper = document.createElement("div");
@@ -589,20 +654,31 @@ const vitaminAjanlo = () => {
     cim.classList.add("text-2xl", "sm:text-4xl", "text-center", "pb-5")
     vitaminWrapper.classList.add("text-center", "grid", "grid-cols-1", "sm:grid-cols-2", "gap-4", "lg:gap-10", "w-full");
 
-    vitaminok.forEach(vitamin => {
+    ajanlottVitaminok.forEach(nev => {
+        const adat = vitaminAdatok[nev] || { adag: "N/A", icon: "💊" };
     
         const vitaminDiv = document.createElement("div");
         vitaminDiv.classList.add("bg-[#476D98]", "rounded-2xl", "p-4", "w-[85%]", "mx-auto", "flex", "justify-between", "items-center", "px-5");
     
-        const nev = document.createElement("p");
-        nev.textContent = vitamin.nev + ":";
+        const nevWrapper = document.createElement("div");
+        nevWrapper.classList.add("flex", "items-center", "gap-2");
+
+        const iconSpan = document.createElement("span");
+        iconSpan.textContent = adat.icon;
+        iconSpan.classList.add("text-xl");
+
+        const nevP = document.createElement("p");
+        nevP.textContent = nev + ":";
+        
+        nevWrapper.appendChild(iconSpan);
+        nevWrapper.appendChild(nevP);
     
-        const adag = document.createElement("p");
-        adag.classList.add("text-white", "font-bold");
-        adag.textContent = vitamin.adag + "/nap";
+        const adagP = document.createElement("p");
+        adagP.classList.add("text-white", "font-bold");
+        adagP.textContent = adat.adag + "/nap";
     
-        vitaminDiv.appendChild(nev)
-        vitaminDiv.appendChild(adag)
+        vitaminDiv.appendChild(nevWrapper)
+        vitaminDiv.appendChild(adagP)
 
         vitaminWrapper.appendChild(vitaminDiv)
     });
@@ -610,5 +686,3 @@ const vitaminAjanlo = () => {
     vitaminContainer.appendChild(cim)
     vitaminContainer.appendChild(vitaminWrapper)
 }
-
-vitaminAjanlo()
