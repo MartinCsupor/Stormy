@@ -80,7 +80,6 @@ const varosKereses = async (e) => {
     const koordinatak = await getCoords(varos)
     lat = koordinatak.lat
     lon = koordinatak.lon
-    getDailyWeather()
 }
 
 const varosInput = document.getElementById("varosinput")
@@ -116,7 +115,8 @@ getDailyWeather().then( async data => {
     minmax.classList.add("font-bold")
 
     fok.innerHTML = hofok(dailyWeather.main.temp) + getUnitSymbol();
-    ikon.src = `/images/icons/weather/${dailyWeather.weather[0].icon}.svg`;
+    ikon.src = `images/icons/weather/${dailyWeather.weather[0].icon}.svg`;
+    ikon.classList.add("h-20")
     leiras.innerHTML = dailyWeather.weather[0].description.charAt(0).toUpperCase() + dailyWeather.weather[0].description.slice(1);
     hoerzet.innerHTML = "Hőérzet: " + hofok(dailyWeather.main.feels_like) + getUnitSymbol();
     varos.innerHTML = dailyWeather.name;
@@ -350,8 +350,8 @@ getHourlyWeather().then( async data => {
  
         slide.classList.add("swiper-slide", `slide${id}`, "bg-[#476D98]", "rounded-2xl", "select-none", "px-15" , "py-2","!flex", "flex-col","items-center", "justify-evenly", "!w-[120px]", "text-center")
         oraIdo.innerHTML = new Date(ora.dt * 1000).getHours() + ":00";
-        oraIkon.src = "images/icons/snowflake.svg";
-        oraIkon.classList.add("max-w-[35px]");
+        oraIkon.src = `images/icons/weather/${dailyWeather.weather[0].icon}.svg`;
+        oraIkon.classList.add("min-w-8");
         oraLeiras.innerHTML = ora.weather[0].description.charAt(0).toUpperCase() + ora.weather[0].description.slice(1);
         oraLeiras.classList.add("text-xs");
         rawHourlyTemps.push(ora.main.temp);
@@ -461,7 +461,7 @@ getHourlyWeather().then( async data => {
         const napMax = document.createElement("p");
 
         napDiv.classList.add("grid", "grid-cols-4", "bg-[#476D98]","m-2", "p-3", "rounded-lg");
-        napEsoWrapper.classList.add("flex", "gap-3");
+        napEsoWrapper.classList.add("flex", "items-center","gap-1");
         napminmaxWrapper.classList.add("flex", "justify-end", "gap-3");
         napEsoIkon.classList.add("w-5");
         napEsoIkon.src = "images/icons/water-drop.svg";
@@ -472,8 +472,8 @@ getHourlyWeather().then( async data => {
             napNev.innerHTML = napok[i].charAt(0).toUpperCase() + napok[i].slice(1);
         }
         napEso.innerHTML = Math.round(esok[i]) + "%";
-;
-        // napIkon.src = `img/icons/$idojaras${ikon[i]}.png`;
+        napIkon.src = `images/icons/weather/${dailyWeather.weather[0].icon}.svg`;
+        napIkon.classList.add("mx-auto", "h-7")
         napMin.innerHTML = hofok(minek[i]) + getUnitSymbol();
         napMax.innerHTML = hofok(maxok[i]) + getUnitSymbol();
 
