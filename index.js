@@ -5,8 +5,8 @@ let hourlyWeather = [];
 let weeklyWeather = [];
 let unit = "celsius";
 let celsius = true;
-let lat = 0
-let lon = 0
+let lat = 46.1833 //átmeneti
+let lon = 18.9538
 let rawHourlyTemps = [];
 let rawDailyMin = [];
 let rawDailyMax = [];
@@ -83,13 +83,16 @@ const varosKereses = async (e) => {
     const koordinatak = await getCoords(varos)
     lat = koordinatak.lat
     lon = koordinatak.lon
+    renderWeather()
+    renderHourlyWeahter()
 }
 
 const varosInput = document.getElementById("varosinput")
 varosInput.addEventListener("change", varosKereses);
 
-getDailyWeather().then( async data => {
-    dailyWeather = await data.json();
+const renderWeather = async () => {
+    const data = await getDailyWeather();
+    dailyWeather = await data.json()
     console.log(dailyWeather)
 
     const extraJellemzo = await getUVIndexAndDewPoint();
@@ -102,23 +105,29 @@ getDailyWeather().then( async data => {
 
     const jelenlegiDiv = document.getElementById("jelenlegi_idojaras")
 
+    const balWrapper = document.createElement("div")
     const fok = document.createElement("h2");
     const ikon = document.createElement("img")
-    const leiras = document.createElement("p")
+    const leiras = document.createElement("p")  
     const ikonWrapper = document.createElement("div")
     const hoerzet = document.createElement("p")
     const jelenlegiJellWrapper = document.createElement("div")
     const varos = document.createElement("p")
     const ido = document.createElement("p")
     const minmax = document.createElement("p")
+    const varosWrapper = document.createElement("div")
+    const minmaxWrapper = document.createElement("div")
 
-    fok.classList.add("font-bold", "text-2xl")
+    balWrapper.classList.add("flex", "flex-col", "justify-between")
+    fok.classList.add("font-bold", "text-3xl", "pl-1")
     ikon.alt = "Időjárás ikon"
     leiras.classList.add("font-bold")
     hoerzet.classList.add("font-bold")
     varos.classList.add("font-bold", "text-3xl")
-    ido.classList.add("font-bold", "p-3")
+    ido.classList.add("font-bold", "text-right")
     minmax.classList.add("font-bold")
+    jelenlegiJellWrapper.classList.add("flex", "flex-col", "justify-between")
+    ikonWrapper.classList.add("flex", "items-center")
 
     fok.innerHTML = hofok(dailyWeather.main.temp) + getUnitSymbol();
     fok.id = "jelenlegi_fok";
@@ -132,16 +141,20 @@ getDailyWeather().then( async data => {
     minmax.innerHTML = hofok(dailyWeather.main.temp_min) + getUnitSymbol() + "/" + hofok(dailyWeather.main.temp_max) + getUnitSymbol();
     minmax.id = "jelenlegi_minmax";
 
-    ikonWrapper.appendChild(fok)
+    varosWrapper.appendChild(varos)
+    varosWrapper.appendChild(ido)
+    minmaxWrapper.appendChild(minmax)
+
+    balWrapper.appendChild(fok)
     ikonWrapper.appendChild(ikon)
     ikonWrapper.appendChild(leiras)
-    ikonWrapper.appendChild(hoerzet)
+    balWrapper.appendChild(ikonWrapper)
+    balWrapper.appendChild(hoerzet)
 
-    jelenlegiJellWrapper.appendChild(varos)    
-    jelenlegiJellWrapper.appendChild(ido)    
-    jelenlegiJellWrapper.appendChild(minmax)    
+    jelenlegiJellWrapper.appendChild(varosWrapper)    
+    jelenlegiJellWrapper.appendChild(minmaxWrapper)    
 
-    jelenlegiDiv.appendChild(ikonWrapper)
+    jelenlegiDiv.appendChild(balWrapper)
     jelenlegiDiv.appendChild(jelenlegiJellWrapper)
 
     //napi jellemzők
@@ -261,7 +274,7 @@ getDailyWeather().then( async data => {
     const fazisKep = document.createElement("img")
     const fazistText = document.createElement("p")
 
-    holdWrapper.classList.add("flex", "justify-evenly", "items-center", "text-center", "bg-[#476D98]", "rounded-lg", "mb-5", "py-5")
+    holdWrapper.classList.add("flex", "justify-evenly", "items-center", "text-center", "bg-[#476D98]", "rounded-lg", "py-5")
     holdFazisDiv.classList.add("flex", "flex-col","items-center", "px-2")
 
     fazisKep.src = `./images/icons/${
@@ -292,8 +305,8 @@ getDailyWeather().then( async data => {
     jellemzokContainer.appendChild(napholdWrapper)
     
     sunMove();
-});
-//NAPOCSKA MOZOOGJOOOON
+};
+
 function sunMove () {
     const arc = document.getElementById('sunArc');
     const sun = document.getElementById('sunMarker');
@@ -353,7 +366,8 @@ const getHourlyWeather = async () => {
     return weeklyWeather;
 };
 
-getHourlyWeather().then( async data => {
+const renderHourlyWeahter = async () => {
+    const data = await getHourlyWeather()
     hourlyWeather = await data.json();
     console.log(hourlyWeather);
 
@@ -527,7 +541,7 @@ getHourlyWeather().then( async data => {
 
         napDivWrapper.append(napDiv)
     }
-});
+};
 
 const changeUnit = (newUnit) => {
     unit = newUnit === "fahrenheit" ? "fahrenheit" : "celsius"; // only C/F
