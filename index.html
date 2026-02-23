@@ -12,15 +12,21 @@
 <body>
   <header class="flex flex-col">
     <section class="flex justify-between items-center lg:px-20">
-      <img src="images/logo.png" alt="Stormy logo" class="h-auto w-1/4 max-w-50" />
-      <h1 class="font-bold text-center text-4xl w-2/4 md:text-5xl lg:text-7xl">
+      <a href="index.html" class="hover:opacity-50 h-auto w-50 ">
+
+        <img src="images/logo.png" alt="Stormy logo" class="h-auto   hover:opacity-80 "  />
+      
+      </a>
+        
+      
+      <h1 class="font-bold text-center text-4xl w-2/4 md:text-5xl lg:text-7xl mr-2 ">
         <a href="index.html" class="hover:opacity-80">
           Stormy
         </a>
       </h1>
       <div class="topnav">
         <button id="menuOpen" class="p-2 cursor-pointer">
-          <img src="images/icons/hambuger-menu.svg" class="w-20 h-20 ml-3" alt="Menü" />
+          <img src="images/icons/hambuger-menu.svg" class="w-20 h-20 justify-center items-center " alt="Menü" />
         </button>
         <div id="myLinks" class="menu">
           <button id="menuClose" class="close-btn">✕</button>
@@ -58,7 +64,7 @@
                 <input type="text" id="varosinput" placeholder="Keresés..." class="h-10 w-auto bg-[#476D98] rounded-lg px-2">
             </div>
 
-            <div class="flex flex-row justify-evenly bg-[#82B3DB] rounded-full h-auto w-30 py-1 gap-1 px-1">
+            <div class="flex flex-row justify-evenly bg-[#82B3DB] rounded-full h-auto  py-1 gap-1 px-1 w-l">
                 <div class="toggle-celsius bg-[#476D98] w-10 h-10 rounded-full flex justify-center items-center cursor-pointer" onclick="changeUnit('celsius')">
                     <p>°C</p>
                 </div>
