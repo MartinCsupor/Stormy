@@ -141,10 +141,18 @@
       </select>
     </div>
 
+    <div class="mt-2 px-1">
+      <input id="progress-bar" type="range" min="0" max="100" value="0" class="w-full h-1 bg-[#5A7BAA] rounded-lg appearance-none cursor-pointer accent-[#8CD9FF]">
+      <div class="flex justify-between text-xs text-white mt-1">
+        <span id="current-time">0:00</span>
+        <span id="duration">0:00</span>
+      </div>
+    </div>
+
     <div class="flex justify-between items-center text-xl mt-3">
-      <button id="prev">⏮</button>
-      <button id="play-pause">▶</button>
-      <button id="next">⏭</button>
+      <button id="prev"><img src="images/icons/prev.svg" class="w-7 h-7" alt="Previous"></button>
+      <button id="play-pause"><img src="images/icons/play.svg" class="w-7 h-7" alt="Play/Pause"></button>
+      <button id="next"><img src="images/icons/next.svg" class="w-6 h-6" alt="Next"></button>
       <button id="recommend-music" title="Zeneajánló (időjárás alapján)">🎵</button>
       <button id="open-add-music" title="Zene hozzáadása">➕</button>
       <button id="toggle-favorite" title="Kedvencek közé / onnan ki">🤍</button>
@@ -222,6 +230,10 @@
       const favOnlyBtn = document.getElementById('toggle-favorites-only');
       const scIframe = document.getElementById('sc-player');
       let scWidget = null;
+      
+      const progressBar = document.getElementById('progress-bar');
+      const currentTimeEl = document.getElementById('current-time');
+      const durationEl = document.getElementById('duration');
 
       // State
       let playlist = [];
@@ -236,6 +248,8 @@
       let library = [];
       let moodFilter = null;
       let moodPlaylistBackup = null;
+      let isDraggingProgress = false;
+      let scDuration = 0;
 
       // Helpers
       function getTrackKey(track) {
@@ -341,17 +355,25 @@
           events: {
             onReady: () => { try { ytPlayer.unMute(); ytPlayer.setVolume(80); } catch {} if (pendingVideoId) { ytPlayer.cueVideoById(pendingVideoId); pendingVideoId = null; } if (ytPendingPlay) { ytPendingPlay = false; try { ytPlayer.playVideo(); } catch {} } },
             onStateChange: (e) => {
-              if (e.data === YT.PlayerState.PLAYING) { isPlaying = true; playPauseBtn.textContent = '⏸'; }
-              else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.CUED) { isPlaying = false; playPauseBtn.textContent = '▶'; }
+              if (e.data === YT.PlayerState.PLAYING) { isPlaying = true; playPauseBtn.querySelector('img').src = 'images/icons/pause.svg'; }
+              else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.CUED) { isPlaying = false; playPauseBtn.querySelector('img').src = 'images/icons/play.svg'; }
               else if (e.data === YT.PlayerState.ENDED) { nextBtn?.click(); }
             }
           }
         });
       };
 
+      // Progress Helpers
+      const formatTime = (s) => {
+        if (!s || isNaN(s) || !isFinite(s)) return "0:00";
+        const m = Math.floor(s / 60);
+        const sec = Math.floor(s % 60);
+        return `${m}:${sec < 10 ? '0' : ''}${sec}`;
+      };
+
       function loadSong(index, autoPlay = false) {
         const song = playlist[index]; if (!song) return;
-        isPlaying = false; playPauseBtn.textContent = '▶';
+        isPlaying = false; playPauseBtn.querySelector('img').src = 'images/icons/play.svg';
         titleText.textContent = song.title; artistText.textContent = 'Felhasználó'; updateFavoriteButton();
         if (song.type === 'soundcloud') {
           mode = 'soundcloud'; try { ytPlayer?.pauseVideo?.(); } catch {}; try { audio.pause(); } catch {}; audio.src = '';
@@ -361,9 +383,15 @@
             if (!scWidget && window.SC && window.SC.Widget) {
               scWidget = SC.Widget(scIframe);
               try {
-                scWidget.bind(SC.Widget.Events.PLAY, () => { isPlaying = true; playPauseBtn.textContent = '⏸'; });
-                scWidget.bind(SC.Widget.Events.PAUSE, () => { isPlaying = false; playPauseBtn.textContent = '▶'; });
+                scWidget.bind(SC.Widget.Events.PLAY, () => { isPlaying = true; playPauseBtn.querySelector('img').src = 'images/icons/pause.svg'; });
+                scWidget.bind(SC.Widget.Events.PAUSE, () => { isPlaying = false; playPauseBtn.querySelector('img').src = 'images/icons/play.svg'; });
                 scWidget.bind(SC.Widget.Events.FINISH, () => { nextBtn?.click(); });
+                scWidget.bind(SC.Widget.Events.PLAY_PROGRESS, (data) => {
+                  if (mode !== 'soundcloud' || isDraggingProgress) return;
+                  // data.currentPosition is ms, relativePosition is 0-1
+                  if (scDuration) { progressBar.value = data.relativePosition * 100; currentTimeEl.textContent = formatTime(data.currentPosition / 1000); durationEl.textContent = formatTime(scDuration / 1000); }
+                });
+                scWidget.bind(SC.Widget.Events.READY, () => { scWidget.getDuration(d => { scDuration = d; durationEl.textContent = formatTime(d / 1000); }); });
               } catch {}
             }
             if (scWidget && scWidget.load) { try { scWidget.load(song.url, { auto_play: autoPlay, show_comments: false, visual: false }); } catch {} }
@@ -379,6 +407,29 @@
           audio.src = song.url; if (autoPlay) audio.play().catch(() => {});
         }
       }
+
+      // Progress Bar Events
+      progressBar?.addEventListener('input', () => { isDraggingProgress = true; });
+      progressBar?.addEventListener('change', () => {
+        isDraggingProgress = false;
+        const percent = parseFloat(progressBar.value);
+        if (mode === 'audio') {
+          if (audio.duration) audio.currentTime = (percent / 100) * audio.duration;
+        } else if (mode === 'youtube' && ytPlayer && ytPlayer.seekTo) {
+          const dur = ytPlayer.getDuration();
+          if (dur) ytPlayer.seekTo((percent / 100) * dur, true);
+        } else if (mode === 'soundcloud' && scWidget) {
+          if (scDuration) scWidget.seekTo((percent / 100) * scDuration);
+        }
+      });
+      // YouTube Progress Polling
+      setInterval(() => {
+        if (mode === 'youtube' && isPlaying && !isDraggingProgress && ytPlayer && ytPlayer.getCurrentTime) {
+          const curr = ytPlayer.getCurrentTime();
+          const dur = ytPlayer.getDuration();
+          if (dur) { progressBar.value = (curr / dur) * 100; currentTimeEl.textContent = formatTime(curr); durationEl.textContent = formatTime(dur); }
+        }
+      }, 500);
 
       // Controls
       playPauseBtn.addEventListener('click', () => {
@@ -418,9 +469,13 @@
         if (playlist.length) loadSong(0); else { titleText.textContent = 'Nincs dal'; artistText.textContent=''; audio.src=''; updateFavoriteButton(); }
       });
 
-      audio.addEventListener('play', () => { isPlaying = true; playPauseBtn.textContent = '⏸'; });
-      audio.addEventListener('pause', () => { isPlaying = false; playPauseBtn.textContent = '▶'; });
+      audio.addEventListener('play', () => { isPlaying = true; playPauseBtn.querySelector('img').src = 'images/icons/pause.svg'; });
+      audio.addEventListener('pause', () => { isPlaying = false; playPauseBtn.querySelector('img').src = 'images/icons/play.svg'; });
       audio.addEventListener('ended', () => { nextBtn?.click(); });
+      audio.addEventListener('timeupdate', () => {
+        if (mode === 'audio' && !isDraggingProgress && audio.duration) { progressBar.value = (audio.currentTime / audio.duration) * 100; currentTimeEl.textContent = formatTime(audio.currentTime); durationEl.textContent = formatTime(audio.duration); }
+      });
+      audio.addEventListener('loadedmetadata', () => { if (mode === 'audio') durationEl.textContent = formatTime(audio.duration); });
 
       // Add Music
       addBtn?.addEventListener('click', () => {
