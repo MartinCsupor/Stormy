@@ -11,6 +11,7 @@ let rawHourlyTemps = [];
 let rawDailyMin = [];
 let rawDailyMax = [];
 
+
 const moonPhasesHU = {
     "New Moon": "Újhold",
     "Waxing Crescent": "Növekvő sarló",
@@ -21,22 +22,36 @@ const moonPhasesHU = {
     "Last Quarter": "Utolsó negyed",
     "Waning Crescent": "Fogyó sarló"
 };
-  
+
+const automaticLocator = async () => {
+    const res = await fetch("https://ipapi.co/city/");
+    const data = await res.text();
+    return data
+}
+
+const renderAutomatic = async () => {
+    const varos = await automaticLocator()
+    const koordinatak = await getCoords(varos)
+    lat = koordinatak.lat
+    lon = koordinatak.lon
+    renderWeather()
+    renderHourlyWeahter()
+}
 
 const getDailyWeather = async () => {
-
+    
     const dailyWeather = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&lang=hu`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&lang=hu`
     );
     return dailyWeather;
 };
 
 const getUVIndexAndDewPoint = async () => {
     const UVandDew = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=46.181793&longitude=18.954306&current=temperature_2m,relative_humidity_2m,dew_point_2m,uv_index&timezone=auto`
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,dew_point_2m,uv_index&timezone=auto`
     );
     const data = await UVandDew.json();
-
+    
     return {
         dew_point: data.current.dew_point_2m,
         uv_index: data.current.uv_index
@@ -46,10 +61,10 @@ const getUVIndexAndDewPoint = async () => {
 
 const getMoonData = async () => {
     const data = await fetch(
-        `https://api.solunar.org/solunar/46.181793,18.954306,${new Date().toLocaleDateString('sv-SE').replaceAll('-', '')},1`
+        `https://api.solunar.org/solunar/lat=${lat}&lon=${lon},${new Date().toLocaleDateString('sv-SE').replaceAll('-', '')},1`
     )
     const MoonData = await data.json()
-
+    
     return {
         moonrise: MoonData.moonRise,
         moonset: MoonData.moonSet,
@@ -61,7 +76,7 @@ const getCoords = async (varos) => {
     const res = await fetch(
         `https://api.openweathermap.org/geo/1.0/direct?q=${varos}&limit=1&appid=${API_KEY}`
     );
-
+    
     if (!res.ok){
         return false
     }
@@ -104,6 +119,7 @@ const renderWeather = async () => {
     //jelenlegi időjárás
 
     const jelenlegiDiv = document.getElementById("jelenlegi_idojaras")
+    jelenlegiDiv.innerHTML = "";
 
     const balWrapper = document.createElement("div")
     const fok = document.createElement("h2");
@@ -121,7 +137,7 @@ const renderWeather = async () => {
     balWrapper.classList.add("flex", "flex-col", "justify-between")
     fok.classList.add("font-bold", "text-3xl", "pl-1")
     ikon.alt = "Időjárás ikon"
-    leiras.classList.add("font-bold")
+    leiras.classList.add("font-bold", "pl-2")
     hoerzet.classList.add("font-bold")
     varos.classList.add("font-bold", "text-3xl")
     ido.classList.add("font-bold", "text-right")
@@ -160,6 +176,7 @@ const renderWeather = async () => {
     //napi jellemzők
 
     const jellemzokContainer = document.getElementById("idojaras_jellemzoi")
+    jellemzokContainer.innerHTML = ""
 
     const jellemzok = [
         { nev: "Páratartalom", ertek: dailyWeather.main.humidity, egyseg: "%", icon: "/images/icons/paratartalom.svg" }, 
@@ -353,15 +370,9 @@ function sunMove () {
     }
 }
 
-// Update sun position every minute
-setInterval(sunMove, 60000);
-
-// Initial call to position sun on load
-sunMove();
-
 const getHourlyWeather = async () => {
     const weeklyWeather = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=46.181793&lon=18.954306&appid=${API_KEY}&lang=hu`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&lang=hu`
     );
     return weeklyWeather;
 };
@@ -374,6 +385,7 @@ const renderHourlyWeahter = async () => {
     //óránkénti időjárás
 
     const orankenti = document.getElementById("orankenti_idojaras");
+    orankenti.innerHTML = "";
 
     const swiper = document.createElement("div");
     const swiperwrapper = document.createElement("div");
@@ -442,6 +454,7 @@ const renderHourlyWeahter = async () => {
     //napi időjárás
 
     const napi = document.getElementById("napi_idojaras");
+    napi.innerHTML = ""
 
 
     let napok = [];
@@ -580,8 +593,6 @@ const changeUnit = (newUnit) => {
     });
 };
 
-
-
 const getUnitSymbol = () => (unit === "fahrenheit" ? "°F" : "°C");
 
 const hofok = (kelvin) => {
@@ -700,3 +711,7 @@ const vitaminAjanlo = (weather, temp, uvIndex) => {
     vitaminContainer.appendChild(cim)
     vitaminContainer.appendChild(vitaminWrapper)
 }
+
+renderAutomatic()
+setInterval(sunMove, 60000);
+sunMove();
