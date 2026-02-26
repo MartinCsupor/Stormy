@@ -72,16 +72,37 @@ const getMoonData = async () => {
     }
 }
 
-const getCoords = async (varos) => {
+const getCoords = async (e) => {    
+    const varos = e.target.value
+
     const res = await fetch(
-        `https://api.openweathermap.org/geo/1.0/direct?q=${varos}&limit=1&appid=${API_KEY}`
+        `https://api.openweathermap.org/geo/1.0/direct?q=${varos}&limit=5&appid=${API_KEY}&lang=hu`
     );
     
     if (!res.ok){
         return false
     }
-    
+
     const data = await res.json()
+    console.log(data)
+
+    talalatok.innerHTML = ""
+
+    data.forEach(varos => {
+        const div = document.createElement("div")
+        div.classList.add("bg-[#82B3DB]", "hover:bg-[#476D98]", "rounded-lg", "px-2", "py-1")
+        div.textContent = varos.name
+
+        div.addEventListener("click", () => {
+            lat =varos.lat
+            lon = varos.lon
+            renderWeather()
+            renderHourlyWeahter()
+            talalatok.innerHTML = ""
+        })
+        
+        talalatok.appendChild(div)
+    })
     
     if(data.length > 0)
         return {
@@ -92,18 +113,9 @@ const getCoords = async (varos) => {
     return false
 }
 
-const varosKereses = async (e) => {
-    const varos = e.target.value
-
-    const koordinatak = await getCoords(varos)
-    lat = koordinatak.lat
-    lon = koordinatak.lon
-    renderWeather()
-    renderHourlyWeahter()
-}
-
 const varosInput = document.getElementById("varosinput")
-varosInput.addEventListener("change", varosKereses);
+const talalatok = document.getElementById("talalatok");
+varosInput.addEventListener("input", (e) => getCoords(e));
 
 const renderWeather = async () => {
     const data = await getDailyWeather();
@@ -139,9 +151,9 @@ const renderWeather = async () => {
     ikon.alt = "Időjárás ikon"
     leiras.classList.add("font-bold", "pl-2")
     hoerzet.classList.add("font-bold")
-    varos.classList.add("font-bold", "text-3xl")
+    varos.classList.add("font-bold", "text-3xl", "text-right")
     ido.classList.add("font-bold", "text-right")
-    minmax.classList.add("font-bold")
+    minmax.classList.add("font-bold", "text-right")
     jelenlegiJellWrapper.classList.add("flex", "flex-col", "justify-between")
     ikonWrapper.classList.add("flex", "items-center")
 
