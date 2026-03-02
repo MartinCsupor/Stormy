@@ -169,7 +169,8 @@ const renderWeather = async () => {
     const balWrapper = document.createElement("div")
     const fok = document.createElement("h2");
     const ikon = document.createElement("img")
-    const leiras = document.createElement("p")  
+    const leiras = document.createElement("p")
+    leiras.id = "weather-description";
     const ikonWrapper = document.createElement("div")
     const hoerzet = document.createElement("p")
     const jelenlegiJellWrapper = document.createElement("div")
