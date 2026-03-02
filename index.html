@@ -179,7 +179,7 @@
       <option value="snow">Havas</option>
       <option value="mist">Ködös</option>
       <option value="wind">Szeles</option>
-      <option value="chill">Laza</option>
+     
     </select>
     <div class="flex justify-between">
       <button id="cancel-music" class="bg-[#476D98] px-4 py-2 rounded">Mégse</button>
@@ -190,7 +190,7 @@
   <!-- Players -->
   <audio id="audio-player"></audio>
   <div style="position:fixed; bottom:0; left:0; width:320px; height:180px; opacity:0.1; pointer-events:none;" class="hidden"><div id="yt-player"></div></div>
-  <div style="position:fixed; bottom:0; left:330px; width:320px; height:180px; opacity:0.1; pointer-events:none;" class="hidden"><iframe id="sc-player" allow="autoplay"></iframe></div>
+  <div style="position:fixed; bottom:0; left:330px; width:320px; height:180px; opacity:0.1; pointer-events:none; "class="hidden"><iframe id="sc-player" allow="autoplay"></iframe></div>
 
   <script src="https://w.soundcloud.com/player/api.js"></script>
   <script src="https://www.youtube.com/iframe_api"></script>
@@ -284,7 +284,8 @@
           { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3', title: 'Napos Chill 2' },
           { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3', title: 'Napos Vibe' },
           { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3', title: 'Napsütés Dallam' },
-          { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3', title: 'Nyári Szellő' }
+          { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3', title: 'Nyári Szellő' },
+          
         ],
         clouds: [
           { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', title: 'Borús Hangulat 1' },
@@ -331,15 +332,20 @@
       };
 
       function getCurrentMood() {
-        const t = (document.getElementById('jelenglegi_idojaras_ikon_leiras')?.textContent || '').toLowerCase();
+        const weatherEl = document.getElementById('weather-description');
+        if (!weatherEl) {
+          return 'clear'; // Alapértelmezett, ha az elem nem található
+        }
+        const t = weatherEl.textContent.toLowerCase();
+
         if (t.includes('tiszta') || t.includes('derült')) return 'clear';
         if (t.includes('felhő') || t.includes('borús')) return 'clouds';
-        if (t.includes('eső') || t.includes('zápor') || t.includes('szitál')) return 'rain';
+        if (t.includes('eső') || t.includes('zápor') || t.includes('szitálás')) return 'rain';
         if (t.includes('zivatar') || t.includes('vihar')) return 'thunder';
-        if (t.includes('hó')) return 'snow';
+        if (t.includes('hó') || t.includes('havazás')) return 'snow';
         if (t.includes('köd') || t.includes('pára') || t.includes('szmog') || t.includes('hamu')) return 'mist';
         if (t.includes('szél') || t.includes('viharos')) return 'wind';
-        return 'clear';
+        return 'clear'; // Alapértelmezett hangulat
       }
       function recommendByWeather() {
         const mood = getCurrentMood();
