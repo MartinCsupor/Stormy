@@ -48,12 +48,10 @@ const automaticLocator = async () => {
                 const res = await fetch("https://get.geojs.io/v1/ip/geo.json")
                 const code = await res.json();
 
-                console.log(code)
                 const res2 = await fetch(`https://restcountries.com/v3.1/alpha/${code.country_code}?fields=capital`)
                 const data = await res2.json()
 
-                console.log(data)
-                return data;
+                return data.capital;
             } catch (err) {
                 console.log("API hiba:", err);
                 return "Budapest"
@@ -64,7 +62,7 @@ const automaticLocator = async () => {
 
 const renderAutomatic = async () => {
     const varos = await automaticLocator()
-    const koordinatak = await getCoords(varos)
+    const koordinatak = await getCoordsAutomatic(varos)
     lat = koordinatak.lat
     lon = koordinatak.lon
     renderWeather()
@@ -104,10 +102,29 @@ const getMoonData = async () => {
         moonphase: MoonData.moonPhase
     }
 }
+const getCoordsAutomatic = async (e) => {   
+    const varos = e
+    const res = await fetch(
+        `https://api.openweathermap.org/geo/1.0/direct?q=${varos}&limit=1&appid=${API_KEY}&lang=hu`
+    );
+    
+    if (!res.ok){
+        return false
+    }
+
+    const data = await res.json()
+    
+    if(data.length > 0)
+        return {
+            lat: data[0].lat,
+            lon: data[0].lon
+        }
+
+    return false
+}
 
 const getCoords = async (e) => {   
-    const varos = e
-    
+    const varos = e.target.value
     const res = await fetch(
         `https://api.openweathermap.org/geo/1.0/direct?q=${varos}&limit=5&appid=${API_KEY}&lang=hu`
     );
