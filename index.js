@@ -29,7 +29,6 @@ const automaticLocator = async () => {
                     timeout: 5000
                 })
             );
-            
             const { latitude, longitude } = position.coords;
             
             const res = await fetch(
@@ -39,34 +38,23 @@ const automaticLocator = async () => {
             const data = await res.json();
             
             if (data.length > 0) {
-                return data[0].name;
+                getCoords(data)
             }
             
         } catch (err) {
-            console.log("Geolokácio hiba", err);
-            try {
-                const res = await fetch("https://get.geojs.io/v1/ip/geo.json")
-                const code = await res.json();
-
-                const res2 = await fetch(`https://restcountries.com/v3.1/alpha/${code.country_code}?fields=capital`)
-                const data = await res2.json()
-
-                return data.capital;
-            } catch (err) {
-                console.log("API hiba:", err);
-                return "Budapest"
-            }
+            console.log(err)
         }
     }
 }
 
 const renderAutomatic = async () => {
-    const varos = await automaticLocator()
+    const varos = "Budapest"
     const koordinatak = await getCoordsAutomatic(varos)
     lat = koordinatak.lat
     lon = koordinatak.lon
     renderWeather()
     renderHourlyWeather()
+    automaticLocator()
 }
 
 const getDailyWeather = async () => {
