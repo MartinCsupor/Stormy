@@ -766,3 +766,5 @@ const vitaminAjanlo = (weather, temp, uvIndex) => {
 renderAutomatic()
 setInterval(sunMove, 60000);
 sunMove();
+
+

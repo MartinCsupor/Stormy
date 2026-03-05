@@ -30,8 +30,9 @@
           <button id="menuClose" class="close-btn">✕</button>
       
           <a href="index.html">Főoldal</a>
-          <a href="registeration.html">Regisztráció</a>
-          <a href="login.html">Bejelentkezés</a>
+          <a href="registeration.html" id="registerLink">Regisztráció</a>
+          <a href="login.html" id="loginLink">Bejelentkezés</a>
+          <a href="#" id="logoutLink" style="display: none;">Kijelentkezés</a>
         </div>
       </div>
             
@@ -89,51 +90,39 @@
           }
           
   </style>
-  <script>
-    const menuOpen = document.getElementById("menuOpen");
-    const menuClose = document.getElementById("menuClose");
-    const menu = document.getElementById("myLinks");
-  
-    menuOpen.addEventListener("click", () => {
-      menu.classList.add("active");
-    });
-  
-    menuClose.addEventListener("click", () => {
-      menu.classList.remove("active");
-    });
-  </script>
+ 
     </header>
 
     <main class="flex flex-col items-center justify-center min-h-screen min-w-full">
         <form id="loginForm" action="#" method="POST" class="bg-[#82B3DB] p-8 rounded-2xl flex flex-col space-y-6 w-xl ">
             <h2 class="mb-8 text-4xl text-center">Bejelentkezés</h2>
             
-            <!-- Email Field -->
+           
             <div class="flex items-center bg-[#5A7BAA] p-3 rounded-md">
                 <img src="images/icons/email icon.svg" alt="Email Icon" class="w-5 mr-3">
                 <input id="loginEmail" type="email" name="email" placeholder="Email cím" class="bg-transparent text-white flex-1 outline-none text-base" required>
             </div>
             
-            <!-- Password Field -->
+           
             <div class="flex items-center bg-[#5A7BAA] p-3 rounded-md ">
                 <img src="images/icons/lakat icon.svg" alt="Lock Icon" class="w-5 mr-3">
                 <input id="loginPassword" type="password" name="password" placeholder="Jelszó" class="bg-transparent text-white flex-1 outline-none text-base " required>
                 <img id="togglePassword" src="images/icons/szem icon.svg" alt="Eye Icon" class="w-5 h-5 ml-3 cursor-pointer">
             </div>
             
-            <!-- Remember Me Checkbox -->
+            
             <div class="flex items-center">
                 <input type="checkbox" name="remember_me" id="remember_me" class="mr-2">
                 <label for="remember_me" class="text-white text-sm">Emlékezz rám</label>
                 <a href="#" class="text-white text-xs ml-5 underline">Elfelejtetted a jelszavad?</a>
             </div>
             
-            <!-- Submit Button -->
+           
             <button type="submit" class="bg-[#5A7BAA] text-white font-bold py-3 rounded-md hover:bg-[#6fa0c8] transition duration-300">
                 Bejelentkezés
             </button>
             
-            <!-- Registration Link -->
+           
             <p class="text-center text-white text-sm mt-4">
                 Nincs fiókod? <a href="registeration.html" class="underline">Regisztrálj be!</a>
             </p>
@@ -141,7 +130,7 @@
     </main>
 
     <script>
-        // Toggle password visibility
+       
         const togglePassword = document.getElementById('togglePassword');
         const passwordField = document.getElementById('loginPassword');
 
@@ -192,7 +181,7 @@ form.addEventListener('submit', (e) => {
 });
 
 </script>
-
+<script src="menu.js"></script>
    
 </body>
 </html>
