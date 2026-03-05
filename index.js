@@ -5,8 +5,6 @@ let hourlyWeather = [];
 let weeklyWeather = [];
 let unit = "celsius";
 let celsius = true;
-let lat = 46.1833 //átmeneti
-let lon = 18.9538
 let rawHourlyTemps = [];
 let rawDailyMin = [];
 let rawDailyMax = [];
@@ -24,18 +22,51 @@ const moonPhasesHU = {
 };
 
 const automaticLocator = async () => {
-    const res = await fetch("https://ipapi.co/city/");
-    const data = await res.text();
-    return data
+    if ("geolocation" in navigator) {
+        try {
+            const position = await new Promise((resolve, reject) =>
+                navigator.geolocation.getCurrentPosition(resolve, reject, {
+                    timeout: 5000
+                })
+            );
+            
+            const { latitude, longitude } = position.coords;
+            
+            const res = await fetch(
+                `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${API_KEY}`
+            );
+            
+            const data = await res.json();
+            
+            if (data.length > 0) {
+                return data[0].name;
+            }
+            
+        } catch (err) {
+            console.log("Geolokácio hiba", err);
+            try {
+                const res = await fetch("https://get.geojs.io/v1/ip/geo.json")
+                const code = await res.json();
+
+                const res2 = await fetch(`https://restcountries.com/v3.1/alpha/${code.country_code}?fields=capital`)
+                const data = await res2.json()
+
+                return data.capital;
+            } catch (err) {
+                console.log("API hiba:", err);
+                return "Budapest"
+            }
+        }
+    }
 }
 
 const renderAutomatic = async () => {
     const varos = await automaticLocator()
-    const koordinatak = await getCoords(varos)
+    const koordinatak = await getCoordsAutomatic(varos)
     lat = koordinatak.lat
     lon = koordinatak.lon
     renderWeather()
-    renderHourlyWeahter()
+    renderHourlyWeather()
 }
 
 const getDailyWeather = async () => {
@@ -71,10 +102,29 @@ const getMoonData = async () => {
         moonphase: MoonData.moonPhase
     }
 }
+const getCoordsAutomatic = async (e) => {   
+    const varos = e
+    const res = await fetch(
+        `https://api.openweathermap.org/geo/1.0/direct?q=${varos}&limit=1&appid=${API_KEY}&lang=hu`
+    );
+    
+    if (!res.ok){
+        return false
+    }
 
-const getCoords = async (e) => {    
+    const data = await res.json()
+    
+    if(data.length > 0)
+        return {
+            lat: data[0].lat,
+            lon: data[0].lon
+        }
+
+    return false
+}
+
+const getCoords = async (e) => {   
     const varos = e.target.value
-
     const res = await fetch(
         `https://api.openweathermap.org/geo/1.0/direct?q=${varos}&limit=5&appid=${API_KEY}&lang=hu`
     );
@@ -97,7 +147,7 @@ const getCoords = async (e) => {
             lat =varos.lat
             lon = varos.lon
             renderWeather()
-            renderHourlyWeahter()
+            renderHourlyWeather()
             talalatok.innerHTML = ""
         })
         
@@ -390,7 +440,7 @@ const getHourlyWeather = async () => {
     return weeklyWeather;
 };
 
-const renderHourlyWeahter = async () => {
+const renderHourlyWeather = async () => {
     const data = await getHourlyWeather()
     hourlyWeather = await data.json();
     console.log(hourlyWeather);
