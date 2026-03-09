@@ -1,4 +1,30 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // ===== MODERN NOTIFICATION FUNCTION (Toast) =====
+    
+    function showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.textContent = message;
+
+
+        notification.className = 'fixed top-20 right-5 p-4 rounded-lg text-white font-bold shadow-xl transform transition-all duration-500 ease-in-out z-[2000] opacity-0 translate-x-full';
+
+        if (type === 'error') {
+            notification.classList.add('bg-red-600');
+        } else if (type === 'info') {
+            notification.classList.add('bg-red-500');
+        } else { // 'success'
+            notification.classList.add('bg-green-500');
+        }
+
+        document.body.appendChild(notification);
+        requestAnimationFrame(() => { notification.classList.remove('opacity-0', 'translate-x-full'); });
+
+        setTimeout(() => {
+            notification.classList.add('opacity-0', 'translate-x-full');
+            notification.addEventListener('transitionend', () => notification.remove());
+        }, 2000);
+    }
+
     // UI
     const musicToggle = document.getElementById('music-toggle');
     const musicPanel = document.getElementById('music-panel');
@@ -12,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     closeMusicBtn?.addEventListener('click', () => { musicPanel.classList.add('hidden'); addMusicModal.classList.add('hidden'); });
     openAddBtn?.addEventListener('click', () => {
       if (!localStorage.getItem('loggedUser')) {
-        alert('Ehhez regisztrálnod kell!');
+        showNotification('Ehhez be kell jelentkezned!', 'info');
         return;
       }
       addMusicModal.classList.toggle('hidden');
@@ -299,7 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     favBtn?.addEventListener('click', () => {
       if (!localStorage.getItem('loggedUser')) {
-        alert('Ehhez regisztrálnod kell!');
+        showNotification('Ehhez be kell jelentkezned!', 'info');
         return;
       }
       const song = playlist[currentIndex]; if (!song) return; const key = getTrackKey(song); if (favorites.has(key)) favorites.delete(key); else favorites.add(key); saveFavorites(); updateFavoriteButton();
@@ -334,24 +360,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add Music
     addBtn?.addEventListener('click', () => {
       const url = urlInput.value.trim(); const title = titleInput.value.trim(); const moodVal = (moodInput?.value || '').trim();
-      if (!url || !title) { alert('Tölts ki mindent!'); return; }
+      if (!url || !title) { showNotification('A zene URL-jét és címét is meg kell adni!', 'error'); return; }
       let newTrack = null;
-      if (/(youtube\.com|youtu\.be)/i.test(url)) { const videoId = extractVideoId(url); if (!videoId) { alert('Érvényes YouTube link kell!'); return; } newTrack = { type: 'youtube', id: videoId, title, mood: moodVal || undefined }; }
+      if (/(youtube\.com|youtu\.be)/i.test(url)) { const videoId = extractVideoId(url); if (!videoId) { showNotification('Érvénytelen YouTube link!', 'error'); return; } newTrack = { type: 'youtube', id: videoId, title, mood: moodVal || undefined }; }
       else if (/(soundcloud\.com)/i.test(url)) { newTrack = { type: 'soundcloud', url, title, mood: moodVal || undefined }; }
       else { newTrack = { type: 'audio', url, title, mood: moodVal || undefined }; }
       library.push(newTrack); saveLibrary();
       if (moodFilter) { applyMoodFilter(moodFilter); } else {
         playlist.push(newTrack); try { localStorage.setItem('stormy_playlist', JSON.stringify(playlist)); } catch {};
-        if (playlist.length === 1) { currentIndex = 0; loadSong(0, false); }
+        if (playlist.length === 1) { currentIndex = 0; loadSong(0, false); } // Auto-load if it's the first song
       }
       urlInput.value = ''; titleInput.value = ''; if (moodInput) moodInput.value = '';
-      addMusicModal.classList.add('hidden'); alert('Zene hozzáadva!');
+      addMusicModal.classList.add('hidden'); showNotification('Zene sikeresen hozzáadva!', 'success');
     });
 
     // Weather-based recommend
     recommendBtn?.addEventListener('click', () => {
       if (!localStorage.getItem('loggedUser')) {
-        alert('Ehhez regisztrálnod kell!');
+        showNotification('Ehhez be kell jelentkezned!', 'info');
         return;
       }
       recommendByWeather();

@@ -1,3 +1,30 @@
+// ===== MODERN NOTIFICATION FUNCTION (Toast) =====
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.textContent = message;
+
+    notification.className = 'fixed top-20 right-5 p-4 rounded-lg text-white font-bold shadow-xl transform transition-all duration-500 ease-in-out z-[2000] opacity-0 translate-x-full';
+
+    if (type === 'error') {
+        notification.classList.add('bg-red-600');
+    } else if (type === 'info') {
+        notification.classList.add('bg-blue-500');
+    } else { // 'success'
+        notification.classList.add('bg-green-500');
+    }
+
+    document.body.appendChild(notification);
+
+    // Animate in
+    requestAnimationFrame(() => { notification.classList.remove('opacity-0', 'translate-x-full'); });
+
+    // Animate out and remove after a delay
+    setTimeout(() => {
+        notification.classList.add('opacity-0', 'translate-x-full');
+        notification.addEventListener('transitionend', () => notification.remove());
+    }, 2000); // Visible for 4 seconds
+}
+
 // ===== FORM =====
 const form = document.getElementById('form1');
 
@@ -45,28 +72,28 @@ form.addEventListener('submit', (e) => {
 
     // Alap ellenőrzések
     if (!email || !username || !password || !passwordConfirm) {
-        alert('Minden mező kitöltése kötelező!');
+        showNotification('Minden mező kitöltése kötelező!', 'error');
         return;
     }
 
     if (password !== passwordConfirm) {
-        alert('A jelszavak nem egyeznek!');
+        showNotification('A jelszavak nem egyeznek!', 'error');
         return;
     }
 
     if (password.length < 6) {
-        alert('A jelszónak legalább 6 karakteresnek kell lennie!');
+        showNotification('A jelszónak legalább 6 karakteresnek kell lennie!', 'error');
         return;
     }
 
     // DUPLIKÁCIÓ ELLENŐRZÉS
     if (users.some(u => u.email === email)) {
-        alert('Ez az email már regisztrálva van!');
+        showNotification('Ez az email már regisztrálva van!', 'error');
         return;
     }
 
     if (users.some(u => u.username === username)) {
-        alert('Ez a felhasználónév már foglalt!');
+        showNotification('Ez a felhasználónév már foglalt!', 'error');
         return;
     }
 
@@ -81,7 +108,7 @@ form.addEventListener('submit', (e) => {
     localStorage.setItem('users', JSON.stringify(users));
 
     console.log('Regisztrált userek:', users);
-    alert('Sikeres regisztráció! 🎉');
+    showNotification('Sikeres regisztráció! 🎉', 'success');
 
     form.reset();
 });

@@ -1,3 +1,4 @@
+
 const API_KEY = "8bbe3807862344f523a5e8a6532780f5";
 
 let dailyWeather = [];
