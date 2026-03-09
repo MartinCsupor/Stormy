@@ -1,4 +1,4 @@
-function getVitaminRecommendation(weatherData) {
+unction getVitaminRecommendation(weatherData) {
   const { weather, temp, uvIndex } = weatherData;
   let vitamins = [];
 
