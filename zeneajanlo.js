@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelMusicBtn = document.getElementById('cancel-music');
     const closeMusicBtn = document.getElementById('close-music');
     const openAddBtn = document.getElementById('open-add-music');
+    const coverImg = document.getElementById("song-cover");
 
     musicToggle?.addEventListener('click', () => musicPanel.classList.toggle('hidden'));
     cancelMusicBtn?.addEventListener('click', () => addMusicModal.classList.add('hidden'));
@@ -249,6 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const song = playlist[index]; if (!song) return;
       isPlaying = false; playPauseBtn.querySelector('img').src = 'images/icons/play.svg';
       titleText.textContent = song.title; artistText.textContent = 'Felhasználó'; updateFavoriteButton();
+      coverImg.src = song.cover || "images/icons/profil.svg";
       if (song.type === 'soundcloud') {
         mode = 'soundcloud'; try { ytPlayer?.pauseVideo?.(); } catch {}; try { audio.pause(); } catch {}; audio.src = '';
         const playerUrl = `https://w.soundcloud.com/player/?url=${encodeURIComponent(song.url)}&auto_play=${autoPlay ? 'true' : 'false'}`;
