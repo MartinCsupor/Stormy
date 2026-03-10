@@ -28,7 +28,7 @@
         <button id="menuOpen" class="p-2 cursor-pointer">
           <img src="images/icons/hambuger-menu.svg" id="hambiMenu" class="w-20 h-20 justify-center items-center " alt="Menü" />
         </button>
-        <div id="myLinks" class="menu">
+        <div id="myLinks" class="menu font-bold">
           <button id="menuClose" class="close-btn">✕</button>
           <a href="index.html">Főoldal</a>
           <a href="registeration.html" id="registerLink">Regisztráció</a>
@@ -116,10 +116,13 @@
   <div id="music-panel" class="hidden fixed bottom-24 right-4 bg-[#476D98] rounded-2xl p-6 w-80 z-50 ">
     <div class="flex justify-between items-center mb-4">
       <div class="flex items-center">
-        <div class="w-12 h-12 bg-gray-300 rounded-md"></div>
-        <div class="ml-4">
-          <p id="song-title" class="text-lg font-bold">Zene címe</p>
-          <p id="song-artist" class="text-sm">Előadó neve</p>
+        <div class="flex items-center">
+          <img id="song-cover" src="images/icons/profil.svg" class="w-12 h-12 rounded-md object-cover">
+        
+          <div class="ml-4">
+            <p id="song-title" class="text-lg font-bold">Zene címe</p>
+            <p id="song-artist" class="text-sm">Előadó neve</p>
+          </div>
         </div>
       </div>
       <button id="close-music" class="w-5 h-5"><img src="images/icons/close icon.svg" /></button>

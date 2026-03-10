@@ -106,9 +106,13 @@ form.addEventListener('submit', (e) => {
 
     users.push(newUser);
     localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('loggedUser', JSON.stringify(newUser));
 
     console.log('Regisztrált userek:', users);
-    showNotification('Sikeres regisztráció! 🎉', 'success');
+    showNotification('Sikeres regisztráció! Átirányítunk a főoldalra...', 'success');
+    
 
-    form.reset();
+    setTimeout(() => {
+        window.location.href = "index.html";
+    }, 1000);
 });
