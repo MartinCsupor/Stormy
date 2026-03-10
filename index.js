@@ -3215,10 +3215,10 @@ const renderAutomatic = async () => {
     automaticLocator()
 }
 
-const getDailyWeather = async () => {
+const getDailyWeather = async (telepules) => {
     
     const dailyWeather = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&lang=hu`
+        `https://api.openweathermap.org/data/2.5/weather?q=${telepules}&appid=${API_KEY}&lang=hu`
     );
     return dailyWeather;
 };
@@ -3278,29 +3278,45 @@ const getCoords = async (e) => {
         .filter(v => v.toLowerCase().startsWith(varosInp.toLowerCase()))
         .slice(0,5);
 
-    talalat.forEach(varos => {
-        const div = document.createElement("div")
-        div.classList.add("bg-[#82B3DB]", "hover:bg-[#476D98]", "rounded-lg", "px-2", "py-1")
-        div.textContent = varos
+    if(talalat.length > 0){
 
-        div.addEventListener("click", async () => {
-            const res = await fetch(
-                `https://api.openweathermap.org/geo/1.0/direct?q=${varos}&limit=1&appid=${API_KEY}&lang=hu`
-            );
-            const data = await res.json()
-            console.log(data)
-            console.log(data[0].lat, data[0].lon)
-            lat = data[0].lat
-            lon = data[0].lon
-            renderWeather()
-            renderHourlyWeather()
-            varosInput.value = varos
-            talalatok.innerHTML = ""
+        talalat.forEach(varos => {
+            const div = document.createElement("div")
+            div.classList.add("bg-[#82B3DB]", "hover:bg-[#476D98]", "rounded-lg", "px-2", "py-1")
+            div.textContent = varos
+            
+            div.addEventListener("click", () => {
+                renderWeather(varos)
+                renderHourlyWeather(varos)
+                varosInput.value = varos
+                talalatok.innerHTML = ""
+            })
+            
+            talalatok.appendChild(div)
         })
+    } else {
+        const res = await fetch(
+            `https://api.openweathermap.org/geo/1.0/direct?q=${varosInp}&limit=5&appid=${API_KEY}&lang=hu`
+        );
+        const data = await res.json()
+        console.log(data)
+        data.forEach(varos => {
+            console.log(varos)
+            const div = document.createElement("div")
+            div.classList.add("bg-[#82B3DB]", "hover:bg-[#476D98]", "rounded-lg", "px-2", "py-1")
+            div.textContent = varos.name
+            
+            div.addEventListener("click", () => {
+                renderWeather(varos.name)
+                renderHourlyWeather(varos.name)
+                varosInput.value = varos.name
+                talalatok.innerHTML = ""
+            })
+            
+            talalatok.appendChild(div)
+        })
+    }
         
-        talalatok.appendChild(div)
-    })
-    
     return false
 }
 
@@ -3308,8 +3324,8 @@ const varosInput = document.getElementById("varosinput")
 const talalatok = document.getElementById("talalatok");
 varosInput.addEventListener("input", (e) => getCoords(e));
 
-const renderWeather = async () => {
-    const data = await getDailyWeather();
+const renderWeather = async (telepules) => {
+    const data = await getDailyWeather(telepules);
     dailyWeather = await data.json()
     console.log(dailyWeather)
 
@@ -3456,7 +3472,7 @@ const renderWeather = async () => {
     const keltetext1 = document.createElement("p")
     const keltetext2 = document.createElement("p")
 
-    keltetext1.textContent = `${new Date(dailyWeather.sys.sunrise * 1000).getHours()}:${new Date(dailyWeather.sys.sunrise * 1000).getMinutes()}`
+    keltetext1.textContent = `${String(new Date(dailyWeather.sys.sunrise * 1000).getHours()).padStart(2, "0")}:${String(new Date(dailyWeather.sys.sunrise * 1000).getMinutes()).padStart(2, "0")}`
     keltetext2.textContent = "Napkelte"
     kelteWrapper.appendChild(keltetext1)
     kelteWrapper.appendChild(keltetext2)
@@ -3465,7 +3481,7 @@ const renderWeather = async () => {
     const nyugtatext1 = document.createElement("p")
     const nyugtatext2 = document.createElement("p")
 
-    nyugtatext1.textContent = `${new Date(dailyWeather.sys.sunset * 1000).getHours()}:${new Date(dailyWeather.sys.sunset * 1000).getMinutes()}`
+    nyugtatext1.textContent = `${String(new Date(dailyWeather.sys.sunset * 1000).getHours()).padStart(2, "2")}:${String(new Date(dailyWeather.sys.sunset * 1000).getMinutes()).padStart(2, "0")}`
     nyugtatext2.textContent = "Napnyugta"
     nyugtaWrapper.appendChild(nyugtatext1)
     nyugtaWrapper.appendChild(nyugtatext2)
@@ -3574,15 +3590,15 @@ function sunMove () {
     }
 }
 
-const getHourlyWeather = async () => {
+const getHourlyWeather = async (telepules) => {
     const weeklyWeather = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&lang=hu`
+        `https://api.openweathermap.org/data/2.5/forecast?q=${telepules}&appid=${API_KEY}&lang=hu`
     );
     return weeklyWeather;
 };
 
-const renderHourlyWeather = async () => {
-    const data = await getHourlyWeather()
+const renderHourlyWeather = async (telepules) => {
+    const data = await getHourlyWeather(telepules)
     hourlyWeather = await data.json();
     console.log(hourlyWeather);
 
