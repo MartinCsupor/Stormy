@@ -3210,8 +3210,8 @@ const renderAutomatic = async () => {
     const koordinatak = await getCoordsAutomatic(varos)
     lat = koordinatak.lat
     lon = koordinatak.lon
-    renderWeather()
-    renderHourlyWeather()
+    renderWeather(varos)
+    renderHourlyWeather(varos)
     automaticLocator()
 }
 
