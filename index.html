@@ -26,7 +26,7 @@
       </h1>
       <div class="topnav">
         <button id="menuOpen" class="p-2 cursor-pointer">
-          <img src="images/icons/hambuger-menu.svg" id="hambiMenu" class="w-20 h-20 justify-center items-center " alt="Menü" />
+          <img src="images/icons/hambuger-menu.svg" id="hambiMenu" class="w-20 h-20 justify-center items-center mt-8" alt="Menü" />
         </button>
         <div id="myLinks" class="menu font-bold">
           <button id="menuClose" class="close-btn">✕</button>
@@ -108,7 +108,7 @@
 
   <div id="zene-ikon">
     <button id="music-toggle" class="fixed bottom-4 right-4 bg-[#8CD9FF] p-3 rounded-full shadow-lg hover:bg-[#2F8BB7]">
-      <img src="images/icons/zene icon.svg" class="w-8 h-8" />
+      <img src="images/icons/zene icon.svg" class="w-8 h-8 cursor-pointer" />
     </button>
   </div>
 
@@ -117,7 +117,7 @@
     <div class="flex justify-between items-center mb-4">
       <div class="flex items-center">
         <div class="flex items-center">
-          <img id="song-cover" src="images/icons/profil.svg" class="w-12 h-12 rounded-md object-cover">
+          <img id="song-cover" src="images/icons/profil.svg" class="w-12 h-12 rounded-md object-cover " />
         
           <div class="ml-4">
             <p id="song-title" class="text-lg font-bold">Zene címe</p>
@@ -125,7 +125,7 @@
           </div>
         </div>
       </div>
-      <button id="close-music" class="w-5 h-5"><img src="images/icons/close icon.svg" /></button>
+      <button id="close-music" class="w-5 h-5 cursor-pointer"><img src="images/icons/close icon.svg" /></button>
     </div>
 
     <div class="mt-3">
@@ -151,16 +151,16 @@
     </div>
 
     <div class="flex justify-between items-center text-xl mt-3 ">
-      <button  id="prev"><img src="images/icons/prev.svg" class="w-7 h-7" alt="Previous"></button>
-      <button id="play-pause"><img src="images/icons/play.svg" class="w-7 h-7" alt="Play/Pause"></button>
-      <button id="next"><img src="images/icons/next.svg" class="w-6 h-6" alt="Next"></button>
-      <button id="recommend-music" title="Zeneajánló (időjárás alapján)">🎵</button>
-      <button id="open-add-music" title="Zene hozzáadása">➕</button>
-      <button id="toggle-favorite" title="Kedvencek közé / onnan ki">🤍</button>
-      <button id="delete-track" title="Jelenlegi zene törlése">🗑</button>
+      <button  id="prev" class="cursor-pointer"><img src="images/icons/prev.svg" class="w-7 h-7" alt="Previous"></button>
+      <button id="play-pause" class="cursor-pointer"><img src="images/icons/play.svg" class="w-7 h-7" alt="Play/Pause"></button>
+      <button id="next" class="cursor-pointer"><img src="images/icons/next.svg" class="w-6 h-6" alt="Next"></button>
+      <button id="recommend-music " class="cursor-pointer" title="Zeneajánló (időjárás alapján) ">🎵</button>
+      <button id="open-add-music" class="cursor-pointer" title="Zene hozzáadása">➕</button>
+      <button id="toggle-favorite" class="cursor-pointer" title="Kedvencek közé / onnan ki">🤍</button>
+      <button id="delete-track" class="cursor-pointer" title="Jelenlegi zene törlése">🗑</button>
     </div>
     <div class="flex justify-between items-center text-sm mt-2">
-      <button id="toggle-favorites-only" class="px-2 py-1 rounded bg-[#5A7BAA] text-white" title="Csak kedvencek megjelenítése">Csak kedvencek: KI</button>
+      <button id="toggle-favorites-only" class="px-2 py-1 rounded bg-[#5A7BAA] text-white cursor-pointer" title="Csak kedvencek megjelenítése">Csak kedvencek: KI</button>
     </div>
   </div>
 
@@ -169,9 +169,9 @@
     <h2 class="text-lg font-bold mb-4 text-center">Egyéni zene hozzáadása</h2>
     <input id="music-url" type="text" placeholder="Zene URL (YouTube, SoundCloud vagy MP3)" class="w-full mb-3 p-2 rounded bg-[#5A7BAA] text-white" />
     <input id="music-title" type="text" placeholder="Zene címe" class="w-full mb-2 p-2 rounded bg-[#5A7BAA] text-white" />
-    <label for="music-mood" class="block text-sm mb-1">Hangulat / Időjárás</label>
+    <label for="music-mood" class="block text-sm mb-1 cursor-pointer">Hangulat / Időjárás</label>
     <select id="music-mood" class="w-full mb-4 p-2 rounded bg-[#5A7BAA] text-white">
-      <option value="">(opcionális)</option>
+      <option value="" >(opcionális)</option>
       <option value="clear">Napos</option>
       <option value="clouds">Borús</option>
       <option value="rain">Esős</option>
