@@ -3273,13 +3273,17 @@ const getCoords = async (e) => {
     const varosInp = e.target.value
     
     talalatok.innerHTML = ""
-
+    
     const talalat = varosok
-        .filter(v => v.toLowerCase().startsWith(varosInp.toLowerCase()))
-        .slice(0,5);
-
+    .filter(v => v.toLowerCase().startsWith(varosInp.toLowerCase()))
+    .slice(0,5);
+    
     if(talalat.length > 0){
-
+        
+        if (varosInp.length ==  0){
+            talalatok.innerHTML = ""
+            return
+        }
         talalat.forEach(varos => {
             const div = document.createElement("div")
             div.classList.add("bg-[#82B3DB]", "hover:bg-[#476D98]", "rounded-lg", "px-2", "py-1")
@@ -3299,7 +3303,6 @@ const getCoords = async (e) => {
             `https://api.openweathermap.org/geo/1.0/direct?q=${varosInp}&limit=5&appid=${API_KEY}&lang=hu`
         );
         const data = await res.json()
-        console.log(data)
         data.forEach(varos => {
             console.log(varos)
             const div = document.createElement("div")
@@ -3316,13 +3319,19 @@ const getCoords = async (e) => {
             talalatok.appendChild(div)
         })
     }
-        
+    
     return false
 }
 
 const varosInput = document.getElementById("varosinput")
 const talalatok = document.getElementById("talalatok");
 varosInput.addEventListener("input", (e) => getCoords(e));
+
+document.onclick = (e) => {
+    if (!varosInput.contains(e.target) && !talalatok.contains(e.target)) {
+        talalatok.innerHTML = ""
+    }
+}
 
 const renderWeather = async (telepules) => {
     const data = await getDailyWeather(telepules);
@@ -3541,7 +3550,6 @@ const renderWeather = async (telepules) => {
     napholdWrapper.appendChild(holdWrapper)
     jellemzokContainer.appendChild(napholdWrapper)
     
-    sunMove();
 };
 
 function sunMove () {
