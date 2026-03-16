@@ -34,7 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const openAddBtn = document.getElementById('open-add-music');
     const coverImg = document.getElementById("song-cover");
 
-    musicToggle?.addEventListener('click', () => musicPanel.classList.toggle('hidden'));
+    musicToggle?.addEventListener('click', () => {
+        musicPanel.classList.toggle('hidden');
+        addMusicModal.classList.add('hidden');
+    });
     cancelMusicBtn?.addEventListener('click', () => addMusicModal.classList.add('hidden'));
     closeMusicBtn?.addEventListener('click', () => { musicPanel.classList.add('hidden'); addMusicModal.classList.add('hidden'); });
     openAddBtn?.addEventListener('click', () => {
@@ -167,19 +170,33 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function getCurrentMood() {
+      // 1. Próbáljuk meg a globális dailyWeather változót használni (index.js-ből)
+      // Ez biztosítja, hogy mindig az aktuálisan keresett város időjárását vegyük alapul.
+      if (typeof dailyWeather !== 'undefined' && dailyWeather && dailyWeather.weather && dailyWeather.weather[0]) {
+        const id = dailyWeather.weather[0].id;
+        // Weather codes: https://openweathermap.org/weather-conditions
+        if (id >= 200 && id < 300) return 'thunder';
+        if (id >= 300 && id < 600) return 'rain';
+        if (id >= 600 && id < 700) return 'snow';
+        if (id >= 700 && id < 800) return 'mist';
+        if (id === 800) return 'clear';
+        if (id > 800) return 'clouds';
+      }
+
+      // 2. Fallback: DOM elem alapján (ha a globális változó nem elérhető)
       const weatherEl = document.getElementById('weather-description');
       if (!weatherEl) {
         return 'clear'; // Alapértelmezett, ha az elem nem található
       }
       const t = weatherEl.textContent.toLowerCase();
 
-      if (t.includes('tiszta') || t.includes('derült')) return 'clear';
+      if (t.includes('tiszta') || t.includes('derült') || t.includes('napos')) return 'clear';
       if (t.includes('felhő') || t.includes('borús')) return 'clouds';
       if (t.includes('eső') || t.includes('zápor') || t.includes('szitálás')) return 'rain';
-      if (t.includes('zivatar') || t.includes('vihar')) return 'thunder';
+      if (t.includes('zivatar') || t.includes('vihar') || t.includes('mennydörgés')) return 'thunder';
       if (t.includes('hó') || t.includes('havazás')) return 'snow';
-      if (t.includes('köd') || t.includes('pára') || t.includes('szmog') || t.includes('hamu')) return 'mist';
-      if (t.includes('szél') || t.includes('viharos')) return 'wind';
+      if (t.includes('köd') || t.includes('pára') || t.includes('szmog') || t.includes('hamu') || t.includes('füst')) return 'mist';
+      if (t.includes('szél') || t.includes('viharos') || t.includes('szeles')) return 'wind';
       return 'clear'; // Alapértelmezett hangulat
     }
     function recommendByWeather() {
