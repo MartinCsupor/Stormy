@@ -3304,7 +3304,6 @@ const getCoords = async (e) => {
         );
         const data = await res.json()
         data.forEach(varos => {
-            console.log(varos)
             const div = document.createElement("div")
             div.classList.add("bg-[#82B3DB]", "hover:bg-[#476D98]", "rounded-lg", "px-2", "py-1")
             div.textContent = varos.name
@@ -3336,7 +3335,6 @@ document.onclick = (e) => {
 const renderWeather = async (telepules) => {
     const data = await getDailyWeather(telepules);
     dailyWeather = await data.json()
-    console.log(dailyWeather)
 
     const extraJellemzo = await getUVIndexAndDewPoint();
     const holdJellemzok = await getMoonData();
@@ -3348,6 +3346,8 @@ const renderWeather = async (telepules) => {
 
     const jelenlegiDiv = document.getElementById("jelenlegi_idojaras")
     jelenlegiDiv.innerHTML = "";
+    const jelenlegiDivContent = document.createElement("div")
+    jelenlegiDivContent.classList.add("flex", "justify-between", "bg-[#476D98]", "p-4", "rounded-lg", "m-2", "h-auto", "h-[-webkit-fill-available]!")
 
     const balWrapper = document.createElement("div")
     const fok = document.createElement("h2");
@@ -3399,14 +3399,19 @@ const renderWeather = async (telepules) => {
     jelenlegiJellWrapper.appendChild(varosWrapper)    
     jelenlegiJellWrapper.appendChild(minmaxWrapper)    
 
-    jelenlegiDiv.appendChild(balWrapper)
-    jelenlegiDiv.appendChild(jelenlegiJellWrapper)
+    jelenlegiDivContent.appendChild(balWrapper)
+    jelenlegiDivContent.appendChild(jelenlegiJellWrapper)
+    jelenlegiDiv.appendChild(jelenlegiDivContent)
 
     //napi jellemzők
 
     const jellemzokContainer = document.getElementById("idojaras_jellemzoi")
     jellemzokContainer.innerHTML = ""
 
+    const jellemzokContainerContent= document.createElement("div")
+    jellemzokContainerContent.classList.add("flex", "flex-col", "justify-evenly", "m-2", "p-2", "rounded-lg", "bg-[#82B3DB]", "h-[-webkit-fill-available]!")
+
+    
     const jellemzok = [
         { nev: "Páratartalom", ertek: dailyWeather.main.humidity, egyseg: "%", icon: "/images/icons/paratartalom.svg" }, 
         { nev: "Szélsebesség", ertek: dailyWeather.wind.speed, egyseg: " km/h", icon: "/images/icons/szelsebesség.svg" },
@@ -3415,29 +3420,30 @@ const renderWeather = async (telepules) => {
         { nev: "Látótávolság", ertek: dailyWeather.visibility/1000, egyseg: " km", icon: "/images/icons/latotavolsag.svg" },
         { nev: "Harmatpont", ertek: extraJellemzo.dew_point, egyseg: " °", icon: "/images/icons/harmatpont.svg" }
     ]
-
+    
     const jellemzokWrapper = document.createElement("div");
-
+    
     jellemzokWrapper.classList.add("grid", "grid-cols-2", "xl:grid-cols-3","gap-4");
-
+    
     jellemzok.map(({ nev, ertek, egyseg }) => {
         const jellemzokDiv = document.createElement("div");
         const cim = document.createElement("h3");
         const adat = document.createElement("p");
-
+        
         jellemzokDiv.classList.add("bg-[#476D98]", "rounded-2xl", "p-4", "text-white");
         cim.classList.add("font-bold", "mb-2");
         adat.classList.add("text-2xl", "text-center");
-
+        
         cim.innerHTML = nev;
         adat.innerHTML = ertek + egyseg;
-
+        
         jellemzokDiv.appendChild(cim);
         jellemzokDiv.appendChild(adat);
         jellemzokWrapper.appendChild(jellemzokDiv);
     })
-
-    jellemzokContainer.appendChild(jellemzokWrapper)
+    
+    jellemzokContainerContent.appendChild(jellemzokWrapper)
+    jellemzokContainer.appendChild(jellemzokContainerContent)
 
     //nap jellemzők
 
@@ -3548,7 +3554,7 @@ const renderWeather = async (telepules) => {
     holdWrapper.appendChild(holdKelteDiv)
 
     napholdWrapper.appendChild(holdWrapper)
-    jellemzokContainer.appendChild(napholdWrapper)
+    jellemzokContainerContent.appendChild(napholdWrapper)
     
 };
 
@@ -3608,12 +3614,14 @@ const getHourlyWeather = async (telepules) => {
 const renderHourlyWeather = async (telepules) => {
     const data = await getHourlyWeather(telepules)
     hourlyWeather = await data.json();
-    console.log(hourlyWeather);
 
     //óránkénti időjárás
 
     const orankenti = document.getElementById("orankenti_idojaras");
     orankenti.innerHTML = "";
+
+    const orankentiContent = document.createElement("div")
+    orankentiContent.classList.add("flex", "m-2", "h-[-webkit-fill-available]!");
 
     const swiper = document.createElement("div");
     const swiperwrapper = document.createElement("div");
@@ -3621,7 +3629,8 @@ const renderHourlyWeather = async (telepules) => {
     swiper.classList.add("swiper", "w-full", "!px-5", "!py-5", "bg-[#82B3DB]", "rounded-lg");
     swiperwrapper.classList.add("swiper-wrapper");
  
-    orankenti.appendChild(swiper);
+    orankenti.appendChild(orankentiContent)
+    orankentiContent.appendChild(swiper);
     swiper.appendChild(swiperwrapper)
  
     let id = 0;
@@ -3684,6 +3693,10 @@ const renderHourlyWeather = async (telepules) => {
     const napi = document.getElementById("napi_idojaras");
     napi.innerHTML = ""
 
+    const napiContent = document.createElement("div")
+    napiContent.classList.add("flex", "flex-col", "m-2", "col-span-2", "h-[-webkit-fill-available]!");
+
+    napi.appendChild(napiContent)
 
     let napok = [];
     let esok = [];
@@ -3734,7 +3747,7 @@ const renderHourlyWeather = async (telepules) => {
     });
 
     const napDivWrapper = document.createElement("div");
-    napi.appendChild(napDivWrapper);
+    napiContent.appendChild(napDivWrapper);
     napDivWrapper.classList.add("flex", "flex-col", "lg:justify-evenly","rounded-lg","bg-[#82B3DB]", "h-[-webkit-fill-available]!");
 
     for (let i = 0; i < 5; i++){
@@ -3898,7 +3911,10 @@ const vitaminAjanlo = (weather, temp, uvIndex) => {
     };
 
     const vitaminContainer = document.getElementById("vitamin_ajanlo");
-    vitaminContainer.innerHTML = ""; // Előző tartalom törlése
+    vitaminContainer.innerHTML = "";
+
+    const vitaminContainerContent = document.createElement("div")
+    vitaminContainerContent.classList.add("w-auto", "bg-[#82B3DB]", "h-auto", "rounded-lg", "m-2", "p-2", "sm:p-4", "flex", "flex-col", "justify-evenly", "h-[-webkit-fill-available]!")
     
     const cim = document.createElement("h2")
     const vitaminWrapper = document.createElement("div");
@@ -3936,8 +3952,9 @@ const vitaminAjanlo = (weather, temp, uvIndex) => {
         vitaminWrapper.appendChild(vitaminDiv)
     });
 
-    vitaminContainer.appendChild(cim)
-    vitaminContainer.appendChild(vitaminWrapper)
+    vitaminContainerContent.appendChild(cim)
+    vitaminContainerContent.appendChild(vitaminWrapper)
+    vitaminContainer.appendChild(vitaminContainerContent)
 }
 
 renderAutomatic()

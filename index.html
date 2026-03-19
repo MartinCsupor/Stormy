@@ -26,7 +26,7 @@
       </h1>
       <div class="topnav">
         <button id="menuOpen" class="p-2 cursor-pointer">
-          <img src="images/icons/hambuger-menu.svg" id="hambiMenu" class="w-20 h-20 justify-center items-center mt-8" alt="Menü" />
+          <img src="images/icons/hambuger-menu.svg" id="hambiMenu" class="w-20 h-20 justify-center items-center" alt="Menü" />
         </button>
         <div id="myLinks" class="menu font-bold">
           <button id="menuClose" class="close-btn">✕</button>
@@ -35,32 +35,6 @@
           <a href="login.html" id="loginLink">Bejelentkezés</a>
           <a href="#" id="logoutLink" style="display: none;">Kijelentkezés</a>
           <a href="#" id="open-music-menu" style="display: none;">Zenelejátszó</a>
-        <div class="w-1/3 flex-1">
-            <a href="index.html" class="hover:opacity-50 h-auto">
-                <img src="images/logo.png" alt="Stormy logo" class="h-auto w-25 sm:w-50 md:max-w-[200px] max-w-[150px] hover:opacity-80 ">
-            </a>
-        </div>
-        
-        <div class="w-1/3 flex-1">
-            <h1 class="font-bold text-center text-4xl md:text-5xl lg:text-7xl">
-                <a href="index.html" class="hover:opacity-80">
-                Stormy
-                </a>
-            </h1>
-        </div>
-
-        <div class="topnav flex justify-end w-1/3">
-            <button id="menuOpen" class="p-2 cursor-pointer">
-            <img src="images/icons/hambuger-menu.svg" id="hambiMenu" class="w-20 h-20 justify-center items-center flex-1" alt="Menü">
-            </button>
-            <div id="myLinks" class="menu font-bold">
-            <button id="menuClose" class="close-btn">✕</button>
-            <a href="index.html">Főoldal</a>
-            <a href="registeration.html" id="registerLink">Regisztráció</a>
-            <a href="login.html" id="loginLink">Bejelentkezés</a>
-            <a href="#" id="logoutLink" style="display: none;">Kijelentkezés</a>
-            </div>
-        </div>
 
         <a href="javascript:void(0);" class="icon"><i class="fa fa-bars"></i></a>
 
@@ -100,34 +74,24 @@
     </header>
 
     <main class="grid grid-cols-1 auto-rows-min lg:grid-cols-3">
-        <section class="lg:col-start-1 lg:row-start-1">
-            <div id="jelenlegi_idojaras" class="flex justify-between bg-[#476D98] p-4 rounded-lg m-2 h-auto h-[-webkit-fill-available]!">
-                <!-- Jelenlegi időjárás -->
-            </div>
+        <section id="jelenlegi_idojaras" class="lg:col-start-1 lg:row-start-1">
+            <!-- Jelenlegi időjárás -->
         </section>
 
-        <section class="lg:row-start-1 lg:col-start-2 lg:col-span-2">
-            <div id="orankenti_idojaras" class="flex m-2 h-[-webkit-fill-available]!">
-                <!-- Óránkénti időjárás -->
-            </div>
+        <section id="orankenti_idojaras" class="lg:row-start-1 lg:col-start-2 lg:col-span-2">
+            <!-- Óránkénti időjárás -->
         </section>
 
-        <section class="lg:row-start-2 lg:col-start-2 lg:col-span-2">
-            <div id="napi_idojaras" class="flex flex-col m-2 col-span-2 h-[-webkit-fill-available]!">
-                <!-- Napi időjárás -->
-            </div>
+        <section id="napi_idojaras" class="lg:row-start-2 lg:col-start-2 lg:col-span-2">
+            <!-- Napi időjárás -->
         </section>
 
-        <section class="lg:row-start-2 lg:col-start-1 lg:row-span-2">
-            <div id="idojaras_jellemzoi" class="flex flex-col justify-evenly m-2 p-2 rounded-lg bg-[#82B3DB] h-[-webkit-fill-available]!">
-                <!-- Időjárás jellemzői -->
-            </div>
+        <section id="idojaras_jellemzoi" class="lg:row-start-2 lg:col-start-1 lg:row-span-2">
+            <!-- Időjárás jellemzői -->
         </section>
 
-        <section class="lg:row-start-3 lg:col-start-2 lg:col-span-2">
-            <div id="vitamin_ajanlo" class="w-auto bg-[#82B3DB] h-auto rounded-lg m-2 p-2 sm:p-4 flex flex-col justify-evenly h-[-webkit-fill-available]!">
-               <!-- Vitamin ajánló -->
-            </div>
+        <section id="vitamin_ajanlo" class="lg:row-start-3 lg:col-start-2 lg:col-span-2">
+            <!-- Vitamin ajánló -->
         </section>
     </main>
 
