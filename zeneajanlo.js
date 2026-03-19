@@ -135,60 +135,53 @@ document.addEventListener('DOMContentLoaded', () => {
     // Recommendations
     const RECOMMENDATIONS = {
       clear: [
-        { type: 'youtube', id: 'iPUmE-tne5U', title: 'Katrina & The Waves - Walking on Sunshine' },
-        { type: 'youtube', id: 'ZbZSe6N_BXs', title: 'Pharrell Williams - Happy' },
-        { type: 'youtube', id: 'KQetemT1sWc', title: 'The Beatles - Here Comes The Sun' },
-        { type: 'youtube', id: 'FscIgtDPGXw', title: 'Johnny Nash - I Can See Clearly Now' },
-        { type: 'youtube', id: '0S43IwBF0uM', title: 'Bill Withers - Lovely Day' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', title: 'Napos Chill (Instrumental)' }
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', title: 'Napos Dallam (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3', title: 'Vidám Reggel (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', title: 'Fényes Nap (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3', title: 'Nyári Szellő (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3', title: 'Boldogság (SoundHelix)' }
       ],
       clouds: [
-        { type: 'youtube', id: 'GCdwKhTtNNw', title: 'The Neighbourhood - Sweater Weather' },
-        { type: 'youtube', id: '4fWyzwo1xg0', title: 'Simon & Garfunkel - The Sound of Silence' },
-        { type: 'youtube', id: 'YQHsXMglC9A', title: 'Adele - Hello' },
-        { type: 'youtube', id: 'dpmAY059TTY', title: 'Limp Bizkit - Behind Blue Eyes' },
-        { type: 'youtube', id: 'hLQl3WQQoQ0', title: 'Adele - Someone Like You' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', title: 'Borús Hangulat (Instrumental)' }
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', title: 'Borús Égbolt (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3', title: 'Szürke Árnyalatok (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3', title: 'Melankólia (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3', title: 'Gondolatok (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3', title: 'Csendes Pihenő (SoundHelix)' }
       ],
       rain: [
-        { type: 'youtube', id: 'CvBfHwUxHIk', title: 'Rihanna - Umbrella' },
-        { type: 'youtube', id: 'Ri7-vnrJD3k', title: 'Adele - Set Fire to the Rain' },
-        { type: 'youtube', id: '8SbUC-UaAxE', title: 'Guns N\' Roses - November Rain' },
-        { type: 'youtube', id: 'u1V8YRJnr4Q', title: 'CCR - Have You Ever Seen The Rain' },
-        { type: 'youtube', id: '3JWTaaS7LdU', title: 'Whitney Houston - I Will Always Love You' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', title: 'Esős Nap (Instrumental)' }
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3', title: 'Esőcseppek (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3', title: 'Zivatar Után (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3', title: 'Vizes Ablak (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', title: 'Kopogó Eső (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3', title: 'Novemberi Eső (SoundHelix)' }
       ],
       thunder: [
-        { type: 'youtube', id: 'v2AC41dglnM', title: 'AC/DC - Thunderstruck' },
-        { type: 'youtube', id: 'fKopy74weus', title: 'Imagine Dragons - Thunder' },
-        { type: 'youtube', id: 'iv8GW1GaoIc', title: 'The Doors - Riders on the Storm' },
-        { type: 'youtube', id: 'kXYiU_JCYtU', title: 'Linkin Park - Numb' },
-        { type: 'youtube', id: 'CSvFpBOe8eY', title: 'System Of A Down - Chop Suey!' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3', title: 'Viharos Energia (Instrumental)' }
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3', title: 'Viharos Erő (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3', title: 'Villámlás (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3', title: 'Dörgés (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', title: 'Elektromosság (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3', title: 'Feszültség (SoundHelix)' }
       ],
       snow: [
-        { type: 'youtube', id: 'L0MK7qz13bU', title: 'Frozen - Let It Go' },
-        { type: 'youtube', id: 'yuFI5KSPAt4', title: 'Red Hot Chili Peppers - Snow (Hey Oh)' },
-        { type: 'youtube', id: 'w9QLn7gM-hY', title: 'Bing Crosby - White Christmas' },
-        { type: 'youtube', id: 'av5JmZK4F_s', title: 'Wham! - Last Christmas' },
-        { type: 'youtube', id: 'aAkMkVFwAoo', title: 'Mariah Carey - All I Want for Christmas Is You' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3', title: 'Téli Nyugalom (Instrumental)' }
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3', title: 'Havas Táj (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3', title: 'Téli Álom (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3', title: 'Jégvirág (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3', title: 'Hideg Érintés (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', title: 'Fehér Karácsony (SoundHelix)' }
       ],
       mist: [
-        { type: 'youtube', id: '4N3N1MlvVc4', title: 'Gary Jules - Mad World' },
-        { type: 'youtube', id: 'rPOlkkBljks', title: 'Ella Fitzgerald - Misty' },
-        { type: 'youtube', id: 'H2di83WAOhU', title: 'The Platters - Smoke Gets In Your Eyes' },
-        { type: 'youtube', id: 'NU9JoFKlaZ0', title: 'Lorde - Green Light' },
-        { type: 'youtube', id: 'LtriuAfkue8', title: 'Fleetwood Mac - Dreams' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3', title: 'Ködös Hangulat (Instrumental)' }
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3', title: 'Ködös Hajnal (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', title: 'Homály (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', title: 'Rejtély (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3', title: 'Pára (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3', title: 'Láthatatlan (SoundHelix)' }
       ],
       wind: [
-        { type: 'youtube', id: 'n4RjJKxsamQ', title: 'Scorpions - Wind of Change' },
-        { type: 'youtube', id: 'tH2w6Oxx0kQ', title: 'Kansas - Dust in the Wind' },
-        { type: 'youtube', id: 'MMFj8uDubsE', title: 'Bob Dylan - Blowin\' in the Wind' },
-        { type: 'youtube', id: '67GzThGHO8o', title: 'Scorpions - Rock You Like A Hurricane' },
-        { type: 'youtube', id: 'eW2qlKa6oHw', title: 'ABBA - The Winner Takes It All' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3', title: 'Szeles Flow (Instrumental)' }
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', title: 'Szeles Idő (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3', title: 'Tornádó (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3', title: 'Orkán (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3', title: 'Szélvihar (SoundHelix)' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3', title: 'Süvítő Szél (SoundHelix)' }
       ]
     };
 
@@ -277,6 +270,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     };
+
+    // Biztosítjuk, hogy ha a YouTube API előbb töltődött be, akkor is inicializáljuk
+    if (window.YT && window.YT.Player) {
+        window.onYouTubeIframeAPIReady();
+    }
 
     // Progress Helpers
     const formatTime = (s) => {
