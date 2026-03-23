@@ -3413,31 +3413,39 @@ const renderWeather = async (telepules) => {
 
     
     const jellemzok = [
-        { nev: "Páratartalom", ertek: dailyWeather.main.humidity, egyseg: "%", icon: "/images/icons/paratartalom.svg" }, 
-        { nev: "Szélsebesség", ertek: dailyWeather.wind.speed, egyseg: " km/h", icon: "/images/icons/szelsebesség.svg" },
-        { nev: "UV Index", ertek: extraJellemzo.uv_index, egyseg: "", icon: "/images/icons/uv_index.svg" },
-        { nev: "Légnyomás", ertek: dailyWeather.main.pressure, egyseg: " mb", icon: "/images/icons/legnyomas.svg" },
-        { nev: "Látótávolság", ertek: dailyWeather.visibility/1000, egyseg: " km", icon: "/images/icons/latotavolsag.svg" },
-        { nev: "Harmatpont", ertek: extraJellemzo.dew_point, egyseg: " °", icon: "/images/icons/harmatpont.svg" }
+        { nev: "Páratartalom", ertek: dailyWeather.main.humidity, egyseg: "%", icon: "./images/icons/paratartalom.svg" }, 
+        { nev: "Szélsebesség", ertek: dailyWeather.wind.speed, egyseg: " km/h", icon: "./images/icons/szelsebesseg.svg" },
+        { nev: "UV Index", ertek: extraJellemzo.uv_index, egyseg: "", icon: "./images/icons/uv_index.svg" },
+        { nev: "Légnyomás", ertek: dailyWeather.main.pressure, egyseg: " mb", icon: "./images/icons/legnyomas.svg" },
+        { nev: "Látótávolság", ertek: dailyWeather.visibility/1000, egyseg: " km", icon: "./images/icons/latotavolsag.svg" },
+        { nev: "Harmatpont", ertek: extraJellemzo.dew_point, egyseg: " °", icon: "./images/icons/harmatpont.svg" }
     ]
     
     const jellemzokWrapper = document.createElement("div");
     
-    jellemzokWrapper.classList.add("grid", "grid-cols-2", "xl:grid-cols-3","gap-4");
+    jellemzokWrapper.classList.add("grid", "grid-cols-2","gap-4");
     
-    jellemzok.map(({ nev, ertek, egyseg }) => {
+    jellemzok.map(({ nev, ertek, egyseg, icon }) => {
         const jellemzokDiv = document.createElement("div");
+        const jellemzokHeader = document.createElement("div")
+        const jellemzokIkon = document.createElement("img");
         const cim = document.createElement("h3");
         const adat = document.createElement("p");
         
+        jellemzokHeader.classList.add("flex", "gap-2", "mb-2")
         jellemzokDiv.classList.add("bg-[#476D98]", "rounded-2xl", "p-4", "text-white");
-        cim.classList.add("font-bold", "mb-2");
+        jellemzokIkon.classList.add("w-5");
+        cim.classList.add("font-bold");
         adat.classList.add("text-2xl", "text-center");
         
+        jellemzokIkon.src = icon
         cim.innerHTML = nev;
         adat.innerHTML = ertek + egyseg;
         
-        jellemzokDiv.appendChild(cim);
+
+        jellemzokHeader.appendChild(jellemzokIkon);
+        jellemzokHeader.appendChild(cim);
+        jellemzokDiv.appendChild(jellemzokHeader)
         jellemzokDiv.appendChild(adat);
         jellemzokWrapper.appendChild(jellemzokDiv);
     })
@@ -3690,6 +3698,8 @@ const renderHourlyWeather = async (telepules) => {
 
     //napi időjárás
 
+    // min max valamiert ugyanannyi javitani kell
+
     const napi = document.getElementById("napi_idojaras");
     napi.innerHTML = ""
 
@@ -3717,7 +3727,6 @@ const renderHourlyWeather = async (telepules) => {
         ikonokO.push(nap.weather[0].icon);
         minekO.push(nap.main.temp_min);
         maxokO.push(nap.main.temp_max);
-
 
         if(db == 8){
             db = 0;
