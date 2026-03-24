@@ -3689,7 +3689,8 @@ const renderHourlyWeather = async (telepules) => {
         slidesPerView: "auto",
         spaceBetween: 16,
         freeMode: true,      
-        resistance: false,
+        resistance: true,
+        resistanceRatio: 0.5,
         momentumBounce: false,
         watchOverflow: false,
     });
