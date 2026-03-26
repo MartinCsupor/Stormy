@@ -135,53 +135,53 @@ document.addEventListener('DOMContentLoaded', () => {
     // Recommendations
     const RECOMMENDATIONS = {
       clear: [
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', title: 'Napos Dallam (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3', title: 'Vidám Reggel (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', title: 'Fényes Nap (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3', title: 'Nyári Szellő (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3', title: 'Boldogság (SoundHelix)' }
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', title: 'Napos Dallam' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3', title: 'Vidám Reggel' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', title: 'Fényes Nap' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3', title: 'Nyári Szellő' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3', title: 'Boldogság' }
       ],
       clouds: [
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', title: 'Borús Égbolt (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3', title: 'Szürke Árnyalatok (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3', title: 'Melankólia (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3', title: 'Gondolatok (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3', title: 'Csendes Pihenő (SoundHelix)' }
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', title: 'Borús Égbolt' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3', title: 'Szürke Árnyalatok' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3', title: 'Melankólia' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3', title: 'Gondolatok' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3', title: 'Csendes Pihenő' }
       ],
       rain: [
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3', title: 'Esőcseppek (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3', title: 'Zivatar Után (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3', title: 'Vizes Ablak (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', title: 'Kopogó Eső (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3', title: 'Novemberi Eső (SoundHelix)' }
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3', title: 'Esőcseppek' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3', title: 'Zivatar Után' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3', title: 'Vizes Ablak' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', title: 'Kopogó Eső' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3', title: 'Novemberi Eső' }
       ],
       thunder: [
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3', title: 'Viharos Erő (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3', title: 'Villámlás (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3', title: 'Dörgés (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', title: 'Elektromosság (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3', title: 'Feszültség (SoundHelix)' }
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3', title: 'Viharos Erő' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3', title: 'Villámlás' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3', title: 'Dörgés' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', title: 'Elektromosság' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3', title: 'Feszültség' }
       ],
       snow: [
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3', title: 'Havas Táj (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3', title: 'Téli Álom (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3', title: 'Jégvirág (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3', title: 'Hideg Érintés (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', title: 'Fehér Karácsony (SoundHelix)' }
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3', title: 'Havas Táj' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3', title: 'Téli Álom' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3', title: 'Jégvirág' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3', title: 'Hideg Érintés' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', title: 'Fehér Karácsony' }
       ],
       mist: [
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3', title: 'Ködös Hajnal (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', title: 'Homály (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', title: 'Rejtély (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3', title: 'Pára (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3', title: 'Láthatatlan (SoundHelix)' }
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3', title: 'Ködös Hajnal' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', title: 'Homály' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', title: 'Rejtély' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3', title: 'Pára' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3', title: 'Láthatatlan' }
       ],
       wind: [
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', title: 'Szeles Idő (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3', title: 'Tornádó (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3', title: 'Orkán (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3', title: 'Szélvihar (SoundHelix)' },
-        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3', title: 'Süvítő Szél (SoundHelix)' }
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', title: 'Szeles Idő' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3', title: 'Tornádó' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3', title: 'Orkán' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3', title: 'Szélvihar' },
+        { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3', title: 'Süvítő Szél' }
       ]
     };
 
