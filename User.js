@@ -22,7 +22,7 @@ function showNotification(message, type = 'success') {
     setTimeout(() => {
         notification.classList.add('opacity-0', 'translate-x-full');
         notification.addEventListener('transitionend', () => notification.remove());
-    }, 2000); // Visible for 4 seconds
+    }, 2000); 
 }
 
 // ===== FORM =====
