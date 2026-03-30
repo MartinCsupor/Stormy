@@ -72,7 +72,6 @@ const getUVIndexAndDewPoint = async (lat, lon) => {
     );
     const data = await UVandDew.json();
     
-    console.log("Harmat"+data.current.dew_point_2m+"Uv" + data.current.uv_index+"HOLDAT CSINAD MEG")
     return {
         dew_point: data.current.dew_point_2m,
         uv_index: data.current.uv_index
@@ -81,8 +80,9 @@ const getUVIndexAndDewPoint = async (lat, lon) => {
 }
 
 const getMoonData = async (lat, lon) => {
+    const date = new Date().toISOString().split("T")[0].replaceAll('-', '');
     const data = await fetch(
-        `https://api.solunar.org/solunar/lat=${lat}&lon=${lon},${new Date().toLocaleDateString('sv-SE').replaceAll('-', '')},1`
+         `https://api.solunar.org/solunar/${lat},${lon},${date},1`
     )
     const MoonData = await data.json()
     
@@ -204,10 +204,9 @@ document.onclick = (e) => {
 const renderWeather = async (telepules) => {
     const data = await getDailyWeather(telepules);
     dailyWeather = await data.json()
-    console.log(dailyWeather)
 
-    const extraJellemzo = await getUVIndexAndDewPoint(dailyWeather.coords.lat, dailyWeather.coors.lon);
-    const holdJellemzok = await getMoonData(dailyWeather.coords.lat, dailyWeather.coors.lon);
+    const extraJellemzo = await getUVIndexAndDewPoint(dailyWeather.coord.lat, dailyWeather.coord.lon);
+    const holdJellemzok = await getMoonData(dailyWeather.coord.lat, dailyWeather.coord.lon);
 
     // Vitamin ajánló frissítése az adatokkal (Kelvin -> Celsius konverzióval)
     vitaminAjanlo(dailyWeather.weather[0].main, dailyWeather.main.temp - 273.15, extraJellemzo.uv_index);
@@ -569,7 +568,7 @@ const renderHourlyWeather = async (telepules) => {
 
     //napi időjárás
 
-    // min max valamiert ugyanannyi javitani kell
+    // min max ugyanannyi javitani kell holnapi nap sincs
 
     const napi = document.getElementById("napi_idojaras");
     napi.innerHTML = ""
@@ -660,20 +659,19 @@ const renderHourlyWeather = async (telepules) => {
         napMax.innerHTML = hofok(maxok[i]) + getUnitSymbol();
 
 
-        napDivWrapper.appendChild(napDiv);
-
+        
         napEsoWrapper.appendChild(napEsoIkon);
         napEsoWrapper.appendChild(napEso);
         
         napminmaxWrapper.appendChild(napMin);
         napminmaxWrapper.appendChild(napMax);
-    
+        
         napDiv.appendChild(napNev);
         napDiv.appendChild(napEsoWrapper)
         napDiv.appendChild(napIkon);
         napDiv.appendChild(napminmaxWrapper)
-
-        napDivWrapper.append(napDiv)
+        
+        napDivWrapper.appendChild(napDiv);
     }
 };
 
