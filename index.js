@@ -578,101 +578,81 @@ const renderHourlyWeather = async (telepules) => {
 
     napi.appendChild(napiContent)
 
-    let napok = [];
     let esok = [];
     let ikonok = [];
     let minek = [];
     let maxok = [];
 
-    let db = 0;
+    let adatok = {}
+    
     hourlyWeather.list.forEach(nap => {
-        db++;
 
-        let esokO =  [];
-        let ikonokO =  [];
-        let minekO = [];
-        let maxokO = [];
-
-        esokO.push(nap.pop*100);
-        ikonokO.push(nap.weather[0].icon);
-        minekO.push(nap.main.temp_min);
-        maxokO.push(nap.main.temp_max);
-
-        if(db == 8){
-            db = 0;
-
-            napok.push(new Date(nap.dt * 1000).toLocaleDateString("hu-HU", {weekday: "long"}));
-
-            esokO = esokO.reduce((a,b) => a + b, 0) / esokO.length;  
-            esok.push(esokO);
-            esokO = []
-
-            ikonokO = ikonokO.sort((a,b) =>
-                ikonokO.filter(v => v===a).length
-                - ikonokO.filter(v => v===b).length
-            ).pop();
-            ikonok.push(ikonokO);
-
-
-            const dayMinK = Math.min(...minekO);
-            const dayMaxK = Math.max(...maxokO);
-            minek.push(dayMinK);
-            maxok.push(dayMaxK);
-            rawDailyMin.push(dayMinK);
-            rawDailyMax.push(dayMaxK);
-            minekO = [];
-            maxokO = [];
+        const maiNap = new Date(nap.dt * 1000).toLocaleDateString("hu-HU", {weekday: "long"})
+        
+        console.log(maiNap)
+        if (!adatok[maiNap]) {
+            adatok[maiNap] = {
+                esokMa: [],
+                ikonokMa: [],
+                minekMa: [],
+                maxokMa: []
+            }
         }
+
+        adatok[maiNap].esokMa.push(nap.pop)
+        adatok[maiNap].ikonokMa.push(nap.weather[0].icon)
+        adatok[maiNap].minekMa.push(nap.main.temp_min)
+        adatok[maiNap].maxokMa.push(nap.main.temp_max)
+
     });
+    console.log(adatok)
 
     const napDivWrapper = document.createElement("div");
     napiContent.appendChild(napDivWrapper);
     napDivWrapper.classList.add("flex", "flex-col", "lg:justify-evenly","rounded-lg","bg-[#82B3DB]", "h-[-webkit-fill-available]!");
 
-    for (let i = 0; i < 5; i++){
+    // for (let i = 0; i < 5; i++){
 
-        const napDiv = document.createElement("div");
-        const napNev = document.createElement("p");
-        const napEsoWrapper = document.createElement("div");
-        const napEsoIkon = document.createElement("img")
-        const napEso = document.createElement("p");
-        const napIkon = document.createElement("img");
-        const napminmaxWrapper = document.createElement("div")
-        const napMin = document.createElement("p");
-        const napMax = document.createElement("p");
+    //     const napDiv = document.createElement("div");
+    //     const napNev = document.createElement("p");
+    //     const napEsoWrapper = document.createElement("div");
+    //     const napEsoIkon = document.createElement("img")
+    //     const napEso = document.createElement("p");
+    //     const napIkon = document.createElement("img");
+    //     const napminmaxWrapper = document.createElement("div")
+    //     const napMin = document.createElement("p");
+    //     const napMax = document.createElement("p");
 
-        napDiv.classList.add("grid", "grid-cols-4", "bg-[#476D98]","m-2", "p-3", "rounded-lg");
-        napEsoWrapper.classList.add("flex", "items-center","gap-1");
-        napminmaxWrapper.classList.add("flex", "justify-end", "gap-3");
-        napEsoIkon.classList.add("w-5");
-        napEsoIkon.src = "images/icons/water-drop.svg";
+    //     napDiv.classList.add("grid", "grid-cols-4", "bg-[#476D98]","m-2", "p-3", "rounded-lg");
+    //     napEsoWrapper.classList.add("flex", "items-center","gap-1");
+    //     napminmaxWrapper.classList.add("flex", "justify-end", "gap-3");
+    //     napEsoIkon.classList.add("w-5");
+    //     napEsoIkon.src = "images/icons/water-drop.svg";
 
-        if (i == 0){
-            napNev.innerHTML = "Ma";
-        } else {
-            napNev.innerHTML = napok[i].charAt(0).toUpperCase() + napok[i].slice(1);
-        }
-        napEso.innerHTML = Math.round(esok[i]) + "%";
-        napIkon.src = `images/icons/weather/${dailyWeather.weather[0].icon}.svg`;
-        napIkon.classList.add("mx-auto", "h-7")
-        napMin.innerHTML = hofok(minek[i]) + getUnitSymbol();
-        napMax.innerHTML = hofok(maxok[i]) + getUnitSymbol();
+    //     if (i == 0){
+    //         napNev.innerHTML = "Ma";
+    //     } else {
+    //         napNev.innerHTML = napok[i].charAt(0).toUpperCase() + napok[i].slice(1);
+    //     }
+    //     napEso.innerHTML = Math.round(esok[i]) + "%";
+    //     napIkon.src = `images/icons/weather/${dailyWeather.weather[0].icon}.svg`;
+    //     napIkon.classList.add("mx-auto", "h-7")
+    //     napMin.innerHTML = hofok(minek[i]) + getUnitSymbol();
+    //     napMax.innerHTML = hofok(maxok[i]) + getUnitSymbol();
 
-
+    //     napEsoWrapper.appendChild(napEsoIkon);
+    //     napEsoWrapper.appendChild(napEso);
         
-        napEsoWrapper.appendChild(napEsoIkon);
-        napEsoWrapper.appendChild(napEso);
+    //     napminmaxWrapper.appendChild(napMin);
+    //     napminmaxWrapper.appendChild(napMax);
         
-        napminmaxWrapper.appendChild(napMin);
-        napminmaxWrapper.appendChild(napMax);
+    //     napDiv.appendChild(napNev);
+    //     napDiv.appendChild(napEsoWrapper)
+    //     napDiv.appendChild(napIkon);
+    //     napDiv.appendChild(napminmaxWrapper)
         
-        napDiv.appendChild(napNev);
-        napDiv.appendChild(napEsoWrapper)
-        napDiv.appendChild(napIkon);
-        napDiv.appendChild(napminmaxWrapper)
-        
-        napDivWrapper.appendChild(napDiv);
-    }
+    //     napDivWrapper.appendChild(napDiv);
+    // }
 };
 
 const changeUnit = (newUnit) => {
