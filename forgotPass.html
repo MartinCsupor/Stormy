@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <title>Elfelejtett jelszó - Stormy</title>
+    <style>
+        .topnav { position: relative; }
+        .menu {
+        position: fixed; top: 0; right: -100%; width: 70%; max-width: 300px; height: 100vh;
+        background: #476D98; display: flex; flex-direction: column; padding: 2rem 1rem;
+        transition: right 0.3s ease; z-index: 1000;
+        }
+        .menu.active { right: 0; }
+        .menu a { color: white; text-decoration: none; padding: 1rem; font-size: 1.2rem; }
+        .menu a:hover { background: rgba(255,255,255,0.2); border-radius: 8px; }
+        .close-btn { align-self: flex-end; font-size: 2rem; color: white; background: none; border: none; cursor: pointer; margin-bottom: 1rem; }
+    </style>
+</head>
+<body class="bg-[#C7E1EE] text-white font-bold text-3xl">
+    <header class="flex flex-col">
+        <section class="flex justify-between items-center lg:px-20">
+            <div class="w-1/3 flex-1">
+                <a href="index.html" class="hover:opacity-50 h-auto">
+                    <img src="images/logo.png" alt="Stormy logo" class="h-auto w-25 sm:w-50 md:max-w-[200px] max-w-[150px] hover:opacity-80 ">
+                </a>
+            </div>
+            
+            <div class="w-1/3 flex-1">
+                <h1 class="font-bold text-center text-4xl md:text-5xl lg:text-7xl">
+                    <a href="index.html" class="hover:opacity-80">
+                    Stormy
+                    </a>
+                </h1>
+            </div>
+
+            <div class="topnav flex justify-end w-1/3">
+                <button id="menuOpen" class="p-2 cursor-pointer">
+                <img src="images/icons/hambuger-menu.svg" id="hambiMenu" class="w-20 h-20 justify-center items-center flex-1" alt="Menü">
+                </button>
+                <div id="myLinks" class="menu font-bold">
+                <button id="menuClose" class="close-btn">✕</button>
+                <a href="index.html">Főoldal</a>
+                <a href="registeration.html" id="registerLink">Regisztráció</a>
+                <a href="login.html" id="loginLink">Bejelentkezés</a>
+                <a href="#" id="logoutLink" style="display: none;">Kijelentkezés</a>
+                </div>
+            </div>
+        </section>
+    </header>
+
+    <main class="flex flex-col items-center justify-center pt-20">
+        <form id="forgotPassForm" class="bg-[#82B3DB] w-[clamp(21rem,60vw,32rem)] p-8 rounded-2xl flex flex-col space-y-6">
+            <h2 class="mb-8 text-4xl text-center">Új jelszó beállítása</h2>
+            
+            <div id="emailStep">
+                <div class="flex items-center bg-[#5A7BAA] p-3 rounded-md mb-6">
+                    <img src="images/icons/email icon.svg" alt="Email Icon" class="w-5 mr-3">
+                    <input id="forgotEmail" type="email" placeholder="Email cím" class="bg-transparent text-white flex-1 outline-none text-base" required>
+                </div>
+                <button type="button" id="checkEmailBtn" class="w-full bg-[#5A7BAA] text-white font-bold py-3 rounded-md hover:bg-[#6fa0c8] transition duration-300">
+                    Email ellenőrzése
+                </button>
+            </div>
+
+            <div id="codeStep" class="hidden flex flex-col space-y-6">
+                <div class="flex items-center bg-[#5A7BAA] p-3 rounded-md mb-6">
+                    <img src="images/icons/lakat icon.svg" alt="Code Icon" class="w-5 mr-3">
+                    <input id="verificationCode" type="text" placeholder="4 jegyű kód" class="bg-transparent text-white flex-1 outline-none text-base" maxlength="4">
+                </div>
+                <button type="button" id="verifyCodeBtn" class="w-full bg-[#5A7BAA] text-white font-bold py-3 rounded-md hover:bg-[#6fa0c8] transition duration-300">
+                    Kód ellenőrzése
+                </button>
+            </div>
+
+            <div id="passwordStep" class="hidden flex flex-col space-y-6">
+                <div class="flex items-center bg-[#5A7BAA] p-3 rounded-md ">
+                    <img src="images/icons/lakat icon.svg" alt="Lock Icon" class="w-5 mr-3">
+                    <input id="newPassword" type="password" placeholder="Új jelszó" class="bg-transparent text-white flex-1 outline-none text-base w-[90%]">
+                    <img id="toggleNewPassword" src="images/icons/szem icon.svg" alt="Eye Icon" class="w-5 h-5 ml-3 cursor-pointer">
+                </div>
+                <div class="flex items-center bg-[#5A7BAA] p-3 rounded-md ">
+                    <img src="images/icons/lakat icon.svg" alt="Lock Icon" class="w-5 mr-3">
+                    <input id="newPasswordConfirm" type="password" placeholder="Új jelszó megerősítése" class="bg-transparent text-white flex-1 outline-none text-base w-[90%]">
+                    <img id="toggleNewPasswordConfirm" src="images/icons/szem icon.svg" alt="Eye Icon" class="w-5 h-5 ml-3 cursor-pointer">
+                </div>
+                <button type="submit" class="bg-[#5A7BAA] text-white font-bold py-3 rounded-md hover:bg-[#6fa0c8] transition duration-300">
+                    Jelszó frissítése
+                </button>
+            </div>
+            
+            <p class="text-center text-white text-sm mt-4">
+                Vissza a <a href="login.html" class="underline">bejelentkezéshez</a>
+            </p>
+        </form>
+    </main>
+
+    <script src="User.js"></script>
+    <script src="menu.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
