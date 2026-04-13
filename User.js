@@ -1,3 +1,6 @@
+// ===== EMAILJS INICIALIZÁLÁSA =====
+emailjs.init("service_7tn90uh");
+
 // ===== MODERN NOTIFICATION FUNCTION (Toast) =====
 function showNotification(message, type = 'success') {
     const notification = document.createElement('div');
@@ -102,6 +105,10 @@ if (forgotPasswordForm) {
     const forgotEmailInput = document.getElementById('forgotEmail');
     const newPassInput = document.getElementById('newPassword');
     const newPassConfirmInput = document.getElementById('newPasswordConfirm');
+    const codeStep = document.getElementById('codeStep');
+    const verifyCodeBtn = document.getElementById('verifyCodeBtn');
+    const verificationCodeInput = document.getElementById('verificationCode');
+    let generatedCode = "";
 
     // Szem ikonok kezelése az új jelszó megadásakor 
     const toggleNewPass = document.getElementById('toggleNewPassword');
@@ -132,11 +139,40 @@ if (forgotPasswordForm) {
         const user = users.find(u => u.email === email);
         if (user) {
             targetUserEmail = email;
+            // Generálunk egy véletlenszerű 4 jegyű kódot
+            generatedCode = Math.floor(1000 + Math.random() * 9000).toString();
+            
+            // Valódi email küldése EmailJS-el
+            const templateParams = {
+                to_email: email,
+                verification_code: generatedCode
+            };
+
+            emailjs.send('SZOLGALTATO_ID', 'TEMPLATE_ID', templateParams)
+                .then(() => {
+                    console.log('E-mail sikeresen elküldve!');
+                    showNotification('Ellenőrző kód elküldve az e-mail címedre!', 'success');
+                })
+                .catch((error) => {
+                    console.error('Hiba az e-mail küldésekor:', error);
+                    showNotification('Hiba történt az e-mail küldésekor. Próbáld később!', 'error');
+                });
+
             emailStep.classList.add('hidden');
-            passwordStep.classList.remove('hidden');
-            showNotification('Email megtalálva! Kérlek add meg az új jelszavad.', 'success');
+            codeStep.classList.remove('hidden');
         } else {
             showNotification('Ez az email cím nincs regisztrálva!', 'error');
+        }
+    });
+
+    verifyCodeBtn.addEventListener('click', () => {
+        const enteredCode = verificationCodeInput.value.trim();
+        if (enteredCode === generatedCode) {
+            codeStep.classList.add('hidden');
+            passwordStep.classList.remove('hidden');
+            showNotification('Kód elfogadva! Most megadhatod az új jelszavad.', 'success');
+        } else {
+            showNotification('Helytelen ellenőrző kód!', 'error');
         }
     });
 

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <link rel="stylesheet" href="styles.css">
     <title>Elfelejtett jelszó - Stormy</title>
     <style>
@@ -62,6 +63,16 @@
                 </div>
                 <button type="button" id="checkEmailBtn" class="w-full bg-[#5A7BAA] text-white font-bold py-3 rounded-md hover:bg-[#6fa0c8] transition duration-300">
                     Email ellenőrzése
+                </button>
+            </div>
+
+            <div id="codeStep" class="hidden flex flex-col space-y-6">
+                <div class="flex items-center bg-[#5A7BAA] p-3 rounded-md mb-6">
+                    <img src="images/icons/lakat icon.svg" alt="Code Icon" class="w-5 mr-3">
+                    <input id="verificationCode" type="text" placeholder="4 jegyű kód" class="bg-transparent text-white flex-1 outline-none text-base" maxlength="4">
+                </div>
+                <button type="button" id="verifyCodeBtn" class="w-full bg-[#5A7BAA] text-white font-bold py-3 rounded-md hover:bg-[#6fa0c8] transition duration-300">
+                    Kód ellenőrzése
                 </button>
             </div>
 
