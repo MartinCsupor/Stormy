@@ -568,8 +568,6 @@ const renderHourlyWeather = async (telepules) => {
 
     //napi időjárás
 
-    // min max ugyanannyi javitani kell holnapi nap sincs
-
     const napi = document.getElementById("napi_idojaras");
     napi.innerHTML = ""
 
@@ -577,11 +575,6 @@ const renderHourlyWeather = async (telepules) => {
     napiContent.classList.add("flex", "flex-col", "m-2", "col-span-2", "h-[-webkit-fill-available]!");
 
     napi.appendChild(napiContent)
-
-    let esok = [];
-    let ikonok = [];
-    let minek = [];
-    let maxok = [];
 
     let adatok = {}
     
@@ -603,9 +596,23 @@ const renderHourlyWeather = async (telepules) => {
         adatok[maiNap].ikonokMa.push(nap.weather[0].icon)
         adatok[maiNap].minekMa.push(nap.main.temp_min)
         adatok[maiNap].maxokMa.push(nap.main.temp_max)
-
     });
-    console.log(adatok)
+
+    const osszesitett = Object.entries(adatok).map(([nap, jellemzok]) => {
+        return(
+            {
+                nap: nap,
+                adatok: {
+                    eso: Math.max(...jellemzok.esokMa) * 100,
+                    min: Math.min(...jellemzok.minekMa),
+                    max: Math.max(...jellemzok.maxokMa),
+                    ikon: leggyakoribbIkon(jellemzok.ikonokMa)
+                }
+            }            
+        )
+    })   
+
+    console.log(osszesitett)
 
     const napDivWrapper = document.createElement("div");
     napiContent.appendChild(napDivWrapper);
@@ -654,6 +661,21 @@ const renderHourlyWeather = async (telepules) => {
     //     napDivWrapper.appendChild(napDiv);
     // }
 };
+
+function leggyakoribbIkon(ikonok){
+    const gyakorisag = {}
+
+    ikonok.forEach(ikon => {
+        if(ikon.includes("d"))
+            gyakorisag[ikon] = (gyakorisag[ikon] || 0) + 1        
+    });
+
+    Object.keys(gyakorisag).reduce((prev, key) => {
+        console.log(prev)
+    })
+  
+
+}
 
 const changeUnit = (newUnit) => {
     unit = newUnit === "fahrenheit" ? "fahrenheit" : "celsius"; // only C/F
