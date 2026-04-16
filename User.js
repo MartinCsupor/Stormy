@@ -1,5 +1,7 @@
 // ===== EMAILJS INICIALIZÁLÁSA =====
-emailjs.init("service_7tn90uh");
+if (typeof emailjs !== 'undefined') {
+    emailjs.init("CTia56tBnS9UP94Qm");
+}
 
 // ===== MODERN NOTIFICATION FUNCTION (Toast) =====
 function showNotification(message, type = 'success') {
@@ -138,24 +140,34 @@ if (forgotPasswordForm) {
         const email = forgotEmailInput.value.trim();
         const user = users.find(u => u.email === email);
         if (user) {
+            if (!email) {
+                showNotification('Hiba: Az e-mail cím üres!', 'error');
+                return;
+            }
+
             targetUserEmail = email;
-            // Generálunk egy véletlenszerű 4 jegyű kódot
+            
             generatedCode = Math.floor(1000 + Math.random() * 9000).toString();
             
-            // Valódi email küldése EmailJS-el
+            console.log(`Küldés folyamatban ide: ${email}, kód: ${generatedCode}`);
+            
             const templateParams = {
-                to_email: email,
+                to_email: email, 
                 verification_code: generatedCode
             };
 
-            emailjs.send('SZOLGALTATO_ID', 'TEMPLATE_ID', templateParams)
+            emailjs.send('service_16pgfoo', 'template_d3xiyce', templateParams)
                 .then(() => {
                     console.log('E-mail sikeresen elküldve!');
                     showNotification('Ellenőrző kód elküldve az e-mail címedre!', 'success');
                 })
                 .catch((error) => {
-                    console.error('Hiba az e-mail küldésekor:', error);
-                    showNotification('Hiba történt az e-mail küldésekor. Próbáld később!', 'error');
+                    console.error('EmailJS hiba:', error.status, error.text);
+                    if (error.status === 422) {
+                        showNotification('Hiba: Az EmailJS sablonban nincs beállítva a címzett! (To Email: {{to_email}})', 'error');
+                    } else {
+                        showNotification('Hiba történt az e-mail küldésekor. Próbáld később!', 'error');
+                    }
                 });
 
             emailStep.classList.add('hidden');
