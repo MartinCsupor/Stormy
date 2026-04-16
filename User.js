@@ -146,13 +146,13 @@ if (forgotPasswordForm) {
             }
 
             targetUserEmail = email;
-            // Generálunk egy véletlenszerű 4 jegyű kódot
+            
             generatedCode = Math.floor(1000 + Math.random() * 9000).toString();
             
             console.log(`Küldés folyamatban ide: ${email}, kód: ${generatedCode}`);
             
             const templateParams = {
-                to_email: email, // Ellenőrizd, hogy a Dashboardon is {{to_email}} van-e!
+                to_email: email, 
                 verification_code: generatedCode
             };
 
