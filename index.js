@@ -582,7 +582,6 @@ const renderHourlyWeather = async (telepules) => {
 
         const maiNap = new Date(nap.dt * 1000).toLocaleDateString("hu-HU", {weekday: "long"})
         
-        console.log(maiNap)
         if (!adatok[maiNap]) {
             adatok[maiNap] = {
                 esokMa: [],
@@ -598,7 +597,6 @@ const renderHourlyWeather = async (telepules) => {
         adatok[maiNap].maxokMa.push(nap.main.temp_max)
     });
 
-    console.log
     const osszesitett = Object.entries(adatok).map(([nap, jellemzok]) => {
         return(
             {
@@ -613,14 +611,11 @@ const renderHourlyWeather = async (telepules) => {
         )
     })   
 
-    console.log(osszesitett)
-
     const napDivWrapper = document.createElement("div");
     napiContent.appendChild(napDivWrapper);
     napDivWrapper.classList.add("flex", "flex-col", "lg:justify-evenly","rounded-lg","bg-[#82B3DB]", "h-[-webkit-fill-available]!");
 
     osszesitett.forEach((nap)=>{
-        console.log(nap)
 
         const napDiv = document.createElement("div");
         const napNev = document.createElement("p");
@@ -632,6 +627,8 @@ const renderHourlyWeather = async (telepules) => {
         const napMin = document.createElement("p");
         const napMax = document.createElement("p");
 
+        rawDailyMax.push(nap.adatok.max)
+        rawDailyMin.push(nap.adatok.min)
         napDiv.classList.add("grid", "grid-cols-4", "bg-[#476D98]","m-2", "p-3", "rounded-lg");
         napEsoWrapper.classList.add("flex", "items-center","gap-1");
         napminmaxWrapper.classList.add("flex", "justify-end", "gap-3");
@@ -667,12 +664,12 @@ function leggyakoribbIkon(ikonok){
         if(ikon.includes("d"))
             gyakorisag[ikon] = (gyakorisag[ikon] || 0) + 1        
     });
-    console.log(gyakorisag)
-    const leggyakoribb = Object.values(gyakorisag).reduce((a, b) => {
-        return a > b ? a : b
+
+    const leggyakoribb = Object.entries(gyakorisag).reduce((a, b) => {
+        return a[1] > b[1] ? a : b
     })
   
-    return String(leggyakoribb).length == 1 ? "0" + leggyakoribb + "d" : leggyakoribb
+    return leggyakoribb[0]
 }
 
 const changeUnit = (newUnit) => {
