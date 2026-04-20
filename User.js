@@ -164,7 +164,7 @@ if (forgotPasswordForm) {
                 .catch((error) => {
                     console.error('EmailJS hiba:', error.status, error.text);
                     if (error.status === 422) {
-                        showNotification('Hiba: Az EmailJS sablonban nincs beállítva a címzett! (To Email: {{to_email}})', 'error');
+                        showNotification('Hiba: Az EmailJS sablonban nincs beállítva a címzett! ', 'error');
                     } else {
                         showNotification('Hiba történt az e-mail küldésekor. Próbáld később!', 'error');
                     }
