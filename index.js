@@ -523,8 +523,8 @@ const renderHourlyWeather = async (telepules) => {
         const oraEso = document.createElement("p");
  
         slide.classList.add("swiper-slide", `slide${id}`, "bg-[#476D98]", "rounded-2xl", "select-none", "px-15" , "py-2","!flex", "flex-col","items-center", "justify-evenly", "!w-[120px]", "text-center")
-        oraIdo.innerHTML = new Date(ora.dt * 1000).getHours() + ":00";
-        oraIkon.src = `images/icons/weather/${dailyWeather.weather[0].icon}.svg`;
+        oraIdo.innerHTML = new Date(ora.dt_txt).getHours() + ":00";
+        oraIkon.src = `images/icons/weather/${ora.weather[0].icon}.svg`;
         oraIkon.classList.add("min-w-8");
         oraLeiras.innerHTML = ora.weather[0].description.charAt(0).toUpperCase() + ora.weather[0].description.slice(1);
         oraLeiras.classList.add("text-xs");
@@ -661,15 +661,15 @@ function leggyakoribbIkon(ikonok){
     const gyakorisag = {}
     
     ikonok.forEach(ikon => {
-        if(ikon.includes("d"))
-            gyakorisag[ikon] = (gyakorisag[ikon] || 0) + 1        
+        const szam = ikon.slice(0, 2)
+        gyakorisag[szam] = (gyakorisag[szam] || 0) + 1
     });
 
     const leggyakoribb = Object.entries(gyakorisag).reduce((a, b) => {
         return a[1] > b[1] ? a : b
     })
   
-    return leggyakoribb[0]
+    return leggyakoribb[0] + "d"
 }
 
 const changeUnit = (newUnit) => {
