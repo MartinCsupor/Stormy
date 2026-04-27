@@ -1,30 +1,115 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 48 48"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="02d.svg"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     id="namedview8"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="12.094472"
+     inkscape:cx="21.414742"
+     inkscape:cy="23.027049"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg8" />
   <!-- Nap -->
-  <circle cx="18" cy="18" r="7" fill="#ffac33"/>
-
+  <circle
+     cx="19.007692"
+     cy="19.917198"
+     r="9.2789335"
+     fill="#ffac33"
+     id="circle1"
+     style="stroke-width:1.32556" />
   <!-- 8 sugár -->
-  <g fill="#ffac33">
-
+  <g
+     fill="#ffac33"
+     id="g8"
+     transform="matrix(1.325562,0,0,1.325562,-4.8524234,-3.9429171)">
     <!-- Fent / Lent -->
-    <rect x="17" y="5" width="2" height="4" rx="1"/>
-    <rect x="17" y="27" width="2" height="4" rx="1"/>
-
+    <rect
+       x="17"
+       y="5"
+       width="2"
+       height="4"
+       rx="1"
+       id="rect1" />
+    <rect
+       x="17"
+       y="27"
+       width="2"
+       height="4"
+       rx="1"
+       id="rect2" />
     <!-- Bal / Jobb -->
-    <rect x="5" y="17" width="4" height="2" rx="1"/>
-    <rect x="27" y="17" width="4" height="2" rx="1"/>
-
+    <rect
+       x="5"
+       y="17"
+       width="4"
+       height="2"
+       rx="1"
+       id="rect3" />
+    <rect
+       x="27"
+       y="17"
+       width="4"
+       height="2"
+       rx="1"
+       id="rect4" />
     <!-- Átlósak -->
-    <rect x="9" y="9" width="2" height="4" rx="1" transform="rotate(-45 10 11)"/>
-    <rect x="25" y="9" width="2" height="4" rx="1" transform="rotate(45 26 11)"/>
-    <rect x="9" y="23" width="2" height="4" rx="1" transform="rotate(45 10 25)"/>
-    <rect x="25" y="23" width="2" height="4" rx="1" transform="rotate(-45 26 25)"/>
-
+    <rect
+       x="9"
+       y="9"
+       width="2"
+       height="4"
+       rx="1"
+       transform="rotate(-45,10,11)"
+       id="rect5" />
+    <rect
+       x="25"
+       y="9"
+       width="2"
+       height="4"
+       rx="1"
+       transform="rotate(45,26,11)"
+       id="rect6" />
+    <rect
+       x="9"
+       y="23"
+       width="2"
+       height="4"
+       rx="1"
+       transform="rotate(45,10,25)"
+       id="rect7" />
+    <rect
+       x="25"
+       y="23"
+       width="2"
+       height="4"
+       rx="1"
+       transform="rotate(-45,26,25)"
+       id="rect8" />
   </g>
-
   <!-- Felhő -->
-  <path d="M34 30c0-3-2.5-5.5-5.5-5.5-1.2 0-2.3.4-3.2 1.1C24.7 23.5 22.6 22 20 22c-3.3 0-6 2.7-6 6 0 .3 0 .6.1.9C12.3 29.4 11 31 11 33c0 2.2 1.8 4 4 4h19c2.2 0 4-1.8 4-4s-1.8-3-4-3z"
-        fill="#d1d5db"/>
-
+  <path
+     d="m 40.216684,35.823941 c 0,-3.976686 -3.313905,-7.29059 -7.290592,-7.29059 -1.590674,0 -3.048792,0.530224 -4.241797,1.458118 -0.795337,-2.78368 -3.579018,-4.772023 -7.025479,-4.772023 -4.374354,0 -7.953371,3.579017 -7.953371,7.953371 0,0.397669 0,0.795337 0.132555,1.193006 -2.386011,0.662781 -4.1092422,2.783681 -4.1092422,5.434804 0,2.916237 2.3860132,5.302248 5.3022492,5.302248 h 25.185677 c 2.916236,0 5.302247,-2.386011 5.302247,-5.302248 0,-2.916236 -2.386011,-3.976686 -5.302247,-3.976686 z"
+     fill="#d1d5db"
+     id="path8"
+     style="stroke-width:1.32556" />
 </svg>

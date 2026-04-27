@@ -1,18 +1,62 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 48 48"
+   version="1.1"
+   id="svg2"
+   sodipodi:docname="02n.svg"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview2"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="6.0472361"
+     inkscape:cx="19.513047"
+     inkscape:cy="26.87178"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
   <!-- Hold (nagyobb + jobban hátul) -->
-  <defs>
-    <mask id="moonMask">
-      <rect width="100%" height="100%" fill="white"/>
-      <circle cx="36" cy="18" r="8" fill="black"/>
+  <defs
+     id="defs1">
+    <mask
+       id="moonMask">
+      <rect
+         width="100%"
+         height="100%"
+         fill="white"
+         id="rect1" />
+      <circle
+         cx="36"
+         cy="18"
+         r="8"
+         fill="black"
+         id="circle1" />
     </mask>
   </defs>
-
-  <circle cx="30" cy="18" r="8" fill="#facc15" mask="url(#moonMask)"/>
-
+  <circle
+     cx="30"
+     cy="18"
+     r="8"
+     fill="#facc15"
+     mask="url(#moonMask)"
+     id="circle2"
+     transform="matrix(1.3567792,-0.64483506,0.64483506,1.3567792,-14.893489,13.798848)" />
   <!-- Felhő (előtte) -->
-  <path d="M30 30c0-3-2.5-5.5-5.5-5.5-1.2 0-2.3.4-3.2 1.1C20.7 23.5 18.6 22 16 22c-3.3 0-6 2.7-6 6 0 .3 0 .6.1.9C8.3 29.4 7 31 7 33c0 2.2 1.8 4 4 4h19c2.2 0 4-1.8 4-4s-1.8-3-4-3z"
-        fill="#d1d5db"/>
-
+  <path
+     d="m 37.913012,30.287858 c 0,-4.506657 -3.755548,-8.262205 -8.262205,-8.262205 -1.802663,0 -3.455104,0.600888 -4.807101,1.652441 -0.901331,-3.15466 -4.055991,-5.407988 -7.961761,-5.407988 -4.957323,0 -9.0133136,4.055991 -9.0133136,9.013314 0,0.450665 0,0.901331 0.150222,1.351997 -2.7039943,0.751109 -4.656879,3.15466 -4.656879,6.159098 0,3.304882 2.7039942,6.008876 6.008876,6.008876 H 37.913012 c 3.304881,0 6.008876,-2.703994 6.008876,-6.008876 0,-3.304882 -2.703995,-4.506657 -6.008876,-4.506657 z"
+     fill="#d1d5db"
+     id="path2"
+     style="stroke-width:1.50222" />
 </svg>
