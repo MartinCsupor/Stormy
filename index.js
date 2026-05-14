@@ -79,17 +79,38 @@ const getUVIndexAndDewPoint = async (lat, lon) => {
     }
 }
 
+const convertTo24Hour = (time12h) => {
+    const [time, period] = time12h.split(" ")
+
+    let [hour, minute] = time.split(":")
+
+    hour = parseInt(hour, 10)
+
+    if (period === "PM" && hour !== 12) {
+        hour += 12;
+    }
+
+    if (period === "AM" && hour === 12) {
+        hour = 0;
+    }
+
+    return `${hour.toString().padStart(2, "0")}:${minute}`;
+}
+
 const getMoonData = async (lat, lon) => {
+    const API = "31bca9a675b7455aaee95849261405 "
     const date = new Date().toISOString().split("T")[0].replaceAll('-', '');
     const data = await fetch(
-         `https://api.solunar.org/solunar/${lat},${lon},${date},1`
+        `https://api.weatherapi.com/v1/astronomy.json?key=${API}&q=${lat},${lon}&dt=${date}`
     )
     const MoonData = await data.json()
     
+    console.log(MoonData)
+
     return {
-        moonrise: MoonData.moonRise,
-        moonset: MoonData.moonSet,
-        moonphase: MoonData.moonPhase
+        moonrise: convertTo24Hour(MoonData.astronomy.astro.moonrise),
+        moonset: convertTo24Hour(MoonData.astronomy.astro.moonset),
+        moonphase: MoonData.astronomy.astro.moon_phase
     }
 }
 
