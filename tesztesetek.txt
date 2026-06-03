@@ -1,0 +1,101 @@
+. Alapvető Katalon WebUI Parancsok
+Ezeket a parancsokat fogod a leggyakrabban használni a Script módban:
+
+WebUI.openBrowser('URL'): Megnyitja a böngészőt a megadott címen.
+WebUI.setText(findTestObject('ID'), 'szöveg'): Szöveget ír be egy mezőbe (pl. Email, Város).
+WebUI.click(findTestObject('ID')): Kattint egy gombra vagy ikonra.
+WebUI.verifyElementPresent(findTestObject('ID'), 5): Ellenőrzi, hogy az elem létezik-e (5 mp várva).
+WebUI.verifyElementText(findTestObject('ID'), 'Várt Szöveg'): Szöveges egyezést vizsgál.
+WebUI.waitForElementVisible(findTestObject('ID'), 10): Megvárja, amíg egy elem (pl. Toast üzenet) láthatóvá válik.
+WebUI.executeJavaScript('window.localStorage.clear();', null): Törli a LocalStorage-t (hasznos tiszta teszt indításához).
+2. Tényleges Test Case példák (Script módban)
+A tesztek futtatása előtt fontos, hogy az Object Repository-ban vedd fel az elemeket (ID vagy XPath alapján).
+
+Teszteset 1: Sikeres Regisztráció
+Ez a teszt ellenőrzi, hogy a felhasználó létre tud-e hozni fiókot és átirányítja-e a rendszer.
+
+groovy
+// 1. Megnyitás
+WebUI.openBrowser('path/to/your/registeration.html')
+WebUI.maximizeWindow()
+
+// 2. Adatok kitöltése
+WebUI.setText(findTestObject('Object Repository/Register/input_Email'), 'teszt@elek.hu')
+WebUI.setText(findTestObject('Object Repository/Register/input_User'), 'tesztelek')
+WebUI.setText(findTestObject('Object Repository/Register/input_Pass'), 'Jelszo123')
+WebUI.setText(findTestObject('Object Repository/Register/input_PassConfirm'), 'Jelszo123')
+
+// 3. Küldés
+WebUI.click(findTestObject('Object Repository/Register/btn_Regisztracio'))
+
+// 4. Ellenőrzés: Megjelent-e a sikerült toast és átmentünk-e a főoldalra
+WebUI.waitForElementVisible(findTestObject('Object Repository/Common/div_ToastNotification'), 5)
+WebUI.verifyElementText(findTestObject('Object Repository/Common/div_ToastNotification'), 'Sikeres regisztráció! Átirányítunk...')
+
+// Megvárjuk az átirányítást
+WebUI.waitForPageLoad(5)
+String currentUrl = WebUI.getUrl()
+assert currentUrl.contains('index.html')
+Teszteset 2: Város keresése és Időjárás betöltése
+Ellenőrzi, hogy a kereső működik-e és frissíti-e a UI-t.
+
+groovy
+ Show full code block 
+WebUI.openBrowser('path/to/your/index.html')
+
+// Keresés: Szentendre
+WebUI.setText(findTestObject('Object Repository/Weather/input_VarosKereso'), 'Szentendre')
+
+// Várjuk a legördülő listát és kattintsunk az első találatra
+WebUI.waitForElementPresent(findTestObject('Object Repository/Weather/div_ElsoTalalat'), 5)
+WebUI.click(findTestObject('Object Repository/Weather/div_ElsoTalalat'))
+
+// Ellenőrizzük, hogy a főcímben megjelent-e a város neve
+WebUI.verifyElementText(findTestObject('Object Repository/Weather/p_JelenlegiVaros'), 'Szentendre')
+
+// Ellenőrizzük, hogy a hőmérséklet nem üres
+String temp = WebUI.getText(findTestObject('Object Repository/Weather/h2_JelenlegiFok'))
+assert temp.length() > 0
+Teszteset 3: Zenelejátszó ajánló (Bejelentkezés szükséges)
+Ez a teszt szimulálja a bejelentkezett állapotot és teszteli az időjárás alapú zeneajánlót.
+
+groovy
+ Show full code block 
+WebUI.openBrowser('path/to/your/index.html')
+
+// Szimuláljuk a bejelentkezést LocalStorage-el (így nem kell mindig végigcsinálni a login-t)
+WebUI.executeJavaScript("localStorage.setItem('loggedUser', JSON.stringify({email:'t@t.hu', username:'teszt'}));", null)
+WebUI.refresh()
+
+// Zene panel megnyitása
+WebUI.click(findTestObject('Object Repository/Music/btn_ZeneIkon'))
+WebUI.waitForElementVisible(findTestObject('Object Repository/Music/div_MusicPanel'), 3)
+
+// Kattintás a zeneajánló (🎵) gombra
+WebUI.click(findTestObject('Object Repository/Music/btn_Recommend'))
+
+// Ellenőrzés: Betöltődött-e valamilyen cím?
+String songTitle = WebUI.getText(findTestObject('Object Repository/Music/p_SongTitle'))
+assert songTitle != 'Zene címe'
+Teszteset 4: Hibás Jelszóvisszaállítás (Rossz OTP kód)
+Negatív teszt a biztonsági flow-hoz.
+
+groovy
+WebUI.openBrowser('path/to/your/forgotPass.html')
+
+// 1. Email beírása
+WebUI.setText(findTestObject('Object Repository/ForgotPass/input_ForgotEmail'), 'teszt@elek.hu')
+WebUI.click(findTestObject('Object Repository/ForgotPass/btn_CheckEmail'))
+
+// 2. Rossz kód megadása
+WebUI.waitForElementVisible(findTestObject('Object Repository/ForgotPass/div_CodeStep'), 5)
+WebUI.setText(findTestObject('Object Repository/ForgotPass/input_VerificationCode'), '0000') // Hibás kód
+WebUI.click(findTestObject('Object Repository/ForgotPass/btn_VerifyCode'))
+
+// 3. Ellenőrzés: Megjelent-e a hibaüzenet
+WebUI.waitForElementVisible(findTestObject('Object Repository/Common/div_ToastNotification'), 3)
+WebUI.verifyElementText(findTestObject('Object Repository/Common/div_ToastNotification'), 'Helytelen ellenőrző kód!')
+Tippek a hatékony teszteléshez:
+LocalStorage ellenőrzés: Használd a WebUI.executeJavaScript("return localStorage.getItem('users');") parancsot, ha ellenőrizni akarod, hogy az adatok tényleg elmentődtek-e a "backend" (böngésző tárhely) felé.
+Delay helyett Wait: Soha ne használj sima WebUI.delay()-t, ha nem muszáj. Használd a WebUI.waitForElementVisible() parancsot, mert az appod aszinkron (API hívásokra vár).
+Képernyőképek: A tesztek végére tegyél WebUI.takeScreenshot(), így ha elbukik a teszt, látod mi volt a képernyőn.
